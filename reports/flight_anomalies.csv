@@ -1,0 +1,17 @@
+FlightDate,Reporting_Airline,Flight_Number_Reporting_Airline,Origin,Dest,CRSDepTime,Cancelled,Diverted,ArrDelay,CarrierDelay,WeatherDelay,NASDelay,SecurityDelay,LateAircraftDelay,cause_sum_mismatch,completed_missing_arrival_delay,scheduled_midnight_2400,cause_minus_arrdelay
+2025-07-24,OO,6512,DSM,ORD,2400,0,0,1451.0,1451.0,0.0,0.0,0.0,0.0,False,False,True,0.0
+2025-09-08,WN,1671,FLL,BWI,1215,0,0,75.0,0.0,0.0,0.0,0.0,0.0,True,False,False,-75.0
+2025-09-06,YX,5859,JFK,MVY,1209,0,0,,,,,,,False,True,False,
+2025-10-30,WN,3884,LAS,SAN,1955,0,0,198.0,0.0,0.0,0.0,0.0,0.0,True,False,False,-198.0
+2025-10-28,WN,159,ABQ,DEN,1005,0,0,99.0,0.0,0.0,0.0,0.0,0.0,True,False,False,-99.0
+2025-11-26,WN,2143,BNA,PNS,1605,0,0,137.0,0.0,0.0,0.0,0.0,0.0,True,False,False,-137.0
+2025-11-30,WN,2466,DEN,HDN,1015,0,0,334.0,0.0,0.0,0.0,0.0,0.0,True,False,False,-334.0
+2025-11-20,WN,1866,DEN,AUS,600,0,0,93.0,0.0,0.0,0.0,0.0,0.0,True,False,False,-93.0
+2025-11-20,WN,2921,LAS,BOI,1940,0,0,813.0,0.0,0.0,0.0,0.0,0.0,True,False,False,-813.0
+2025-11-20,WN,4353,SMF,BOI,1950,0,0,820.0,0.0,0.0,0.0,0.0,0.0,True,False,False,-820.0
+2025-11-21,WN,3051,DEN,BZN,745,0,0,277.0,0.0,0.0,0.0,0.0,0.0,True,False,False,-277.0
+2025-11-24,WN,981,DEN,BZN,1525,0,0,118.0,0.0,0.0,0.0,0.0,0.0,True,False,False,-118.0
+2025-11-26,WN,4657,STL,CMH,2015,0,0,188.0,0.0,0.0,0.0,0.0,0.0,True,False,False,-188.0
+2025-11-17,WN,2537,LAS,BUR,1715,0,0,189.0,0.0,0.0,0.0,0.0,0.0,True,False,False,-189.0
+2025-11-18,WN,2827,DEN,HOU,1735,0,0,98.0,0.0,0.0,0.0,0.0,0.0,True,False,False,-98.0
+2025-11-18,WN,3994,SMF,ONT,1320,0,0,130.0,0.0,0.0,0.0,0.0,0.0,True,False,False,-130.0

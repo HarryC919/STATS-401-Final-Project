@@ -1,0 +1,15 @@
+{
+  "full_year_verified": true,
+  "raw_zip_checksums_verified": 12,
+  "airport_checksum_verified": true,
+  "parquet_partitions_verified": 12,
+  "summary_count_reconciliation": true,
+  "raw_january_independent_counts": {
+    "scheduled_flights": 539747,
+    "eligible_arrivals": 522269,
+    "delayed_arrivals": 98130,
+    "cancelled_flights": 16312,
+    "diverted_flights": 1166
+  },
+  "total_rows": 7001619
+}
