@@ -8,7 +8,8 @@ This page presents our verified dataset, six implemented D3 visualizations, and 
 for coordinated interaction and evaluation. All figures below were exported from the
 working dashboard using actual 2025 project data; they are not sketches or mockups.
 
-[Run the dashboard](../README.md#view-the-dashboard) · [Proposal](../proposal.md) ·
+[Live dashboard](https://harryc919.github.io/STATS-401-Final-Project/) ·
+[Run locally](../README.md#view-the-dashboard) · [Proposal](../proposal.md) ·
 [Data quality report](../reports/quality_report.md) · [Browser checks](../reports/site_validation.json)
 
 ## 1. Dataset

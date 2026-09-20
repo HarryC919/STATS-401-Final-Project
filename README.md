@@ -13,14 +13,18 @@ across all twelve months of 2025. Comparisons are descriptive, not causal.
 
 ## View the dashboard
 
-From the repository root:
+**Published:** <https://harryc919.github.io/STATS-401-Final-Project/> — pushes to `main`
+that change `site/` are redeployed automatically by
+[GitHub Actions](.github/workflows/deploy-pages.yml) after the site data checks pass.
+
+To run locally from the repository root:
 
 ```bash
 uv sync --locked
 uv run --locked python scripts/serve_site.py
 ```
 
-Open **http://127.0.0.1:8765/**. Stop with **Ctrl+C**. If that port is occupied,
+Open **<http://127.0.0.1:8765/>**. Stop with **Ctrl+C**. If that port is occupied,
 use `uv run --locked python scripts/serve_site.py --port 8766` and open port 8766.
 The server never stops another process and serves only `site/`.
 
@@ -28,10 +32,9 @@ The small [website data snapshot](site/data/) and pinned [vendor assets](site/ve
 are included, so viewing does not require raw data, a frontend build, or CDN access.
 Python is managed by uv at version 3.13. A first `uv sync` may need network access.
 
-The [HTML source](site/index.html) is not a hosted application when viewed in GitHub's
-file viewer. No GitHub Pages deployment is configured by this integration. To publish
-later, deploy the contents of `site/` as a static website, then add its verified URL here.
-The interim document's embedded figures are visible directly on the GitHub repository page.
+The [HTML source](site/index.html) alone is not a hosted application when viewed in
+GitHub's file viewer; the published site above is the hosted copy. The interim
+document's embedded figures are visible directly on the GitHub repository page.
 
 ## Current implementation
 
