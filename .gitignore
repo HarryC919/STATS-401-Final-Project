@@ -3,3 +3,22 @@
 
 # Requirement files
 Proposal_Requirement.md
+
+# Reproducible local data and Python environment
+.venv/
+__pycache__/
+/data/raw/
+/data/processed/
+/data/summaries/
+
+# System files
+.DS_Store
+
+# Other files
+*.log
+AGENTS.md
+CLAUDE.md
+
+# Optional local browser tooling and migration backup
+node_modules/
+.local-backups/
