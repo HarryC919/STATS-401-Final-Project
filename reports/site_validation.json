@@ -1,0 +1,66 @@
+{
+  "browser": "153.0.8010.48",
+  "checks": "passed",
+  "charts": [
+    {
+      "chart": "monthly",
+      "marks": 24,
+      "screenshot": "docs/assets/interim/monthly.png"
+    },
+    {
+      "chart": "airline",
+      "marks": 14,
+      "screenshot": "docs/assets/interim/airline.png"
+    },
+    {
+      "chart": "airport",
+      "marks": 15,
+      "screenshot": "docs/assets/interim/airport.png"
+    },
+    {
+      "chart": "route",
+      "marks": 15,
+      "screenshot": "docs/assets/interim/route.png"
+    },
+    {
+      "chart": "cause",
+      "marks": 5,
+      "screenshot": "docs/assets/interim/cause.png"
+    },
+    {
+      "chart": "network",
+      "marks": 220,
+      "screenshot": "docs/assets/interim/network.png"
+    }
+  ],
+  "mapCoverage": "338 of 346 cities projected; 220 city-pair edges shown. Both directions pooled; within-city flights are not drawn as edges.",
+  "desktopViewport": [
+    1440,
+    1100
+  ],
+  "mobileViewport": [
+    390,
+    844
+  ],
+  "checked": [
+    "data loading",
+    "six rendered charts",
+    "national baseline",
+    "missing values",
+    "tooltips",
+    "tab switching",
+    "keyboard activation",
+    "mobile page overflow",
+    "initial load failure",
+    "map retry"
+  ],
+  "limitations": "Automated checks and visual inspection are not a user study or an interaction-performance evaluation.",
+  "source_sha256": {
+    "site/index.html": "dea55282e778b2bdda8651526e01b28adb652bcd12a9de6a87e6d73d6328da3c",
+    "site/css/style.css": "ebb8f07698cef60fdbb39f22df6d8ed14701484af8331d2baef0cab2fd2c1db4",
+    "site/js/app.js": "17be1b18f11fe50da104a49ed6f0736091b1942baa25266add41872c49d76831",
+    "site/js/charts.js": "76c07f23fe5cfa7c84fbb14665c16dfa925e95b5815c921fec708ac3ea1405b7",
+    "site/js/metrics.js": "e4754610b394f075766a2ee6d5883d9a1009d9a3f29d321948adcfa6c99126b3",
+    "site/data/manifest.json": "03aa7bdc616740acfb88a6846b8e92f561dce7ea49f5b7cf40fa47f8d4787b85"
+  }
+}

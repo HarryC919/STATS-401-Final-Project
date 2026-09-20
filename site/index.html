@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
+<title>2025 U.S. Domestic Flight Reliability Overview</title>
+<script src="vendor/d3.min.js"></script>
+<script src="vendor/topojson-client.min.js"></script>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header>
+  <h1>2025 U.S. Domestic Flight Reliability Overview</h1>
+  <p>Static Analysis &middot; National Overview &middot; Monthly Trends &middot; Airline, Airport, Route &amp; Cause Analysis</p>
+</header>
+
+<main class="container">
+  <p class="method-note">2025 reporting-carrier data. Delay rate = arrivals at least 15 minutes late / eligible arrivals.
+  Cancelled and diverted flights are excluded from that denominator; cancellation and diversion rates use all scheduled flights.
+  Airport and city rates describe arrival outcomes of outgoing flights. Comparisons are descriptive.</p>
+  <p id="load-status" role="status">Loading the verified data snapshot…</p>
+
+  <div class="kpi-row" id="kpis"></div>
+
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="tab-monthly">Monthly Trends</button>
+    <button class="tab-btn" data-tab="tab-airline">Airline Delay Rate</button>
+    <button class="tab-btn" data-tab="tab-airport">Busiest Airports</button>
+    <button class="tab-btn" data-tab="tab-route">Busiest Routes</button>
+    <button class="tab-btn" data-tab="tab-cause">Delay Causes</button>
+    <button class="tab-btn" data-tab="tab-network">Flight Network Map</button>
+  </div>
+
+  <div class="tab-panel active" id="tab-monthly">
+    <section>
+      <h2>Monthly Delay and Cancellation Trends</h2>
+      <div class="sub">Arrival delay rate (&ge;15 min) and cancellation rate by month, 2025</div>
+      <svg id="monthlyChart" viewBox="0 0 1100 380" preserveAspectRatio="xMidYMid meet"></svg>
+    </section>
+  </div>
+
+  <div class="tab-panel" id="tab-airline">
+    <section>
+      <h2>Airline Delay Rate Comparison</h2>
+      <div class="sub">Sorted by annual arrival delay rate; red bars exceed the national average</div>
+      <svg id="airlineChart" viewBox="0 0 1100 520" preserveAspectRatio="xMidYMid meet"></svg>
+    </section>
+  </div>
+
+  <div class="tab-panel" id="tab-airport">
+    <section>
+      <h2>Busiest Airports: Delay Rate Comparison</h2>
+      <div class="sub">Top 15 airports by annual departures, ordered by delay rate; red bars exceed the national rate</div>
+      <svg id="airportChart" viewBox="0 0 1100 520" preserveAspectRatio="xMidYMid meet"></svg>
+    </section>
+  </div>
+
+  <div class="tab-panel" id="tab-route">
+    <section>
+      <h2>Busiest Routes: Delay Rate Comparison</h2>
+      <div class="sub">Top 15 directed routes by annual flights, ordered by delay rate; red bars exceed the national rate</div>
+      <svg id="routeChart" viewBox="0 0 1100 520" preserveAspectRatio="xMidYMid meet"></svg>
+    </section>
+  </div>
+
+  <div class="tab-panel" id="tab-cause">
+    <section>
+      <h2>Delay Cause Breakdown</h2>
+      <div class="sub">Share of reported attributed minutes, national total. Missing attribution is not zero; Weather excludes weather attributed to NAS.</div>
+      <svg id="causeChart" viewBox="0 0 1100 460" preserveAspectRatio="xMidYMid meet"></svg>
+    </section>
+  </div>
+
+  <div class="tab-panel" id="tab-network">
+    <section>
+      <h2>City-level Flight Network Overview</h2>
+      <div class="sub">
+        Static city-level overview: circle area = annual scheduled departures; circle color = arrival-delay rate;
+        curved lines = up to 220 busiest projectable city-pairs, pooling both directions; width = flight volume
+      </div>
+      <div class="network-map-wrap">
+        <svg id="networkMap" viewBox="0 0 1100 650" preserveAspectRatio="xMidYMid meet"></svg>
+      </div>
+      <p id="network-status" role="status"></p>
+      <div class="sub" style="margin-top:10px;margin-bottom:0">
+        City locations are departure-weighted airport coordinates, not city centers. Territories outside the Albers USA projection remain in national totals. Color is clipped to the 5th–95th percentile range among cities with at least 10,000 departures; all projectable cities are drawn. Gray means no eligible arrivals.
+      </div>
+    </section>
+  </div>
+
+</main>
+
+<div class="tooltip" id="tooltip"></div>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

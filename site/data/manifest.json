@@ -1,0 +1,84 @@
+{
+  "year": 2025,
+  "months": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+  ],
+  "scheduled_flights": 7001619,
+  "generator": "scripts/export_site_data.py",
+  "city_identity": "BTS OriginCityName (including state); airports with the same city name are pooled.",
+  "coordinates": "Departure-weighted historical airport coordinates joined on AirportSeqID.",
+  "city_pairs": "Both directions pooled; within-city flights excluded only from city-pair edges.",
+  "within_city_flights": 0,
+  "map_limit": 220,
+  "projection_note": "Albers USA does not display all territories; filter endpoints before selecting top routes.",
+  "sources": {
+    "reports/verification.json": "8b0f274c6b80186ca667cae3ebade9cc4e9cf285e16365562cfd874a3883603b",
+    "reports/quality_report.json": "24500fcb798e9da99a44fae44e1078fd5c4c641779c206ba8b3e76568d1cffe6",
+    "data/summaries/national.csv": "50d4cf8edb02b6ebb165b54fb33bfde0610e08acb3e7efb716cf3e1b37f4c290",
+    "data/summaries/monthly.csv": "b47bc1e9b56bd411917e4831406b63821f2d3b2e94d7048f2c7c29621c1f1d1a",
+    "data/summaries/airline_annual.csv": "f44672ba78771850e8ee850e4aff7d9a07c43898e53a3b4e1b45929da60731f1",
+    "data/summaries/airport_annual.csv": "406de286ce865ebf88520531caf98ac3c1102311fed1fb799e5da8133f10594b",
+    "data/summaries/route_annual.csv": "1561a729c790856eb4f47d39012e450997e16838ad1ae55190b999230d536c52",
+    "data/processed/airports.csv": "e05d28405ceb1f34f4c0070a69477b7141031fb24287380add4fced0314c3dbf",
+    "data/processed/flights_2025_01.parquet": "d165ed9e8093c6c89740c1e3fbe20ab8018052016d13b11d69ccccb89bccdf15",
+    "data/processed/flights_2025_02.parquet": "0f0a0f918f1036875fc890f44cb5840023e4078a4c110f70a7f75f7546d4a267",
+    "data/processed/flights_2025_03.parquet": "8702ecb61ea2c7a4084de8ce56520436b68a81f14f75410b935f4edd45f536af",
+    "data/processed/flights_2025_04.parquet": "347586d31d03727552d8631a483428c77a0931986b3b98983eff8c0d5b7026d7",
+    "data/processed/flights_2025_05.parquet": "17f2675548819829b15591b47f7819da2e68e79340206efa585e700f47d7de64",
+    "data/processed/flights_2025_06.parquet": "5fac00a8ac3bd06819cdb345a0f053638b857159fecdba37b1e50d3d57ccfcee",
+    "data/processed/flights_2025_07.parquet": "25326775ed526cc3c956c0d39b639025c69c6cb0b6e63046a6637db7ff2a24a4",
+    "data/processed/flights_2025_08.parquet": "e5ff254fe4d74dfa55a23104e1dd6eff6cc12c91553a5522f264887179234813",
+    "data/processed/flights_2025_09.parquet": "e0c26d70326ce24fc1093c2961b68fa88eb15af64815181cca3d0519a748800e",
+    "data/processed/flights_2025_10.parquet": "8d70f8f5e55b87eabd13ad79a8c9ea2ad3cbf05df05c3fa8efb3436b972f31a7",
+    "data/processed/flights_2025_11.parquet": "c687573f01dcdaf58829ada29a9bc9d6a67f2088eecd9befafdeb0593df742d9",
+    "data/processed/flights_2025_12.parquet": "c7e14b0731a19e8fb0c39f5e96d323fb6b6d8f72d0d5201d77dea3711b70e875"
+  },
+  "files": {
+    "airline_annual.csv": {
+      "sha256": "d4e1e334696b2212bcbc981d9dd8c15960ac9ca42f0f6c83e770724dbd0dcb4f",
+      "rows": 14,
+      "bytes": 1413
+    },
+    "airport_annual.csv": {
+      "sha256": "d558ffca7e12cc42202cbba5657790a07b8721f1094b1ed2d424f0ff9621e161",
+      "rows": 352,
+      "bytes": 29748
+    },
+    "city_routes.csv": {
+      "sha256": "5293d15c6cab42a0a250b03e87a308bf6a9d2ddba99dec71b4b194e876e4611f",
+      "rows": 3212,
+      "bytes": 330212
+    },
+    "city_summary.csv": {
+      "sha256": "e8439082c5381dadb98f4dba03ecc522fb63771f84ba3d2f36e96b30f3b1747a",
+      "rows": 346,
+      "bytes": 46301
+    },
+    "monthly.csv": {
+      "sha256": "8cacb5ad18b2362e73c3678b3499089cf0fc7f1ddfa4b3093ecff1da3306ad99",
+      "rows": 12,
+      "bytes": 4161
+    },
+    "national.csv": {
+      "sha256": "c5a762df1f3e7ab01308400ed9c15c2018c12b266f0c2cc319980e2c4357ea94",
+      "rows": 1,
+      "bytes": 926
+    },
+    "route_annual.csv": {
+      "sha256": "36f34ec374cc69e9e431b3a264254766e0680ed3d318afa3fc169a2e9801aa52",
+      "rows": 6938,
+      "bytes": 569520
+    }
+  }
+}

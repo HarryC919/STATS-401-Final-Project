@@ -1,0 +1,89 @@
+
+  body { font-family: "Segoe UI", Arial, sans-serif; margin: 0; background: #f7f8fa; color: #222; }
+  header { background: #1a3a5c; color: #fff; padding: 32px 48px; }
+  header h1 { margin: 0 0 8px; font-size: 28px; }
+  header p { margin: 0; opacity: .85; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 32px 24px 64px; }
+
+  .tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+  .tab-btn {
+    border: 1px solid #cdd6e0;
+    background: #fff;
+    color: #1a3a5c;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .tab-btn:hover { background: #eef3fa; }
+  .tab-btn.active {
+    background: #1a3a5c;
+    color: #fff;
+    border-color: #1a3a5c;
+    font-weight: 600;
+  }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  section { background: #fff; border-radius: 10px; padding: 24px; margin-bottom: 32px; box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+  section h2 { margin: 0 0 4px; font-size: 20px; }
+  section .sub { color: #666; font-size: 14px; margin-bottom: 16px; }
+  section svg { width: 100%; height: auto; display: block; }
+  .axis text { font-size: 12px; fill: #555; }
+  .axis path, .axis line { stroke: #ccc; }
+  .grid line { stroke: #eee; }
+  .grid path { stroke: none; }
+  .bar { fill: #3b7dd8; }
+  .bar.highlight { fill: #d9534f; }
+  .tooltip {
+    position: fixed; display: none; pointer-events: none; z-index: 10;
+    background: rgba(0,0,0,.8); color: #fff;
+    padding: 6px 10px; border-radius: 6px; font-size: 12px;
+    opacity: 0; transition: opacity .15s;
+  }
+  .pie-label { font-size: 12px; fill: #333; }
+  .pie-legend text { font-size: 12px; fill: #333; }
+
+  .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 32px; }
+  .kpi { background: #fff; border-radius: 10px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+  .kpi .label { font-size: 13px; color: #666; }
+  .kpi .value { font-size: 30px; font-weight: 700; margin-top: 6px; }
+  .kpi .value small { font-size: 15px; font-weight: 400; color: #888; }
+
+  /* ===== Hanchi: flight network map ===== */
+  .network-map-wrap { position: relative; width:100%; border:1px solid #e1e7ed;
+    border-radius:10px; overflow:hidden; background:#fbfdfe; }
+  #networkMap { width:100%; height:auto; display:block; }
+  .map-state { fill:#e8eef2; stroke:#fff; stroke-width:1.1; }
+  .map-state-border { fill:none; stroke:#b4c1ca; stroke-width:.75; pointer-events:none; }
+  .map-route { fill:none; stroke:#5a7180; stroke-opacity:.115; stroke-linecap:round; mix-blend-mode:multiply; }
+  .map-route.top { stroke-opacity:.21; }
+  .map-node { stroke:#fff; stroke-width:1.35; }
+  .map-hub-label { font-size:10px; font-weight:700; fill:#354955; paint-order:stroke;
+    stroke:#fff; stroke-width:3px; stroke-linejoin:round; }
+  .map-legend-box { fill:rgba(255,255,255,.95); stroke:#dbe3e9; stroke-width:1; }
+  .map-legend-title { font-size:12px; font-weight:700; fill:#263640; }
+  .map-legend-text { font-size:10px; fill:#617481; }
+
+
+.method-note { font-size: 14px; line-height: 1.65; color: #45576a; }
+#load-status, #network-status { font-size: 13px; color: #45576a; }
+.tab-btn:focus-visible { outline: 3px solid #eea638; outline-offset: 3px; }
+@media (max-width: 650px) {
+  header { padding: 24px 16px; }
+  header h1 { font-size: 23px; }
+  .container { padding: 20px 12px; }
+  .kpi-row { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .kpi { padding: 12px; }
+  .kpi .value { font-size: 22px; }
+  section { padding: 14px; overflow-x: auto; }
+  section svg { min-width: 700px; }
+  .network-map-wrap { min-width: 700px; }
+}
