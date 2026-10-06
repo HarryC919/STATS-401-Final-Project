@@ -1,0 +1,89 @@
+{
+  "batch": "B — shared month/airline filtering",
+  "browser": "154.0.8037.98",
+  "checks": "passed",
+  "charts": [
+    {
+      "chart": "monthly",
+      "marks": 24,
+      "screenshot": "docs/assets/batch-b/monthly-default.png"
+    },
+    {
+      "chart": "airline",
+      "marks": 14,
+      "screenshot": "docs/assets/batch-b/airline-default.png"
+    },
+    {
+      "chart": "airport",
+      "marks": 15,
+      "screenshot": "docs/assets/batch-b/airport-default.png"
+    },
+    {
+      "chart": "route",
+      "marks": 15,
+      "screenshot": "docs/assets/batch-b/route-default.png"
+    },
+    {
+      "chart": "cause",
+      "marks": 5,
+      "screenshot": "docs/assets/batch-b/cause-default.png"
+    },
+    {
+      "chart": "network",
+      "marks": 220,
+      "screenshot": "docs/assets/batch-b/network-default.png"
+    }
+  ],
+  "expectations": {
+    "fullYearScheduled": 7001619,
+    "janMarAllScheduled": 1645503,
+    "janMarUAScheduled": 186629,
+    "janFebUAScheduled": 119635,
+    "referenceJanMar": "317266/1611046 = 19.7%"
+  },
+  "checked": [
+    "six charts render in default state",
+    "filter bar default summary",
+    "KPI flight total and arrival delay rate in every scope",
+    "tooltip label, pooled flights, and pooled delay rate",
+    "month range updates KPI/summary/monthly band/reference label",
+    "airline context retained with UA outlined",
+    "airport and route bars match independently pooled expectations",
+    "filtered routes load partitions on demand",
+    "reset restores annual all-airline view",
+    "rapid changes settle on the newest selection under throttled responses",
+    "map mid-load filter change does not duplicate routes or nodes",
+    "failed filtered render clears stale marks and shows the error in the panel",
+    "returning to a truly cached tab clears the error without re-rendering it",
+    "filter changes on a cached fixed-scope tab refresh the status text in place",
+    "KPI cancellation and diversion rates in every scope",
+    "returning to a rendered tab clears leftover error/loading status",
+    "keyboard operation of selects and Reset",
+    "mobile overflow",
+    "initial load failure",
+    "filtered render retry"
+  ],
+  "notChecked": [
+    "empty-selection browser state (no filter combination yields zero rows in this dataset; covered by unit tests)",
+    "cause and network views stay fixed-scope by design and were only checked to render"
+  ],
+  "desktopViewport": [
+    1440,
+    1100
+  ],
+  "mobileViewport": [
+    390,
+    844
+  ],
+  "limitations": "Automated checks and visual inspection are not a user study or an interaction-performance evaluation.",
+  "source_sha256": {
+    "site/index.html": "78b5271e1fd8dd06020d97e6d4a48bcd4696d0001cd0cac86cd565d682c06be3",
+    "site/css/style.css": "4e7a45f7ecfb674f4fb4a772ae2a9a3a69ca65311417d922c6917b06eb9091ab",
+    "site/js/app.js": "1d8514827faac415b662bc21d28b109d59fd26223a2b63220e7d61c52c455d4f",
+    "site/js/charts.js": "7eb9121e62d81de0226fbc98fcae74232c0ced68cb089cade90f9be16051b643",
+    "site/js/state.js": "83160fe0b953f57bfdbea850be22aa71e33981f2608ab4113dd162f747666394",
+    "site/js/aggregate.js": "f2e7e6cbc29ba6e37ee3fb76895aece0f963d1705423e68f86ea5fe02fb8e9f7",
+    "site/js/data.js": "5c0ba4a9e8e5887904ac7f32d92864f21b11c465bd6c64803b9bb7eb7412bc59",
+    "site/data/manifest.json": "49f01de58e5ee3c29b3eeafe665db0d0f8c5624ec61a62db8308868a871c8222"
+  }
+}

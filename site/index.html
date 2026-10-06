@@ -22,6 +22,23 @@
   Airport and city rates describe arrival outcomes of outgoing flights. Comparisons are descriptive.</p>
   <p id="load-status" role="status">Loading the verified data snapshot…</p>
 
+  <div class="filter-bar" id="filter-bar" role="group" aria-label="Shared month and airline filters">
+    <label for="month-start">Months</label>
+    <select id="month-start" aria-label="First month of the range"></select>
+    <span class="filter-sep">to</span>
+    <select id="month-end" aria-label="Last month of the range"></select>
+    <label for="airline-select">Airline</label>
+    <select id="airline-select" aria-label="Reporting airline">
+      <option value="">All airlines</option>
+    </select>
+    <label for="airport-search">Airport</label>
+    <input id="airport-search" list="airport-options" placeholder="e.g. ORD — opens detail"
+           autocomplete="off" aria-label="Airport selection for the detail view (optional)">
+    <datalist id="airport-options"></datalist>
+    <span id="filter-summary" aria-live="polite"></span>
+    <button id="filter-reset" type="button">Reset</button>
+  </div>
+
   <div class="kpi-row" id="kpis"></div>
 
   <div class="tabs">
@@ -29,14 +46,18 @@
     <button class="tab-btn" data-tab="tab-airline">Airline Delay Rate</button>
     <button class="tab-btn" data-tab="tab-airport">Busiest Airports</button>
     <button class="tab-btn" data-tab="tab-route">Busiest Routes</button>
+    <button class="tab-btn" data-tab="tab-detail">Airport Detail</button>
+    <button class="tab-btn" data-tab="tab-temporal">Temporal Patterns</button>
     <button class="tab-btn" data-tab="tab-cause">Delay Causes</button>
+    <button class="tab-btn" data-tab="tab-cause-compare">Cause Comparison</button>
+    <button class="tab-btn" data-tab="tab-scatter">Volume &amp; Reliability</button>
     <button class="tab-btn" data-tab="tab-network">Flight Network Map</button>
   </div>
 
   <div class="tab-panel active" id="tab-monthly">
     <section>
       <h2>Monthly Delay and Cancellation Trends</h2>
-      <div class="sub">Arrival delay rate (&ge;15 min) and cancellation rate by month, 2025</div>
+      <div class="sub">Arrival delay rate (&ge;15 min) and cancellation rate by month; all twelve months stay visible, the selected range is shaded</div>
       <svg id="monthlyChart" viewBox="0 0 1100 380" preserveAspectRatio="xMidYMid meet"></svg>
     </section>
   </div>
@@ -44,7 +65,7 @@
   <div class="tab-panel" id="tab-airline">
     <section>
       <h2>Airline Delay Rate Comparison</h2>
-      <div class="sub">Sorted by annual arrival delay rate; red bars exceed the national average</div>
+      <div class="sub">All reporting airlines over the selected months, sorted by arrival delay rate; red bars exceed the pooled national reference, the selected airline is outlined</div>
       <svg id="airlineChart" viewBox="0 0 1100 520" preserveAspectRatio="xMidYMid meet"></svg>
     </section>
   </div>
@@ -52,7 +73,7 @@
   <div class="tab-panel" id="tab-airport">
     <section>
       <h2>Busiest Airports: Delay Rate Comparison</h2>
-      <div class="sub">Top 15 airports by annual departures, ordered by delay rate; red bars exceed the national rate</div>
+      <div class="sub">Top 15 origin airports by scheduled departures under the current filters, ordered by delay rate; red bars exceed the pooled national reference</div>
       <svg id="airportChart" viewBox="0 0 1100 520" preserveAspectRatio="xMidYMid meet"></svg>
     </section>
   </div>
@@ -60,8 +81,64 @@
   <div class="tab-panel" id="tab-route">
     <section>
       <h2>Busiest Routes: Delay Rate Comparison</h2>
-      <div class="sub">Top 15 directed routes by annual flights, ordered by delay rate; red bars exceed the national rate</div>
+      <div class="sub">Top 15 directed routes by scheduled flights under the current month and airline filters, ordered by delay rate; reverse directions stay separate observations. Airport selection applies in Airport Detail.</div>
       <svg id="routeChart" viewBox="0 0 1100 520" preserveAspectRatio="xMidYMid meet"></svg>
+    </section>
+  </div>
+
+  <div class="tab-panel" id="tab-detail">
+    <section>
+      <h2>Airport Detail</h2>
+      <div class="sub" id="detail-sub">Select an airport to inspect its filtered reliability.</div>
+      <p id="detail-status" role="status"></p>
+      <svg id="detailTrend" viewBox="0 0 1100 380" preserveAspectRatio="xMidYMid meet"></svg>
+      <h3 class="detail-heading">Reported cause composition</h3>
+      <svg id="detailCauses" viewBox="0 0 1100 380" preserveAspectRatio="xMidYMid meet"></svg>
+      <h3 class="detail-heading">Five busiest outgoing directed routes</h3>
+      <div class="sub">Selected by scheduled flights under the current filters and displayed in that order; reverse directions stay separate. A route with zero eligible arrivals keeps its place with "No data".</div>
+      <svg id="detailRoutes" viewBox="0 0 1100 420" preserveAspectRatio="xMidYMid meet"></svg>
+    </section>
+  </div>
+
+  <div class="tab-panel" id="tab-temporal">
+    <section>
+      <h2>Temporal Patterns: Weekday &times; Scheduled Departure Hour</h2>
+      <div class="sub">Arrival-delay rate by weekday (rows, Monday first) and scheduled local departure hour (columns, 0&ndash;23; the BTS 2400 convention maps to 00). Cells pool the selected months, airline, and airport from the reported records.</div>
+      <div class="sub">Gray = no observations (never a zero rate). Gray-blue = scheduled flights with no eligible arrivals. Dashed outline = low sample (fewer than 30 eligible arrivals). Observed zero delay renders at the 0% end of the color scale.</div>
+      <svg id="temporalHeatmap" viewBox="0 0 1100 520" preserveAspectRatio="xMidYMid meet"></svg>
+    </section>
+  </div>
+
+  <div class="tab-panel" id="tab-scatter">
+    <section>
+      <h2>Volume and Reliability</h2>
+      <div class="sub">Scheduled-flight volume (log scale) versus arrival-delay rate for origin airports or reporting airlines under the current filters. Points with no eligible arrivals are not plotted — a missing rate is never shown as zero.</div>
+      <div class="cause-mode" role="radiogroup" aria-label="Scatter mode">
+        <label><input type="radio" name="scatter-mode" value="airports" checked> By origin airport</label>
+        <label><input type="radio" name="scatter-mode" value="airlines"> By reporting airline</label>
+        <label>Minimum volume
+          <input type="range" id="scatter-min-volume" min="0" max="20000" step="250" value="0"
+                 aria-label="Minimum scheduled flights for plotted points">
+          <output id="scatter-min-volume-out" for="scatter-min-volume">0</output>
+        </label>
+        <button id="scatter-clear-brush" type="button">Clear brush highlight</button>
+      </div>
+      <p class="scope-note">Dragging on empty plot areas brushes a comparison/highlight set — it never changes filters or denominators. Clicking an airport point opens Airport Detail. Descriptive, not causal.</p>
+      <p id="scatter-brush-count" role="status">Brush cleared — no groups are highlighted.</p>
+      <svg id="scatterChart" viewBox="0 0 1100 620" preserveAspectRatio="xMidYMid meet"></svg>
+    </section>
+  </div>
+
+  <div class="tab-panel" id="tab-cause-compare">
+    <section>
+      <h2>Reported Cause Comparison: 100% Stacked Bars</h2>
+      <div class="sub">Share of reported attributed minutes across the five BTS categories for each compared group under the current filters. The national pie remains the overview; this view compares groups.</div>
+      <div class="cause-mode" role="radiogroup" aria-label="Comparison mode">
+        <label><input type="radio" name="cause-compare-mode" value="airports" checked> By origin airport</label>
+        <label><input type="radio" name="cause-compare-mode" value="airlines"> By reporting airline</label>
+      </div>
+      <p class="scope-note">Bars with a positive reported-minute total sum to 100%. Groups whose attribution is missing or totals zero are listed with an explicit note — never drawn as complete bars. Missing attribution is not zero; Weather excludes weather attributed to NAS. Descriptive, not causal.</p>
+      <svg id="causeCompareChart" viewBox="0 0 1100 620" preserveAspectRatio="xMidYMid meet"></svg>
     </section>
   </div>
 
@@ -69,6 +146,7 @@
     <section>
       <h2>Delay Cause Breakdown</h2>
       <div class="sub">Share of reported attributed minutes, national total. Missing attribution is not zero; Weather excludes weather attributed to NAS.</div>
+      <p class="scope-note">Fixed scope: this view shows the full-year 2025 national attribution and does not yet respond to the month/airline filters; filtered comparative cause bars are planned.</p>
       <svg id="causeChart" viewBox="0 0 1100 460" preserveAspectRatio="xMidYMid meet"></svg>
     </section>
   </div>
@@ -87,12 +165,14 @@
       <div class="sub" style="margin-top:10px;margin-bottom:0">
         City locations are departure-weighted airport coordinates, not city centers. Territories outside the Albers USA projection remain in national totals. Color is clipped to the 5th–95th percentile range among cities with at least 10,000 departures; all projectable cities are drawn. Gray means no eligible arrivals.
       </div>
+      <p class="scope-note">Fixed scope: this city-level overview always shows the full-year 2025, all reporting airlines, all origin airports, so it does not respond to the month/airline filters. The selected airport is highlighted with its busiest outgoing routes at that same fixed scope; filtered statistics live in Airport Detail.</p>
     </section>
   </div>
 
 </main>
 
 <div class="tooltip" id="tooltip"></div>
+<div class="airport-chooser" id="airport-chooser" role="dialog" aria-label="Choose an airport" hidden></div>
 
 <script type="module" src="js/app.js"></script>
 </body>

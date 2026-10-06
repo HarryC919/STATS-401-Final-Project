@@ -1,0 +1,48 @@
+{
+  "batch": "D3 — volume-reliability scatterplot",
+  "browser": "154.0.8037.98",
+  "checks": "passed",
+  "expectations": {
+    "plottedAirportsFull": 352,
+    "excludedNoEligibleFull": 0,
+    "topVolume": {
+      "label": "ORD",
+      "scheduled": 327028,
+      "rate": "26.5%"
+    },
+    "airlines": 14
+  },
+  "checked": [
+    "point coordinates match independently pooled values (all rendered points)",
+    "rendered cx/cy match axis-derived log/linear positions within ±0.5px; x ticks stay in range",
+    "reset with default filters still invalidates mode + threshold (radio, slider, output, points)",
+    "clearing the brush removes the selection box and handles; scope changes clear brush state too",
+    "a global month change after brushing clears the set, note, strokes, box, and the scope count",
+    "airlines-mode selection highlights the chosen carrier without dropping context",
+    "missing rates excluded and reported, never plotted as zero",
+    "minimum-volume filter behaves predictably and updates the scope line",
+    "tooltips carry scheduled, eligible, delayed, and rate via real hover",
+    "brush defines a highlight-only set; denominators unchanged; clear works",
+    "airlines mode coordinates match; airports points open Airport Detail",
+    "reset restores mode, volume filter, and the full plotted set"
+  ],
+  "notChecked": [
+    "interaction timing performance (Batch E)",
+    "user study (Batch E)"
+  ],
+  "desktopViewport": [
+    1440,
+    1500
+  ],
+  "limitations": "Automated checks and visual inspection are not a user study or an interaction-performance evaluation.",
+  "source_sha256": {
+    "site/index.html": "78b5271e1fd8dd06020d97e6d4a48bcd4696d0001cd0cac86cd565d682c06be3",
+    "site/css/style.css": "4e7a45f7ecfb674f4fb4a772ae2a9a3a69ca65311417d922c6917b06eb9091ab",
+    "site/js/app.js": "1d8514827faac415b662bc21d28b109d59fd26223a2b63220e7d61c52c455d4f",
+    "site/js/charts.js": "7eb9121e62d81de0226fbc98fcae74232c0ced68cb089cade90f9be16051b643",
+    "site/js/state.js": "83160fe0b953f57bfdbea850be22aa71e33981f2608ab4113dd162f747666394",
+    "site/js/aggregate.js": "f2e7e6cbc29ba6e37ee3fb76895aece0f963d1705423e68f86ea5fe02fb8e9f7",
+    "site/js/data.js": "5c0ba4a9e8e5887904ac7f32d92864f21b11c465bd6c64803b9bb7eb7412bc59",
+    "site/data/manifest.json": "49f01de58e5ee3c29b3eeafe665db0d0f8c5624ec61a62db8308868a871c8222"
+  }
+}

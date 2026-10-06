@@ -1,0 +1,63 @@
+{
+  "batch": "D1 — weekday x scheduled-hour heatmap",
+  "browser": "154.0.8037.98",
+  "checks": "passed",
+  "expectations": {
+    "gridTotalScheduled": 7001619,
+    "ordUaJanFebTopCell": {
+      "weekday": "Fri",
+      "hour": 18,
+      "scheduled": 278,
+      "eligible": 276,
+      "delayed": 78
+    },
+    "zeroDelayCell": {
+      "weekday": "Mon",
+      "hour": 22,
+      "scheduled": 1,
+      "eligible": 1,
+      "delayed": 0
+    },
+    "mdtOOJune": {
+      "observedCells": 23,
+      "lowSampleCells": 22,
+      "unobservedCells": 145,
+      "scheduled": 48
+    }
+  },
+  "checked": [
+    "7x24 grid with Monday-first rows and 00-22 hour ticks",
+    "BTS 2400 convention stated",
+    "all-invalid-hours input shows the anomaly explanation, not an ordinary empty state",
+    "whole-grid verification: all 168 rendered slots match independently pooled values",
+    "legend ends match the cell colors (0% blue, max red) and the no-eligible case is documented",
+    "failed month load clears the stale grid, shows a panel error, and recovers on retry",
+    "a slow partition response cannot replace the newest selection",
+    "national grid reconciles to 7,001,619 scheduled (no partition loss)",
+    "cell tooltips carry pooled flights, eligible, delayed, and rate",
+    "observed zero delay shows 0.0% at the blue end; unobserved slots stay gray with \"No observations\"",
+    "cross-partition pooling (ORD+UA Jan-Feb) matches independent sums",
+    "airport+airline+month filters and reset update the heatmap consistently",
+    "low-sample rule (fewer than 30 eligible) marks cells and says so in tooltips",
+    "empty combination shows the explicit empty state"
+  ],
+  "notChecked": [
+    "interaction timing performance (Batch E)",
+    "user study (Batch E)"
+  ],
+  "desktopViewport": [
+    1440,
+    1100
+  ],
+  "limitations": "Automated checks and visual inspection are not a user study or an interaction-performance evaluation.",
+  "source_sha256": {
+    "site/index.html": "78b5271e1fd8dd06020d97e6d4a48bcd4696d0001cd0cac86cd565d682c06be3",
+    "site/css/style.css": "4e7a45f7ecfb674f4fb4a772ae2a9a3a69ca65311417d922c6917b06eb9091ab",
+    "site/js/app.js": "1d8514827faac415b662bc21d28b109d59fd26223a2b63220e7d61c52c455d4f",
+    "site/js/charts.js": "7eb9121e62d81de0226fbc98fcae74232c0ced68cb089cade90f9be16051b643",
+    "site/js/state.js": "83160fe0b953f57bfdbea850be22aa71e33981f2608ab4113dd162f747666394",
+    "site/js/aggregate.js": "f2e7e6cbc29ba6e37ee3fb76895aece0f963d1705423e68f86ea5fe02fb8e9f7",
+    "site/js/data.js": "5c0ba4a9e8e5887904ac7f32d92864f21b11c465bd6c64803b9bb7eb7412bc59",
+    "site/data/manifest.json": "49f01de58e5ee3c29b3eeafe665db0d0f8c5624ec61a62db8308868a871c8222"
+  }
+}

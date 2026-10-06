@@ -41,10 +41,19 @@ document's embedded figures are visible directly on the GitHub repository page.
 Six real-data D3 views are implemented: monthly trends, airline comparison, airport
 comparison, directed-route comparison, reported delay-cause composition, and a city-level
 network map. KPI cards provide national context. Tabs and hover details on the first five
-charts work; the city map is currently a static overview.
+charts work.
 
-Linked month/airline filters, airport drill-down, the temporal heatmap, comparative cause
-bars, and the volume–reliability scatterplot remain future work from the proposal.
+A shared filter bar drives month-range and reporting-airline selection across the KPI
+cards and the monthly, airline, airport, and route views; rates are recomputed from
+pooled counts, a Reset restores the annual all-airline view, filtered routes load the
+per-origin partitions on demand, and the cause chart and city map state their fixed
+scope. Airport selection (search box, comparison-chart bars, or map cities) opens an
+Airport Detail view — filtered trend, reported cause composition, and the five busiest
+outgoing directed routes. The temporal-patterns heatmap shows the arrival-delay rate
+by weekday and scheduled departure hour, the cause-comparison view stacks reported
+attribution across airports or airlines, and the volume–reliability scatterplot plots
+volume (log scale) against delay rate with a minimum-volume filter and a highlight-only
+brush. Performance measurement and the participant study remain future work.
 See the [interim check](docs/interim-check.md) for scope and evaluation plans.
 
 ## Reproduce the data
@@ -95,3 +104,26 @@ missing-value semantics, tooltips, tabs, keyboard activation, mobile overflow, a
 failures/retry. It refreshes `docs/assets/interim/*.png` and
 [reports/site_validation.json](reports/site_validation.json). Inspect the figures visually
 after export. These checks are separate from the planned user study and performance evaluation.
+
+Batch B adds two focused checks that never touch the interim figures:
+`node scripts/test_filter_state.mjs` unit-tests the pure filter-state and pooling
+modules, and `NODE_PATH=<playwright modules> node scripts/qa_batch_b.cjs` (with the
+site served) exercises the shared filters in a real browser, writing screenshots to
+`docs/assets/batch-b/` and evidence to
+[reports/site_validation_batch_b.json](reports/site_validation_batch_b.json).
+Batch C adds `scripts/qa_batch_c.cjs` the same way for the airport detail and map
+entry points (`docs/assets/batch-c/`, `reports/site_validation_batch_c.json`); D1
+adds `scripts/qa_batch_d1.cjs` for the weekday × hour heatmap; D2 adds
+`scripts/qa_batch_d2.cjs` for the comparative cause bars; D3 adds
+`scripts/qa_batch_d3.cjs` for the volume–reliability scatterplot (each with its own
+`docs/assets/batch-*/` and `reports/site_validation_batch_*.json`).
+
+Both checks run on **Node 24** (pinned in [.nvmrc](.nvmrc) and declared by the
+`engines` field in `package.json` — it documents intent but does not stop a directly
+invoked `node`; CI installs the same version from `.nvmrc`).
+Before running them locally, install and select that version with
+[nvm](https://github.com/nvm-sh/nvm) from the repository root:
+
+```bash
+nvm install && nvm use
+```

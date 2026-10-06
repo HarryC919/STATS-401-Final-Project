@@ -18,6 +18,8 @@ __pycache__/
 *.log
 AGENTS.md
 CLAUDE.md
+.zcodeignore
+docs/2026-10-05-zcode-glm-batch-a-prompt.md
 
 # Optional local browser tooling and migration backup
 node_modules/

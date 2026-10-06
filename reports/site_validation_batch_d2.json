@@ -1,0 +1,65 @@
+{
+  "batch": "D2 — comparative 100% stacked cause bars",
+  "browser": "154.0.8037.98",
+  "checks": "passed",
+  "expectations": {
+    "comparedAirports": [
+      "ORD",
+      "DEN",
+      "DFW",
+      "ATL",
+      "PHX",
+      "CLT",
+      "LAX",
+      "LAS",
+      "SEA",
+      "MCO",
+      "SFO",
+      "BOS"
+    ],
+    "topGroup": {
+      "label": "ORD",
+      "reportedMinutes": "6,448,168"
+    },
+    "zeroTotalFixture": {
+      "origin": "FCA",
+      "airline": "OO",
+      "month": 4,
+      "scheduled": 62
+    },
+    "partialFixture": null
+  },
+  "checked": [
+    "busiest 12 airports compared with every complete bar summing to 100% (±0.5px)",
+    "segment shares match independently pooled minutes; tooltips carry minutes, share, observations",
+    "completeness statistics reachable by real hover on segments and on the row labels (no synthetic events)",
+    "five stable category colors asserted on rendered segments; row-level completeness counts exposed",
+    "airlines mode under Jan–Mar; airport selection scopes the airline comparison to ORD",
+    "zero-total attribution group listed with an explicit note and no segments; other bars unaffected",
+    "synthetic partial group: unobserved category drops out, remaining four renormalize to 100%, counts exposed",
+    "synthetic all-missing group: explicit no-minutes row, zero segments, zero observations stated",
+    "selected airport appended when outside the busiest 12",
+    "Reset restores the default airports mode including the radio state",
+    "reset invalidates the cached comparison even when the filters were already default",
+    "missing-attribution rule stated on the page"
+  ],
+  "notChecked": [
+    "interaction timing performance (Batch E)",
+    "user study (Batch E)"
+  ],
+  "desktopViewport": [
+    1440,
+    1500
+  ],
+  "limitations": "Automated checks and visual inspection are not a user study or an interaction-performance evaluation.",
+  "source_sha256": {
+    "site/index.html": "78b5271e1fd8dd06020d97e6d4a48bcd4696d0001cd0cac86cd565d682c06be3",
+    "site/css/style.css": "4e7a45f7ecfb674f4fb4a772ae2a9a3a69ca65311417d922c6917b06eb9091ab",
+    "site/js/app.js": "1d8514827faac415b662bc21d28b109d59fd26223a2b63220e7d61c52c455d4f",
+    "site/js/charts.js": "7eb9121e62d81de0226fbc98fcae74232c0ced68cb089cade90f9be16051b643",
+    "site/js/state.js": "83160fe0b953f57bfdbea850be22aa71e33981f2608ab4113dd162f747666394",
+    "site/js/aggregate.js": "f2e7e6cbc29ba6e37ee3fb76895aece0f963d1705423e68f86ea5fe02fb8e9f7",
+    "site/js/data.js": "5c0ba4a9e8e5887904ac7f32d92864f21b11c465bd6c64803b9bb7eb7412bc59",
+    "site/data/manifest.json": "49f01de58e5ee3c29b3eeafe665db0d0f8c5624ec61a62db8308868a871c8222"
+  }
+}

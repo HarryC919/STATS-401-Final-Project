@@ -1,0 +1,52 @@
+{
+  "batch": "C — airport detail and geographic entry points",
+  "browser": "154.0.8037.98",
+  "checks": "passed",
+  "expectations": {
+    "ordFullScheduled": 327028,
+    "ordJanMarScheduled": 66212,
+    "mdwJanMarScheduled": 16036,
+    "ordJanMarUAScheduled": 20902,
+    "ordTop5Full": [
+      "LGA:11,542",
+      "BOS:7,290",
+      "LAX:7,086",
+      "DCA:6,758",
+      "DFW:6,722"
+    ]
+  },
+  "checked": [
+    "map tracks first selection, switches, clearing, and Reset",
+    "zero-eligible top-five routes keep place, count, and a missing rate",
+    "detail trend labels full-year context, airline, airport, and shading",
+    "cause composition asserts rendered colors, pooled minutes, shares, and observation counts",
+    "airport search opens detail with pooled statistics",
+    "detail trend, cause composition, and top-5 routes reconcile with source data",
+    "ORD and MDW select separately with distinct correct statistics",
+    "airport comparison retains context and highlights the selection; bars are clickable",
+    "empty airport/airline combination shows an explicit empty state",
+    "map airport layer and top-20 outgoing routes for the selected origin",
+    "multi-airport city click opens an explicit choice; single-airport city selects directly",
+    "non-projectable airport reachable via selector with map note; totals unaffected",
+    "reset clears selection and returns to the monthly overview"
+  ],
+  "notChecked": [
+    "interaction timing performance (Batch E)",
+    "user study (Batch E)"
+  ],
+  "desktopViewport": [
+    1440,
+    1100
+  ],
+  "limitations": "Automated checks and visual inspection are not a user study or an interaction-performance evaluation.",
+  "source_sha256": {
+    "site/index.html": "78b5271e1fd8dd06020d97e6d4a48bcd4696d0001cd0cac86cd565d682c06be3",
+    "site/css/style.css": "4e7a45f7ecfb674f4fb4a772ae2a9a3a69ca65311417d922c6917b06eb9091ab",
+    "site/js/app.js": "1d8514827faac415b662bc21d28b109d59fd26223a2b63220e7d61c52c455d4f",
+    "site/js/charts.js": "7eb9121e62d81de0226fbc98fcae74232c0ced68cb089cade90f9be16051b643",
+    "site/js/state.js": "83160fe0b953f57bfdbea850be22aa71e33981f2608ab4113dd162f747666394",
+    "site/js/aggregate.js": "f2e7e6cbc29ba6e37ee3fb76895aece0f963d1705423e68f86ea5fe02fb8e9f7",
+    "site/js/data.js": "5c0ba4a9e8e5887904ac7f32d92864f21b11c465bd6c64803b9bb7eb7412bc59",
+    "site/data/manifest.json": "49f01de58e5ee3c29b3eeafe665db0d0f8c5624ec61a62db8308868a871c8222"
+  }
+}
