@@ -1,0 +1,6 @@
+Month,Reporting_Airline,DestAirportID,Dest,scheduled_flights,eligible_arrivals,delayed_arrivals,cancelled_flights,diverted_flights
+6,AS,10299,ANC,19,19,4,0,0
+7,AS,10299,ANC,31,31,4,0,0
+8,AS,10299,ANC,31,30,10,1,0
+9,AS,10299,ANC,30,30,5,0,0
+10,AS,10299,ANC,3,3,1,0,0

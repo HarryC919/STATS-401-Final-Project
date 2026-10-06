@@ -1,0 +1,13 @@
+Month,Reporting_Airline,DestAirportID,Dest,scheduled_flights,eligible_arrivals,delayed_arrivals,cancelled_flights,diverted_flights
+1,UA,12016,GUM,31,31,2,0,0
+2,UA,12016,GUM,28,28,1,0,0
+3,UA,12016,GUM,33,33,3,0,0
+4,UA,12016,GUM,30,30,1,0,0
+5,UA,12016,GUM,31,31,0,0,0
+6,UA,12016,GUM,30,30,0,0,0
+7,UA,12016,GUM,31,31,4,0,0
+8,UA,12016,GUM,31,31,3,0,0
+9,UA,12016,GUM,30,30,1,0,0
+10,UA,12016,GUM,31,30,1,1,0
+11,UA,12016,GUM,30,30,2,0,0
+12,UA,12016,GUM,31,31,2,0,0

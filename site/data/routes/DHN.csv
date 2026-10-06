@@ -1,0 +1,4 @@
+Month,Reporting_Airline,DestAirportID,Dest,scheduled_flights,eligible_arrivals,delayed_arrivals,cancelled_flights,diverted_flights
+6,OO,10397,ATL,19,19,13,0,0
+7,OO,10397,ATL,25,25,8,0,0
+8,OO,10397,ATL,8,8,2,0,0

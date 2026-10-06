@@ -1,0 +1,13 @@
+Month,Reporting_Airline,DestAirportID,Dest,scheduled_flights,eligible_arrivals,delayed_arrivals,cancelled_flights,diverted_flights
+1,B6,10721,BOS,31,31,0,0,0
+2,B6,10721,BOS,28,27,4,1,0
+3,B6,10721,BOS,31,31,1,0,0
+4,B6,10721,BOS,30,30,0,0,0
+5,B6,10721,BOS,31,31,0,0,0
+6,B6,10721,BOS,30,30,3,0,0
+7,B6,10721,BOS,31,30,0,1,0
+8,B6,10721,BOS,31,31,0,0,0
+9,B6,10721,BOS,30,30,1,0,0
+10,B6,10721,BOS,31,31,1,0,0
+11,B6,10721,BOS,30,30,0,0,0
+12,B6,10721,BOS,31,31,8,0,0

@@ -1,0 +1,13 @@
+Month,Reporting_Airline,DestAirportID,Dest,scheduled_flights,eligible_arrivals,delayed_arrivals,cancelled_flights,diverted_flights
+1,OO,13487,MSP,54,54,5,0,0
+2,OO,13487,MSP,48,48,6,0,0
+3,OO,13487,MSP,54,53,7,1,0
+4,OO,13487,MSP,50,49,5,1,0
+5,OO,13487,MSP,54,53,7,1,0
+6,OO,13487,MSP,53,53,2,0,0
+7,OO,13487,MSP,64,64,4,0,0
+8,OO,13487,MSP,67,67,10,0,0
+9,OO,13487,MSP,56,56,7,0,0
+10,OO,13487,MSP,53,53,4,0,0
+11,OO,13487,MSP,52,48,8,4,0
+12,OO,13487,MSP,53,52,9,1,0

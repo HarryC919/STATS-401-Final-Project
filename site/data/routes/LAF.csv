@@ -1,0 +1,6 @@
+Month,Reporting_Airline,DestAirportID,Dest,scheduled_flights,eligible_arrivals,delayed_arrivals,cancelled_flights,diverted_flights
+8,OO,13930,ORD,42,42,7,0,0
+9,OO,13930,ORD,47,47,7,0,0
+10,OO,13930,ORD,49,49,7,0,0
+11,OO,13930,ORD,46,43,9,3,0
+12,OO,13930,ORD,52,50,18,2,0

@@ -102,6 +102,26 @@ Their `manifest.json` records input SHA-256 hashes, output hashes, row counts, a
 Do not edit these CSVs manually. The original large datasets and full analytical
 summaries remain local; the small website snapshot is tracked for reproducible viewing.
 
+Besides the seven original tables (`national.csv`, `monthly.csv`, `airline_annual.csv`,
+`airport_annual.csv`, `route_annual.csv`, `city_summary.csv`, `city_routes.csv`, all
+byte-compatible with the static dashboard), Batch A publishes filter-ready inputs:
+
+- `airport_month_airline.csv`: month × reporting airline × origin airport counts and
+  delay-cause minutes/observation inputs, for month/airline/airport filtering.
+- `airline_month.csv`: the same fields pooled to month × reporting airline.
+- `airport_directory.csv`: one row per stable `AirportID` with display name, flight-data
+  city membership, and departure-weighted coordinates across historical `AirportSeqID`
+  versions.
+- `routes/<ORIGIN>.csv`: directed outgoing routes partitioned per origin airport.
+- `temporal/2025-MM.csv`: weekday × scheduled-hour data partitioned per month.
+
+These files retain counts, cause minutes, and observation counts so consumers pool
+numerators and denominators before recomputing rates; they deliberately omit
+precomputed rates and shares. Partition discovery, null semantics, and the pooling
+rules are specified in [the filter data contract](../docs/2026-10-05-filter-data-contract.md);
+`scripts/verify_site_filters.py` reconciles the delivered files against independent
+source-summary and Parquet calculations.
+
 City nodes pool airports with the same BTS city name (including state). Rates are
 recomputed from pooled counts. Coordinates are departure-weighted means of historical
 airport coordinates joined by `AirportSeqID`; they are representative airport locations,

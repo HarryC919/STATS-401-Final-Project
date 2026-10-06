@@ -22,6 +22,2591 @@
   "within_city_flights": 0,
   "map_limit": 220,
   "projection_note": "Albers USA does not display all territories; filter endpoints before selecting top routes.",
+  "coverage": {
+    "airports": 352,
+    "route_origins": 352,
+    "reporting_airlines": 14
+  },
+  "filter_data": {
+    "contract": "docs/2026-10-05-filter-data-contract.md",
+    "pooling": "Filter rows first, sum counts, recompute rates; zero denominators stay missing.",
+    "cause_nulls": "Cause minutes are missing exactly where observations are zero; observed zeros stay zero.",
+    "airport_directory": "One row per AirportID; departure-weighted coordinates across historical AirportSeqID versions; name from the dominant version; city membership from flight-data city names.",
+    "loading_plan": {
+      "initial": [
+        "national.csv",
+        "monthly.csv",
+        "airline_annual.csv",
+        "airport_annual.csv",
+        "route_annual.csv",
+        "city_summary.csv",
+        "city_routes.csv",
+        "airport_directory.csv",
+        "airport_month_airline.csv",
+        "airline_month.csv"
+      ],
+      "on_demand": {
+        "routes/<ORIGIN>.csv": "selected origin airport (Batch C detail)",
+        "temporal/2025-MM.csv": "selected months (Batch D1 heatmap)"
+      }
+    }
+  },
+  "partitions": {
+    "routes": {
+      "path": "site/data/routes",
+      "grain": "One file per origin IATA code; rows are Month x Reporting_Airline x DestAirportID x Dest with the five core counts; directions stay separate.",
+      "count": 352,
+      "total_rows": 116878,
+      "total_bytes": 3288567,
+      "files": {
+        "ABE": {
+          "file": "routes/ABE.csv",
+          "origin_airport_id": 10135,
+          "rows": 129,
+          "bytes": 3559,
+          "sha256": "40458d2f66e9384659672b391c18e577c60b70ac8bdc5fe24894f3776f337604"
+        },
+        "ABI": {
+          "file": "routes/ABI.csv",
+          "origin_airport_id": 10136,
+          "rows": 12,
+          "bytes": 494,
+          "sha256": "d1d4b3a4c1ac707897ce966bc2d63d677a62663c717cfa7d747021312ec985ad"
+        },
+        "ABQ": {
+          "file": "routes/ABQ.csv",
+          "origin_airport_id": 10140,
+          "rows": 440,
+          "bytes": 12325,
+          "sha256": "4e50e7be450ef7781d3de2aa921f91a9144d597f889217e651c61e7a60af7adb"
+        },
+        "ABR": {
+          "file": "routes/ABR.csv",
+          "origin_airport_id": 10141,
+          "rows": 12,
+          "bytes": 460,
+          "sha256": "e93ec04e026daf98ff14deaf316f71154d2be7c671a188d7a7e8061e08cb7d0b"
+        },
+        "ABY": {
+          "file": "routes/ABY.csv",
+          "origin_airport_id": 10146,
+          "rows": 12,
+          "bytes": 466,
+          "sha256": "bc85080a06b3dac9c8fe2d5fa5be7c8909264ad84a4c46896741739cc81ec4bf"
+        },
+        "ACK": {
+          "file": "routes/ACK.csv",
+          "origin_airport_id": 10154,
+          "rows": 54,
+          "bytes": 1585,
+          "sha256": "7f86ca1a62b9c8cd1f61a48b50374090cf880fcfd6835ad4e4b6ac886f990363"
+        },
+        "ACT": {
+          "file": "routes/ACT.csv",
+          "origin_airport_id": 10155,
+          "rows": 20,
+          "bytes": 686,
+          "sha256": "1513c6269cff09a3ec7000aea3633cead28a01e2a98f1fb006be75f18cbc6f77"
+        },
+        "ACV": {
+          "file": "routes/ACV.csv",
+          "origin_airport_id": 10157,
+          "rows": 36,
+          "bytes": 1139,
+          "sha256": "9710adebf3499666dd2003c12c7d8410ff94c4fbfa0b152db1a3cee645329295"
+        },
+        "ACY": {
+          "file": "routes/ACY.csv",
+          "origin_airport_id": 10158,
+          "rows": 74,
+          "bytes": 2146,
+          "sha256": "58a91a8fa616ba53d2fdf7643b3f9176a7826d0b3b2acb27e002e697a9c16677"
+        },
+        "ADK": {
+          "file": "routes/ADK.csv",
+          "origin_airport_id": 10165,
+          "rows": 12,
+          "bytes": 434,
+          "sha256": "065d55c2f13637cd84f4c4971e4a7a21423f6ea62e0ecc0873d01d93366557d0"
+        },
+        "ADQ": {
+          "file": "routes/ADQ.csv",
+          "origin_airport_id": 10170,
+          "rows": 12,
+          "bytes": 465,
+          "sha256": "d5b584e169c944528414503773f05ad6538f7372c84d8962467e14fa8bfa587f"
+        },
+        "AEX": {
+          "file": "routes/AEX.csv",
+          "origin_airport_id": 10185,
+          "rows": 18,
+          "bytes": 628,
+          "sha256": "f485c3c5fa1c80c550eb53023f187874cad06c415a1e9449ed0b0325b6de7bba"
+        },
+        "AGS": {
+          "file": "routes/AGS.csv",
+          "origin_airport_id": 10208,
+          "rows": 73,
+          "bytes": 2098,
+          "sha256": "6e39748c3537d09f83ce852142eb0b97b6fade100b1abadb3b9517f48caa59bf"
+        },
+        "AKN": {
+          "file": "routes/AKN.csv",
+          "origin_airport_id": 10245,
+          "rows": 6,
+          "bytes": 292,
+          "sha256": "62233329c8454668df7f3357ec50714f98ed694dd6628e543dc928186a79fad7"
+        },
+        "ALB": {
+          "file": "routes/ALB.csv",
+          "origin_airport_id": 10257,
+          "rows": 314,
+          "bytes": 8708,
+          "sha256": "f948ddbdfe523766e1143f8bc9d1b15ffcafbde7220f297d3ba15dd1b5480068"
+        },
+        "ALO": {
+          "file": "routes/ALO.csv",
+          "origin_airport_id": 10268,
+          "rows": 7,
+          "bytes": 330,
+          "sha256": "cfae46ac034d9bb770885ca57e7701d12ca0d86b7e21bb4a791c632f75e01b2c"
+        },
+        "AMA": {
+          "file": "routes/AMA.csv",
+          "origin_airport_id": 10279,
+          "rows": 87,
+          "bytes": 2558,
+          "sha256": "b397ec52048507b7293456a4b39b9e42844e1cea2372f60dd7196c69ab1d4841"
+        },
+        "ANC": {
+          "file": "routes/ANC.csv",
+          "origin_airport_id": 10299,
+          "rows": 367,
+          "bytes": 10141,
+          "sha256": "73e7bde789de1a5bdfd05557d4cf7de8d41bb463f5925b955c3504988a5be1e3"
+        },
+        "APN": {
+          "file": "routes/APN.csv",
+          "origin_airport_id": 10333,
+          "rows": 12,
+          "bytes": 460,
+          "sha256": "8235f8f60df60bc0e042f35551e677de39d83a1649712fb068f3a5d670f4e1ac"
+        },
+        "ASE": {
+          "file": "routes/ASE.csv",
+          "origin_airport_id": 10372,
+          "rows": 92,
+          "bytes": 2755,
+          "sha256": "a93394383d407a55cf4f53787401fbf89304dcca7226c1936af603c56d7ba782"
+        },
+        "ATL": {
+          "file": "routes/ATL.csv",
+          "origin_airport_id": 10397,
+          "rows": 3081,
+          "bytes": 88043,
+          "sha256": "52da7126f8a47dc1f76f59f3244d408988b998be389596339e63e22b828c6f07"
+        },
+        "ATW": {
+          "file": "routes/ATW.csv",
+          "origin_airport_id": 10408,
+          "rows": 221,
+          "bytes": 6118,
+          "sha256": "00ff0b0d74d241fe91c0c797aaf82f32b3f5e3e1ee7a05273200329f22e81fdf"
+        },
+        "ATY": {
+          "file": "routes/ATY.csv",
+          "origin_airport_id": 10409,
+          "rows": 10,
+          "bytes": 409,
+          "sha256": "8b86a98301ca1769a100e2fb6ee04474c60da91f643a14385a1d787af8bab998"
+        },
+        "AUS": {
+          "file": "routes/AUS.csv",
+          "origin_airport_id": 10423,
+          "rows": 1430,
+          "bytes": 39959,
+          "sha256": "91385f2235f17d8934422a57bb8e14d72c97a0e1aaafc1599885c6563d7d7cff"
+        },
+        "AVL": {
+          "file": "routes/AVL.csv",
+          "origin_airport_id": 10431,
+          "rows": 354,
+          "bytes": 9644,
+          "sha256": "557bd392cb780939bd0e50f99d7271ea3f6f0a2fa88274453da10a5f66fc07b5"
+        },
+        "AVP": {
+          "file": "routes/AVP.csv",
+          "origin_airport_id": 10434,
+          "rows": 36,
+          "bytes": 1116,
+          "sha256": "d522f98f6aaf96ae277a41538da6d7f0c2c34cb6e7982f33a4126b11122481ef"
+        },
+        "AZA": {
+          "file": "routes/AZA.csv",
+          "origin_airport_id": 10466,
+          "rows": 437,
+          "bytes": 11705,
+          "sha256": "1c638d6fcadf3fe4af4a58c7142086f4989cd1e6be552419001eb12a14030a58"
+        },
+        "AZO": {
+          "file": "routes/AZO.csv",
+          "origin_airport_id": 10469,
+          "rows": 20,
+          "bytes": 692,
+          "sha256": "084d0048d8773125a805d131791b813ba13416f2914fbc70a8bcbc1451e16619"
+        },
+        "BDL": {
+          "file": "routes/BDL.csv",
+          "origin_airport_id": 10529,
+          "rows": 463,
+          "bytes": 12926,
+          "sha256": "edc76935ec15a7a02c2674751c4f17b3f6b6a889f00fe9a44bb1b777ae0aa51d"
+        },
+        "BET": {
+          "file": "routes/BET.csv",
+          "origin_airport_id": 10551,
+          "rows": 12,
+          "bytes": 470,
+          "sha256": "c6eabd85fa5dcfc43736189002f308bf579719cd339d6d5ea86f3ca09385ec09"
+        },
+        "BFF": {
+          "file": "routes/BFF.csv",
+          "origin_airport_id": 10558,
+          "rows": 12,
+          "bytes": 468,
+          "sha256": "7bee9e1aa37582789256b0a55cdc3c4218f3e22d04830b7f6cd0e451c2ea4eec"
+        },
+        "BFL": {
+          "file": "routes/BFL.csv",
+          "origin_airport_id": 10561,
+          "rows": 68,
+          "bytes": 1994,
+          "sha256": "94e72b9700e3fec1f2eb1e4380a31de34bb949d96f97ced8dcca9762cc506511"
+        },
+        "BGM": {
+          "file": "routes/BGM.csv",
+          "origin_airport_id": 10577,
+          "rows": 8,
+          "bytes": 351,
+          "sha256": "068cf37413b5c7f6eda9e75d0e8ce17756ee7887f71ccdbb74ededed6ef8d7ff"
+        },
+        "BGR": {
+          "file": "routes/BGR.csv",
+          "origin_airport_id": 10581,
+          "rows": 126,
+          "bytes": 3534,
+          "sha256": "28b001971e3b7cb3dde170d781ae438dad35e5beb8326e5db21012bbe958fcab"
+        },
+        "BHM": {
+          "file": "routes/BHM.csv",
+          "origin_airport_id": 10599,
+          "rows": 348,
+          "bytes": 9696,
+          "sha256": "0f07001cd4c5d14b6ea9ba81c1ac114c253998aebcd75568a628743c2c48313a"
+        },
+        "BIH": {
+          "file": "routes/BIH.csv",
+          "origin_airport_id": 10617,
+          "rows": 14,
+          "bytes": 507,
+          "sha256": "ea304f1c0360a96fa85bd5eb9c666dba6711d02add10e8e7aec8bed1d4d1d4d9"
+        },
+        "BIL": {
+          "file": "routes/BIL.csv",
+          "origin_airport_id": 10620,
+          "rows": 113,
+          "bytes": 3235,
+          "sha256": "2a68177180cb6811e3a89cd8a6ade39885c7c133fc92133a1f50b72f01d9d429"
+        },
+        "BIS": {
+          "file": "routes/BIS.csv",
+          "origin_airport_id": 10627,
+          "rows": 90,
+          "bytes": 2611,
+          "sha256": "8a35c50e6e521c5adefb552faf2dc05b925d9987456c7509446c8793018ed967"
+        },
+        "BJI": {
+          "file": "routes/BJI.csv",
+          "origin_airport_id": 10631,
+          "rows": 12,
+          "bytes": 459,
+          "sha256": "9d3274a0d856e46bef4ef61a3eeb114a424388f070915f7e22cb297a472314f4"
+        },
+        "BLI": {
+          "file": "routes/BLI.csv",
+          "origin_airport_id": 10666,
+          "rows": 72,
+          "bytes": 2087,
+          "sha256": "31dca5f7441be58c8da5ab60a73fb36111eaf225dcda21bd941b4e813d3c0a0b"
+        },
+        "BLV": {
+          "file": "routes/BLV.csv",
+          "origin_airport_id": 10676,
+          "rows": 102,
+          "bytes": 2800,
+          "sha256": "f63a80ae2560cb38a6fcabde8b93cecac77a7268a03548d360840248804808c6"
+        },
+        "BMI": {
+          "file": "routes/BMI.csv",
+          "origin_airport_id": 10685,
+          "rows": 49,
+          "bytes": 1443,
+          "sha256": "fc6bce377c5ef477b7e98de06a503e24402b4341019bdab5f9dc1fd7b6a6451f"
+        },
+        "BNA": {
+          "file": "routes/BNA.csv",
+          "origin_airport_id": 10693,
+          "rows": 1862,
+          "bytes": 51639,
+          "sha256": "72f01654afe944c113f2aae502cc771cc9511bd2602c62813b7786dba7a4b69f"
+        },
+        "BOI": {
+          "file": "routes/BOI.csv",
+          "origin_airport_id": 10713,
+          "rows": 444,
+          "bytes": 12361,
+          "sha256": "be1aca075db98a35590690f5a2fe89c243183e1c74115ce87dc81b094edb768c"
+        },
+        "BOS": {
+          "file": "routes/BOS.csv",
+          "origin_airport_id": 10721,
+          "rows": 1939,
+          "bytes": 54532,
+          "sha256": "de1abfb423544b00ea9e009db126c0598e0b2725cfbf94d5909880b37dca473f"
+        },
+        "BPT": {
+          "file": "routes/BPT.csv",
+          "origin_airport_id": 10728,
+          "rows": 12,
+          "bytes": 467,
+          "sha256": "9924ccd8b747c606964914b4f900adb24855a687706ee3b8db1e49e01e1f7113"
+        },
+        "BQN": {
+          "file": "routes/BQN.csv",
+          "origin_airport_id": 10732,
+          "rows": 64,
+          "bytes": 1879,
+          "sha256": "627bf3931010fa05528169ed3f5eb12347b449f47e978df91c9c3611ddf72313"
+        },
+        "BRD": {
+          "file": "routes/BRD.csv",
+          "origin_airport_id": 10739,
+          "rows": 12,
+          "bytes": 461,
+          "sha256": "4f7ead1456ae7ff537d0b6355a2318d2c30083ed20829420083d75a4362204f4"
+        },
+        "BRO": {
+          "file": "routes/BRO.csv",
+          "origin_airport_id": 10747,
+          "rows": 21,
+          "bytes": 726,
+          "sha256": "6b65759c1a0de2d9a7169d04a633282f09db2cf4d34482d20ee43660239da0bf"
+        },
+        "BRW": {
+          "file": "routes/BRW.csv",
+          "origin_airport_id": 10754,
+          "rows": 12,
+          "bytes": 464,
+          "sha256": "0124557f959386b4d5304fc80ce645eb309ee448f450f97948a7d739e6840c40"
+        },
+        "BTM": {
+          "file": "routes/BTM.csv",
+          "origin_airport_id": 10779,
+          "rows": 24,
+          "bytes": 786,
+          "sha256": "91a70e44735c6a89ed2bbdf9f1de1473b15099cb44e08202492a907809037450"
+        },
+        "BTR": {
+          "file": "routes/BTR.csv",
+          "origin_airport_id": 10781,
+          "rows": 99,
+          "bytes": 2855,
+          "sha256": "a71a4a26e9ca5258f733c598cf01ea4310099c048cdc043800693e74d17c423f"
+        },
+        "BTV": {
+          "file": "routes/BTV.csv",
+          "origin_airport_id": 10785,
+          "rows": 179,
+          "bytes": 5019,
+          "sha256": "7d987d7ee441b1086c5e4152acd547b81d95f3d96cb3aaf1f0996c0e9864a6b9"
+        },
+        "BUF": {
+          "file": "routes/BUF.csv",
+          "origin_airport_id": 10792,
+          "rows": 485,
+          "bytes": 13428,
+          "sha256": "d44a18c6d15211e475dafe11cfe9be809f4f36de9cda5e1bab7a15447a9a1468"
+        },
+        "BUR": {
+          "file": "routes/BUR.csv",
+          "origin_airport_id": 10800,
+          "rows": 428,
+          "bytes": 12094,
+          "sha256": "b973f8cdc541e0fd4d4f5b76349fada5b3e146b2d9174babae5dca5b6e16a1a1"
+        },
+        "BWI": {
+          "file": "routes/BWI.csv",
+          "origin_airport_id": 10821,
+          "rows": 1275,
+          "bytes": 36202,
+          "sha256": "3b7e40e13192f92547522d49bd73cda8586483060a1b4f43dada832304eb5452"
+        },
+        "BZN": {
+          "file": "routes/BZN.csv",
+          "origin_airport_id": 10849,
+          "rows": 332,
+          "bytes": 9087,
+          "sha256": "855721e2d6523e8aa0e0c0f52ca4f040f7b884bac0f02f58299a1b23c2d967ee"
+        },
+        "CAE": {
+          "file": "routes/CAE.csv",
+          "origin_airport_id": 10868,
+          "rows": 122,
+          "bytes": 3465,
+          "sha256": "0d397960b90bd02f180e16e3d7dd111cf3f64f8536c53c9c0a71927bbacb4996"
+        },
+        "CAK": {
+          "file": "routes/CAK.csv",
+          "origin_airport_id": 10874,
+          "rows": 138,
+          "bytes": 3850,
+          "sha256": "8f978985780274121080e546fa644cbae43079f3bd20df0e7a9dd4e992ea50d6"
+        },
+        "CDC": {
+          "file": "routes/CDC.csv",
+          "origin_airport_id": 10918,
+          "rows": 12,
+          "bytes": 459,
+          "sha256": "6bda2935dca33efe02f22c7d81680fda340891f2d2dd272c65ace47a827c6f60"
+        },
+        "CDV": {
+          "file": "routes/CDV.csv",
+          "origin_airport_id": 10926,
+          "rows": 24,
+          "bytes": 786,
+          "sha256": "d628e60cc47f63a6643df35a8c70045e33f30e34a6b8cd4033abf796b371b5d6"
+        },
+        "CHA": {
+          "file": "routes/CHA.csv",
+          "origin_airport_id": 10980,
+          "rows": 158,
+          "bytes": 4406,
+          "sha256": "7c188a94f6b275f6925323f1e214c47e38a6d455291e86e52235ab03e338cf44"
+        },
+        "CHO": {
+          "file": "routes/CHO.csv",
+          "origin_airport_id": 10990,
+          "rows": 34,
+          "bytes": 1070,
+          "sha256": "5fc9e50dbd50eb0a1bd9e6f7ec6daf8f23c45ed919056a8c8ff81d1944917ac1"
+        },
+        "CHS": {
+          "file": "routes/CHS.csv",
+          "origin_airport_id": 10994,
+          "rows": 543,
+          "bytes": 15031,
+          "sha256": "a0dd263c93d53252c9509baea6c9959a62d1ddf56c1e694df111cb07c84774a4"
+        },
+        "CID": {
+          "file": "routes/CID.csv",
+          "origin_airport_id": 11003,
+          "rows": 276,
+          "bytes": 7600,
+          "sha256": "b55ea35f48616548d95fadc246146e5a6dce9ff0667301426d0f609d7e2b3fdb"
+        },
+        "CIU": {
+          "file": "routes/CIU.csv",
+          "origin_airport_id": 11013,
+          "rows": 29,
+          "bytes": 924,
+          "sha256": "8b9a51dfb25be7b308b6676a8ad398286bcfa9a17a6ada4c2541eb8871c979d0"
+        },
+        "CKB": {
+          "file": "routes/CKB.csv",
+          "origin_airport_id": 11027,
+          "rows": 27,
+          "bytes": 816,
+          "sha256": "64822ca2130170dbe3ef395a3d2353f5b0067d51ee151dc04828675e44b058c9"
+        },
+        "CLD": {
+          "file": "routes/CLD.csv",
+          "origin_airport_id": 11041,
+          "rows": 11,
+          "bytes": 431,
+          "sha256": "5e839eb9a6953584374a3a2b375b3b8b108669912b752abde0e0761786fa5b90"
+        },
+        "CLE": {
+          "file": "routes/CLE.csv",
+          "origin_airport_id": 11042,
+          "rows": 812,
+          "bytes": 22474,
+          "sha256": "23a6f3ea0fa054020ccef9413245008714a229626dc0583314cba892329547c0"
+        },
+        "CLL": {
+          "file": "routes/CLL.csv",
+          "origin_airport_id": 11049,
+          "rows": 21,
+          "bytes": 711,
+          "sha256": "8c031ec86ecc82fbc26a74067fd5e08f8ed2111d5123c87681f4c0172d1153cd"
+        },
+        "CLT": {
+          "file": "routes/CLT.csv",
+          "origin_airport_id": 11057,
+          "rows": 2586,
+          "bytes": 72988,
+          "sha256": "fc863dabc51123e4de4082e7d7c8f9194761c03d9f76ab24eadfcaf16e592a3a"
+        },
+        "CMH": {
+          "file": "routes/CMH.csv",
+          "origin_airport_id": 11066,
+          "rows": 768,
+          "bytes": 21460,
+          "sha256": "bb47ed4cd1a395b6595a6f86ee053a88121d01864b8a8212f4ef572f20451993"
+        },
+        "CMI": {
+          "file": "routes/CMI.csv",
+          "origin_airport_id": 11067,
+          "rows": 24,
+          "bytes": 809,
+          "sha256": "04037874e9755c3d9cd075d8f077cdcbbd8792694e6fc0208a4bd168176aa3c4"
+        },
+        "CMX": {
+          "file": "routes/CMX.csv",
+          "origin_airport_id": 11076,
+          "rows": 12,
+          "bytes": 468,
+          "sha256": "f7094a8b7cf56f76a5cc4490eda4e80738e10d1917fe486b3f3d58451e8f5792"
+        },
+        "COD": {
+          "file": "routes/COD.csv",
+          "origin_airport_id": 11097,
+          "rows": 12,
+          "bytes": 474,
+          "sha256": "daf6ac4dabb67033c09f74e65f87ef95c284c4da01e2a3cfc6c3a82fcd4ec680"
+        },
+        "COS": {
+          "file": "routes/COS.csv",
+          "origin_airport_id": 11109,
+          "rows": 231,
+          "bytes": 6464,
+          "sha256": "d75e8129c8f6f81f4dfa76cdc7be13a11808bf2a365d04b253a79b88974ccd05"
+        },
+        "COU": {
+          "file": "routes/COU.csv",
+          "origin_airport_id": 11111,
+          "rows": 45,
+          "bytes": 1386,
+          "sha256": "8e34e98bbbdc36a75eeb07b8d4fdeb397dfc9319643ddaabdab561486d84d243"
+        },
+        "CPR": {
+          "file": "routes/CPR.csv",
+          "origin_airport_id": 11122,
+          "rows": 12,
+          "bytes": 494,
+          "sha256": "6c5d0c0dbc702a33f27fbdbbee60d64df943779e64a32d5b5a72e9c16dd08ad9"
+        },
+        "CRP": {
+          "file": "routes/CRP.csv",
+          "origin_airport_id": 11140,
+          "rows": 46,
+          "bytes": 1421,
+          "sha256": "826181dd9ba974dd02e7de797d6f0efe11836ef23533fa2c1da94fc0a3998ebc"
+        },
+        "CRW": {
+          "file": "routes/CRW.csv",
+          "origin_airport_id": 11146,
+          "rows": 48,
+          "bytes": 1472,
+          "sha256": "e03577e5decd1bd6e6a7b1142f0eaa415c33ad059f2c41b7f90d3cbccd6090b9"
+        },
+        "CVG": {
+          "file": "routes/CVG.csv",
+          "origin_airport_id": 11193,
+          "rows": 876,
+          "bytes": 23942,
+          "sha256": "6da29ed27a080d7566b6c592922bf00761c27cd75c2b7a284e6967f7be5f561d"
+        },
+        "CWA": {
+          "file": "routes/CWA.csv",
+          "origin_airport_id": 11203,
+          "rows": 10,
+          "bytes": 412,
+          "sha256": "ee545fef7ab7998cef4cacf7c567cbbafd1efdc6b202a173fc00957b35e311db"
+        },
+        "CYS": {
+          "file": "routes/CYS.csv",
+          "origin_airport_id": 11233,
+          "rows": 12,
+          "bytes": 467,
+          "sha256": "3ac96a824aab2f4e18616a1b8ca4ba0daf1e9b50bc1dd25edb32f5cf2f8720c3"
+        },
+        "DAB": {
+          "file": "routes/DAB.csv",
+          "origin_airport_id": 11252,
+          "rows": 36,
+          "bytes": 1164,
+          "sha256": "38644443e1dfe422a4d92637bd1de13afbcbd19a390ba7c112cc1f85aab403db"
+        },
+        "DAL": {
+          "file": "routes/DAL.csv",
+          "origin_airport_id": 11259,
+          "rows": 813,
+          "bytes": 23238,
+          "sha256": "ffb001e113c495a02ca97640c3fd2611014b799498c53dce5ee4350fcfde6d4c"
+        },
+        "DAY": {
+          "file": "routes/DAY.csv",
+          "origin_airport_id": 11267,
+          "rows": 156,
+          "bytes": 4422,
+          "sha256": "a88b5ec677e01a84d82445aa032aeecd36826f3ef5af89291868e44bdb3df266"
+        },
+        "DCA": {
+          "file": "routes/DCA.csv",
+          "origin_airport_id": 11278,
+          "rows": 2386,
+          "bytes": 66565,
+          "sha256": "4e5baeeaab841d8bc180efc2978dd2b16d81de6dc6f2ba1e207df88b06eef81e"
+        },
+        "DDC": {
+          "file": "routes/DDC.csv",
+          "origin_airport_id": 11283,
+          "rows": 12,
+          "bytes": 468,
+          "sha256": "e29fc96624b6611f22e5f8c157610a0ff77813ece8d421fa2e61d82be7717878"
+        },
+        "DEC": {
+          "file": "routes/DEC.csv",
+          "origin_airport_id": 11288,
+          "rows": 12,
+          "bytes": 469,
+          "sha256": "6b3896dfdd12849219f5f6fbda1d8503c0c03a6010b8803a93f07eb86e76efa3"
+        },
+        "DEN": {
+          "file": "routes/DEN.csv",
+          "origin_airport_id": 11292,
+          "rows": 4444,
+          "bytes": 125354,
+          "sha256": "6ac72afe628e4cfd2512647b0806b7e3d96e8760b79858d44372e42f0fe5b5be"
+        },
+        "DFW": {
+          "file": "routes/DFW.csv",
+          "origin_airport_id": 11298,
+          "rows": 4180,
+          "bytes": 117686,
+          "sha256": "2818e1f66d9e3c6fca228eb69c150bc315cff3a7e0babf4088f97a178bd28f42"
+        },
+        "DHN": {
+          "file": "routes/DHN.csv",
+          "origin_airport_id": 11308,
+          "rows": 3,
+          "bytes": 211,
+          "sha256": "c15913546203a71e576866aa9fa23ecd8284216f23b1c5773fac294649ae6425"
+        },
+        "DIK": {
+          "file": "routes/DIK.csv",
+          "origin_airport_id": 11315,
+          "rows": 12,
+          "bytes": 469,
+          "sha256": "3fdd799fd317ec9949b10e0aeb8f65ef8e0bfde096a19540dcd936c126b98b3f"
+        },
+        "DLG": {
+          "file": "routes/DLG.csv",
+          "origin_airport_id": 11336,
+          "rows": 5,
+          "bytes": 266,
+          "sha256": "5480f303bba09b527085fc028dfe2faa413f866fa996f5efbe4b4dafc0ce70a4"
+        },
+        "DLH": {
+          "file": "routes/DLH.csv",
+          "origin_airport_id": 11337,
+          "rows": 29,
+          "bytes": 948,
+          "sha256": "461ea92829331b72ae169df4987cadc0c6bfe175d7ceb09d31cd32fcfe50e778"
+        },
+        "DRO": {
+          "file": "routes/DRO.csv",
+          "origin_airport_id": 11413,
+          "rows": 55,
+          "bytes": 1695,
+          "sha256": "f750e5c59289dd54ff51a9f549052a987f31a6c7394a82fcc1f208b5fd684bbc"
+        },
+        "DSM": {
+          "file": "routes/DSM.csv",
+          "origin_airport_id": 11423,
+          "rows": 471,
+          "bytes": 12834,
+          "sha256": "7130c4fe3641b81fa5a800d18c512fef44ef5827f39260886c21b0ac61d5e1fd"
+        },
+        "DTW": {
+          "file": "routes/DTW.csv",
+          "origin_airport_id": 11433,
+          "rows": 2147,
+          "bytes": 59872,
+          "sha256": "84bd90616195dda1928ee6921fec35484cb1a164f505323dc6b0250e8896d516"
+        },
+        "DVL": {
+          "file": "routes/DVL.csv",
+          "origin_airport_id": 11447,
+          "rows": 18,
+          "bytes": 629,
+          "sha256": "66353a43e4bba9079a246b9dea39b38522c8b2e7c02b06ce8214a83a9b95190f"
+        },
+        "EAR": {
+          "file": "routes/EAR.csv",
+          "origin_airport_id": 11468,
+          "rows": 12,
+          "bytes": 463,
+          "sha256": "52dc908370da62a1b8a5d28f4af1f4034e718638ade809e08a229d19a90b139c"
+        },
+        "EAU": {
+          "file": "routes/EAU.csv",
+          "origin_airport_id": 11471,
+          "rows": 12,
+          "bytes": 466,
+          "sha256": "25f22ce178e05477a9b6e159a203fc7837a34eafc0da2ebeabe52d3ac80d6776"
+        },
+        "ECP": {
+          "file": "routes/ECP.csv",
+          "origin_airport_id": 11481,
+          "rows": 231,
+          "bytes": 6385,
+          "sha256": "454b54bff237c2203e0b2ad89974e3584370731d68a53608bd9723f61dd9991d"
+        },
+        "EGE": {
+          "file": "routes/EGE.csv",
+          "origin_airport_id": 11503,
+          "rows": 112,
+          "bytes": 3186,
+          "sha256": "6a8d175569531ba06440e8b7131b7e36c7ce8bf20238a8da78deec8238075630"
+        },
+        "EKO": {
+          "file": "routes/EKO.csv",
+          "origin_airport_id": 11525,
+          "rows": 12,
+          "bytes": 458,
+          "sha256": "a31e18d487aafd518cbdce014fe64030bace11eb8e252060149648511c6c8a2c"
+        },
+        "ELM": {
+          "file": "routes/ELM.csv",
+          "origin_airport_id": 11537,
+          "rows": 47,
+          "bytes": 1386,
+          "sha256": "ded4f90c2b3e8b5349336ac98336a2a94e3883343ac8a78faf7853e67ccfd9c1"
+        },
+        "ELP": {
+          "file": "routes/ELP.csv",
+          "origin_airport_id": 11540,
+          "rows": 312,
+          "bytes": 8732,
+          "sha256": "ebf3b8e42f7856fe676aeffa27d9bb4fcfbb4db1d0d02c814e4c52476686aad2"
+        },
+        "ERI": {
+          "file": "routes/ERI.csv",
+          "origin_airport_id": 11577,
+          "rows": 2,
+          "bytes": 187,
+          "sha256": "252ff6d9acc6d393249708222cfd5d69100cb056bbdc6c13d8f8005f5d59414b"
+        },
+        "ESC": {
+          "file": "routes/ESC.csv",
+          "origin_airport_id": 11587,
+          "rows": 24,
+          "bytes": 785,
+          "sha256": "79696ac69e82e5b60bb0c3caf15a73eb7484222bf46972234dcb61e776306400"
+        },
+        "EUG": {
+          "file": "routes/EUG.csv",
+          "origin_airport_id": 11603,
+          "rows": 240,
+          "bytes": 6662,
+          "sha256": "87190849990403b17e3c555d42e7fdaf4d680369515fce7b05626501a74be6b9"
+        },
+        "EVV": {
+          "file": "routes/EVV.csv",
+          "origin_airport_id": 11612,
+          "rows": 60,
+          "bytes": 1731,
+          "sha256": "8a56b064d3f14baffda96a4298c8ed044661e56e9423cae1f5c7fc061367a105"
+        },
+        "EWN": {
+          "file": "routes/EWN.csv",
+          "origin_airport_id": 11617,
+          "rows": 10,
+          "bytes": 405,
+          "sha256": "36048784aad33f13c0793013d0da5aee7c5cb41c1361607a5cd4ef15f5254caf"
+        },
+        "EWR": {
+          "file": "routes/EWR.csv",
+          "origin_airport_id": 11618,
+          "rows": 1669,
+          "bytes": 46973,
+          "sha256": "e92d4304da1f1d4a6ca96ac7666724a53e7698c66ae1061a0cdd0e0ddd90f632"
+        },
+        "EYW": {
+          "file": "routes/EYW.csv",
+          "origin_airport_id": 11624,
+          "rows": 245,
+          "bytes": 6765,
+          "sha256": "31e431b299a3b19e89e97bb9f51aff58157713e82779f997680b7930c12096a2"
+        },
+        "FAI": {
+          "file": "routes/FAI.csv",
+          "origin_airport_id": 11630,
+          "rows": 54,
+          "bytes": 1643,
+          "sha256": "f4cf0a00164c0d2118c3ef5700e8a8238267158f05f5c6ca763b30eedbaf10f2"
+        },
+        "FAR": {
+          "file": "routes/FAR.csv",
+          "origin_airport_id": 11637,
+          "rows": 157,
+          "bytes": 4401,
+          "sha256": "460198b4fcf2e66cbf09683190268d2a7fa8436a851f214be00f1621ebb9d140"
+        },
+        "FAT": {
+          "file": "routes/FAT.csv",
+          "origin_airport_id": 11638,
+          "rows": 211,
+          "bytes": 6041,
+          "sha256": "d23ffe4c25f9582ba503dcba68a8572aac8682224d337273a6480c3161f1605b"
+        },
+        "FAY": {
+          "file": "routes/FAY.csv",
+          "origin_airport_id": 11641,
+          "rows": 19,
+          "bytes": 634,
+          "sha256": "c782613f935eee8f8503f9493e7207b5bdcfc6c7fc655e8d16d9873ab1b66582"
+        },
+        "FCA": {
+          "file": "routes/FCA.csv",
+          "origin_airport_id": 11648,
+          "rows": 152,
+          "bytes": 4195,
+          "sha256": "4895d9a499bde39f53b1b22a81fe82e7ae490111350f6810a5666bca8ad16dce"
+        },
+        "FLG": {
+          "file": "routes/FLG.csv",
+          "origin_airport_id": 11695,
+          "rows": 28,
+          "bytes": 915,
+          "sha256": "52a3e53199b1465b31cd7264765f184a9febb61808785924be803b79267a40ab"
+        },
+        "FLL": {
+          "file": "routes/FLL.csv",
+          "origin_airport_id": 11697,
+          "rows": 1745,
+          "bytes": 48305,
+          "sha256": "22bd8b2577a147ce31984779b56531f6cc147b8b4f30bb139af9b44a8342779e"
+        },
+        "FMN": {
+          "file": "routes/FMN.csv",
+          "origin_airport_id": 11711,
+          "rows": 8,
+          "bytes": 350,
+          "sha256": "ecfd141ee00e5b488a81f74a4388ae2ed787b9381fa2fbc1aa3535ec287ff6fe"
+        },
+        "FNT": {
+          "file": "routes/FNT.csv",
+          "origin_airport_id": 11721,
+          "rows": 130,
+          "bytes": 3571,
+          "sha256": "2c8bda8b85c14495f2dd0a6547b8d02822bbe5376b28b612d20dce9e00845874"
+        },
+        "FOD": {
+          "file": "routes/FOD.csv",
+          "origin_airport_id": 11725,
+          "rows": 12,
+          "bytes": 465,
+          "sha256": "741fad65fc5b87e5e1ae12c1bcbdaa609ed433d2cc5427dca0c163f01d11324b"
+        },
+        "FSD": {
+          "file": "routes/FSD.csv",
+          "origin_airport_id": 11775,
+          "rows": 226,
+          "bytes": 6267,
+          "sha256": "f88cabefa985bd8abe172722f8e3884957f00f635e3c4924f8f93b780372a90b"
+        },
+        "FSM": {
+          "file": "routes/FSM.csv",
+          "origin_airport_id": 11778,
+          "rows": 12,
+          "bytes": 475,
+          "sha256": "50b840c1c31eb8def5f590a8eedbb28a1758c7e75e1970708214523f4e0b4aa6"
+        },
+        "FWA": {
+          "file": "routes/FWA.csv",
+          "origin_airport_id": 11823,
+          "rows": 160,
+          "bytes": 4497,
+          "sha256": "157d0b5e15a6bcc788b2ef0199e0966a3e658437d9390f3bed57ce0d6fce8f5f"
+        },
+        "GCC": {
+          "file": "routes/GCC.csv",
+          "origin_airport_id": 11865,
+          "rows": 12,
+          "bytes": 466,
+          "sha256": "4a08939d6fb1d377cfd408349faa01e61f362a06f404a8cc63f0d86bfea8cbd9"
+        },
+        "GCK": {
+          "file": "routes/GCK.csv",
+          "origin_airport_id": 11867,
+          "rows": 13,
+          "bytes": 494,
+          "sha256": "21d6cffee5dce23a7deda18058099020fc170895ced0c7309af4274389c0db51"
+        },
+        "GEG": {
+          "file": "routes/GEG.csv",
+          "origin_airport_id": 11884,
+          "rows": 348,
+          "bytes": 9674,
+          "sha256": "9844c5b0bb00480954bad915db33c2c582f0449a2513ea662089ec4fbe5ca8a8"
+        },
+        "GFK": {
+          "file": "routes/GFK.csv",
+          "origin_airport_id": 11898,
+          "rows": 36,
+          "bytes": 1072,
+          "sha256": "83238eedd3487189f63a04408963580e6d72195864271fb245d87c6c554f2b86"
+        },
+        "GGG": {
+          "file": "routes/GGG.csv",
+          "origin_airport_id": 11905,
+          "rows": 13,
+          "bytes": 490,
+          "sha256": "50c4b93555f4b1c22f7a63d8e42cf8b5bbadda66374ccfe47f7d4ecc2cb25f02"
+        },
+        "GJT": {
+          "file": "routes/GJT.csv",
+          "origin_airport_id": 11921,
+          "rows": 76,
+          "bytes": 2244,
+          "sha256": "1e981c1ed5c2fa31e9aebd51b21300316707875ff4a91a54403c1d81ad0f1cee"
+        },
+        "GNV": {
+          "file": "routes/GNV.csv",
+          "origin_airport_id": 11953,
+          "rows": 57,
+          "bytes": 1696,
+          "sha256": "bc85406ee7480fedcf3ed2c438bb4db6169970c980b2dd1a7801901b8cabec85"
+        },
+        "GPT": {
+          "file": "routes/GPT.csv",
+          "origin_airport_id": 11973,
+          "rows": 49,
+          "bytes": 1502,
+          "sha256": "e26cbd28ff59f7f4ac5658969a09849bd137af90bdaaac7a0fa1fa72767cdc5e"
+        },
+        "GRB": {
+          "file": "routes/GRB.csv",
+          "origin_airport_id": 11977,
+          "rows": 87,
+          "bytes": 2520,
+          "sha256": "fbb6c127be04d614330df8ff1d155d4d989ec102649cd05161b8c33b7f57b775"
+        },
+        "GRI": {
+          "file": "routes/GRI.csv",
+          "origin_airport_id": 11980,
+          "rows": 36,
+          "bytes": 1096,
+          "sha256": "181561cf3302859bdae4bc9bd1a1f6057d3e1dc3592bb3e4e315bd1212a787db"
+        },
+        "GRK": {
+          "file": "routes/GRK.csv",
+          "origin_airport_id": 11982,
+          "rows": 23,
+          "bytes": 785,
+          "sha256": "b30c3502eecc4dbfd6d6bccdc94a466e08d62569f2110bcfcb0b4e8fae994322"
+        },
+        "GRR": {
+          "file": "routes/GRR.csv",
+          "origin_airport_id": 11986,
+          "rows": 509,
+          "bytes": 13946,
+          "sha256": "7430c80c3974099301c1c978859341b782abbf5d78d617913700a75b21f20252"
+        },
+        "GSO": {
+          "file": "routes/GSO.csv",
+          "origin_airport_id": 11995,
+          "rows": 198,
+          "bytes": 5570,
+          "sha256": "c4bc1df4460277db11851279ad95c154d396e2acba2ab0cf8fad1c0b1f33d7e7"
+        },
+        "GSP": {
+          "file": "routes/GSP.csv",
+          "origin_airport_id": 11996,
+          "rows": 320,
+          "bytes": 8855,
+          "sha256": "c95e8611ab86dc6ae407322c61bdb8ebe6216798509ef08c9b0e9cfbd8878ddc"
+        },
+        "GST": {
+          "file": "routes/GST.csv",
+          "origin_airport_id": 11997,
+          "rows": 3,
+          "bytes": 212,
+          "sha256": "3793e91dc3807a54abdf627f3b94cc6bc9dbd51cfc30f0c896c4ea6aa252f313"
+        },
+        "GTF": {
+          "file": "routes/GTF.csv",
+          "origin_airport_id": 12003,
+          "rows": 74,
+          "bytes": 2099,
+          "sha256": "c56e86d74b7d603ed2a02c7197dbfedd382e9e234b1d3684bb9f6e751eedff15"
+        },
+        "GTR": {
+          "file": "routes/GTR.csv",
+          "origin_airport_id": 12007,
+          "rows": 8,
+          "bytes": 353,
+          "sha256": "0b3f480f80d7e186068670d92d3c6da320a4de696ae27f1bbdf1211d0c5e3a91"
+        },
+        "GUC": {
+          "file": "routes/GUC.csv",
+          "origin_airport_id": 12012,
+          "rows": 22,
+          "bytes": 732,
+          "sha256": "aa9457789dc7b53061988dc25a91da82015d6b4a560e3a81e1b70f029204088b"
+        },
+        "GUF": {
+          "file": "routes/GUF.csv",
+          "origin_airport_id": 16422,
+          "rows": 43,
+          "bytes": 1222,
+          "sha256": "1cd286f524ae216f8ef85a070aa24266e8d42b42d6538f7ff56be574ad92f01c"
+        },
+        "GUM": {
+          "file": "routes/GUM.csv",
+          "origin_airport_id": 12016,
+          "rows": 24,
+          "bytes": 785,
+          "sha256": "c08c5404c88f0b8319fedf7564d55050592c9aa390169d0bc53955ba8a72debc"
+        },
+        "HDN": {
+          "file": "routes/HDN.csv",
+          "origin_airport_id": 12094,
+          "rows": 104,
+          "bytes": 2912,
+          "sha256": "adab770e987f278ed5ded36301ea505ac4d0efac2892dac6f85d7bb0cff885fa"
+        },
+        "HGR": {
+          "file": "routes/HGR.csv",
+          "origin_airport_id": 12119,
+          "rows": 30,
+          "bytes": 923,
+          "sha256": "2963c42e90a8eec43437497b81651008c7fc2baa9217ca797c9de14fc565b807"
+        },
+        "HHH": {
+          "file": "routes/HHH.csv",
+          "origin_airport_id": 12124,
+          "rows": 68,
+          "bytes": 1962,
+          "sha256": "dc34246589cb87b1876d4fa30e7c47d5997e065ca63f05f9a2666a7f6d6b9c46"
+        },
+        "HIB": {
+          "file": "routes/HIB.csv",
+          "origin_airport_id": 12129,
+          "rows": 12,
+          "bytes": 461,
+          "sha256": "c5da28021515d7db01105fc5d7925ff172b48c58781db07955ba60f80a41707b"
+        },
+        "HLN": {
+          "file": "routes/HLN.csv",
+          "origin_airport_id": 12156,
+          "rows": 30,
+          "bytes": 953,
+          "sha256": "7ec20b2626b48ce20a707befcaed4d58cfda28fbbe20cf86ecd06044474dbf6f"
+        },
+        "HNL": {
+          "file": "routes/HNL.csv",
+          "origin_airport_id": 12173,
+          "rows": 657,
+          "bytes": 18535,
+          "sha256": "fdade31949146b370c3108b59a1c0b66b7bc8cd058b97dc62664a1f386ecc8a9"
+        },
+        "HOB": {
+          "file": "routes/HOB.csv",
+          "origin_airport_id": 12177,
+          "rows": 24,
+          "bytes": 788,
+          "sha256": "140cc1ae3597cb7ab9844e8d98bc4a70d4e452f991b03b7d84039a1371234c3b"
+        },
+        "HOU": {
+          "file": "routes/HOU.csv",
+          "origin_airport_id": 12191,
+          "rows": 784,
+          "bytes": 22155,
+          "sha256": "801ae167ff64c86b168da734992259aa9549f9f8adc9bdd21c8e4aa83d16f8f6"
+        },
+        "HPN": {
+          "file": "routes/HPN.csv",
+          "origin_airport_id": 12197,
+          "rows": 146,
+          "bytes": 4280,
+          "sha256": "b73dafad34394a2ac76b4e69004fa1935bbdb1cc71e765d2293ebc2a81e3b905"
+        },
+        "HRL": {
+          "file": "routes/HRL.csv",
+          "origin_airport_id": 12206,
+          "rows": 80,
+          "bytes": 2358,
+          "sha256": "d11d45d1134b4d7b3f0753a36834bbf41529a13c883eaf46fefffea11cf57457"
+        },
+        "HSV": {
+          "file": "routes/HSV.csv",
+          "origin_airport_id": 12217,
+          "rows": 137,
+          "bytes": 3935,
+          "sha256": "95b846c3f3a35fac82e32acbf1f1881a396d1a1a6d738969a2f72fb9eda16e86"
+        },
+        "HTS": {
+          "file": "routes/HTS.csv",
+          "origin_airport_id": 12223,
+          "rows": 44,
+          "bytes": 1294,
+          "sha256": "a5ccdb0adef11995bd192187b6409d0cacf6bfc996328d505a981d61724d2cd9"
+        },
+        "HYA": {
+          "file": "routes/HYA.csv",
+          "origin_airport_id": 12250,
+          "rows": 20,
+          "bytes": 663,
+          "sha256": "e72d3f7aead68c19c5ee0d742ac50bc924850883615de7dc936301011e30fea1"
+        },
+        "HYS": {
+          "file": "routes/HYS.csv",
+          "origin_airport_id": 12255,
+          "rows": 12,
+          "bytes": 466,
+          "sha256": "9d7ec02073a12fc6c74507d1377a0a63e839f2681af16b88ef4107ffb95b9ba4"
+        },
+        "IAD": {
+          "file": "routes/IAD.csv",
+          "origin_airport_id": 12264,
+          "rows": 1087,
+          "bytes": 30070,
+          "sha256": "71f3d31a2cdb366c98a00e62eeb271d544501af983816eb4ab22c00de6a18d86"
+        },
+        "IAG": {
+          "file": "routes/IAG.csv",
+          "origin_airport_id": 12265,
+          "rows": 39,
+          "bytes": 1151,
+          "sha256": "7c0230afce23b130dc78636a0596bd2b5418022464b18d2344d3e1bd6f568f2f"
+        },
+        "IAH": {
+          "file": "routes/IAH.csv",
+          "origin_airport_id": 12266,
+          "rows": 1800,
+          "bytes": 50318,
+          "sha256": "355192114779bca8b0601b4bc478b542fdf19356d98dbc9f8e840fd382c45b1b"
+        },
+        "ICT": {
+          "file": "routes/ICT.csv",
+          "origin_airport_id": 12278,
+          "rows": 270,
+          "bytes": 7494,
+          "sha256": "ec8c7b77048e5ed979a815caac0cae29e0e9b9027ec6dbd8d1c6b64f8ec9bfc1"
+        },
+        "IDA": {
+          "file": "routes/IDA.csv",
+          "origin_airport_id": 12280,
+          "rows": 118,
+          "bytes": 3313,
+          "sha256": "a8029bfc8bf740a3da800f60b64410984b3f42f12b678e2fc3aed78b327babcf"
+        },
+        "ILM": {
+          "file": "routes/ILM.csv",
+          "origin_airport_id": 12323,
+          "rows": 180,
+          "bytes": 5017,
+          "sha256": "9f398fa22954e1ba62ce05a9c0b248305654e05b4575ba46f6a02380d3edf644"
+        },
+        "IMT": {
+          "file": "routes/IMT.csv",
+          "origin_airport_id": 12335,
+          "rows": 24,
+          "bytes": 788,
+          "sha256": "5654b910619dce5697448b33d07927fadd32343eacbaaf19a498b023f61d7e7a"
+        },
+        "IND": {
+          "file": "routes/IND.csv",
+          "origin_airport_id": 12339,
+          "rows": 911,
+          "bytes": 25183,
+          "sha256": "847c22990a7578cc61e147d4d92713576fb56db70d0edea2a1222ec29ea5892c"
+        },
+        "INL": {
+          "file": "routes/INL.csv",
+          "origin_airport_id": 12343,
+          "rows": 12,
+          "bytes": 459,
+          "sha256": "731696e55df198d808b750d1475e562acbc0349c40b6a8a653dc3f0076a50f97"
+        },
+        "ISP": {
+          "file": "routes/ISP.csv",
+          "origin_airport_id": 12391,
+          "rows": 147,
+          "bytes": 4159,
+          "sha256": "2fd5dc493d6e5c2c85f68e303af61a29a0aaa4a35d2c685bdfff2364009c5fba"
+        },
+        "ITH": {
+          "file": "routes/ITH.csv",
+          "origin_airport_id": 12397,
+          "rows": 1,
+          "bytes": 156,
+          "sha256": "7a852b9eb49798149e8f92cfb4992234af087bb66aceaa899b40a9158b982fa3"
+        },
+        "ITO": {
+          "file": "routes/ITO.csv",
+          "origin_airport_id": 12402,
+          "rows": 36,
+          "bytes": 1175,
+          "sha256": "6a3323297854e0b2bfdc616dc1fbaa0559628dbb9d7280f289ab5b8e5dba0f3c"
+        },
+        "JAC": {
+          "file": "routes/JAC.csv",
+          "origin_airport_id": 12441,
+          "rows": 174,
+          "bytes": 4864,
+          "sha256": "bd123c35a01e8d8900dd71504467c91d159f693820bd4da3b63f7372fe08eb64"
+        },
+        "JAN": {
+          "file": "routes/JAN.csv",
+          "origin_airport_id": 12448,
+          "rows": 115,
+          "bytes": 3315,
+          "sha256": "784850fe6356797324f10a305f8af85e7baa3edfa0b64a635cf90257ebb135fe"
+        },
+        "JAX": {
+          "file": "routes/JAX.csv",
+          "origin_airport_id": 12451,
+          "rows": 626,
+          "bytes": 17165,
+          "sha256": "979eabdc32278afb0706111bd494578deb5b8ebce03ed344df4d18031d9320f5"
+        },
+        "JFK": {
+          "file": "routes/JFK.csv",
+          "origin_airport_id": 12478,
+          "rows": 1350,
+          "bytes": 38363,
+          "sha256": "e2f6a4eafc948dbeead90d57b56aa7e593c2d116824c27f07f01884e6464b8de"
+        },
+        "JLN": {
+          "file": "routes/JLN.csv",
+          "origin_airport_id": 12511,
+          "rows": 24,
+          "bytes": 791,
+          "sha256": "070371d2ea322104d3c8222fd3bc9f56394ac6b68e80bb7d562e1263c846c2b0"
+        },
+        "JMS": {
+          "file": "routes/JMS.csv",
+          "origin_airport_id": 12519,
+          "rows": 18,
+          "bytes": 624,
+          "sha256": "78b5eefc4d74ab6efc8afedc926c94d46aa2923b4ecf35dda0b6df9497503ede"
+        },
+        "JNU": {
+          "file": "routes/JNU.csv",
+          "origin_airport_id": 12523,
+          "rows": 80,
+          "bytes": 2356,
+          "sha256": "2c45e90771a5ce201d99a80fbbdcac69266194c57344de2402576e1f17daef34"
+        },
+        "JST": {
+          "file": "routes/JST.csv",
+          "origin_airport_id": 12559,
+          "rows": 24,
+          "bytes": 793,
+          "sha256": "fd16f31e8495c1aab75b622e2e49288a08a0e32a7d90432fc5b16d8d7c4e7b62"
+        },
+        "KOA": {
+          "file": "routes/KOA.csv",
+          "origin_airport_id": 12758,
+          "rows": 267,
+          "bytes": 7477,
+          "sha256": "3ac9d21fa4140037cc0659c09cc5f6b0ac3ffdede533f75b322cbef98fa9b6a8"
+        },
+        "KTN": {
+          "file": "routes/KTN.csv",
+          "origin_airport_id": 12819,
+          "rows": 48,
+          "bytes": 1466,
+          "sha256": "f429345dd335a976eed411faeaf4833e8968fca0452808827992711d4ada0cb3"
+        },
+        "LAF": {
+          "file": "routes/LAF.csv",
+          "origin_airport_id": 12878,
+          "rows": 5,
+          "bytes": 270,
+          "sha256": "8847ce18609481dabf7ea572dfff20a709dd259a3f51930b605329d47279c380"
+        },
+        "LAN": {
+          "file": "routes/LAN.csv",
+          "origin_airport_id": 12884,
+          "rows": 34,
+          "bytes": 1082,
+          "sha256": "59b858d5f48c9dc173c83cf9a678ead0a24a338ff62bfcdf9cfc480ae2ce2eea"
+        },
+        "LAR": {
+          "file": "routes/LAR.csv",
+          "origin_airport_id": 12888,
+          "rows": 12,
+          "bytes": 469,
+          "sha256": "76cfaa6f7586a3f23b07a53b128377f73367e3c8e998092534c485b68ea60437"
+        },
+        "LAS": {
+          "file": "routes/LAS.csv",
+          "origin_airport_id": 12889,
+          "rows": 2772,
+          "bytes": 76985,
+          "sha256": "1e6c095422192745225f5b0c40fc76e6a35e4495575d68721155e0e1a6f66601"
+        },
+        "LAW": {
+          "file": "routes/LAW.csv",
+          "origin_airport_id": 12891,
+          "rows": 13,
+          "bytes": 498,
+          "sha256": "b31976f50d8611252e8ee1165601e14be1d87f6ea04c79c3bab67da9c99cbd17"
+        },
+        "LAX": {
+          "file": "routes/LAX.csv",
+          "origin_airport_id": 12892,
+          "rows": 2440,
+          "bytes": 68457,
+          "sha256": "509dc1222b820a0c9d5d0beedc5eb0fe85a06f9b23492618ac2d9ef1cb889ce2"
+        },
+        "LBB": {
+          "file": "routes/LBB.csv",
+          "origin_airport_id": 12896,
+          "rows": 138,
+          "bytes": 3950,
+          "sha256": "7ea8e305084d55136e3c6f4ec443fba3d230352fd321495ff872067a3c95d111"
+        },
+        "LBE": {
+          "file": "routes/LBE.csv",
+          "origin_airport_id": 12898,
+          "rows": 25,
+          "bytes": 799,
+          "sha256": "d51236fc205dc5de6f6fb84c82848a13d4da124df45b16887266c99438ee8dda"
+        },
+        "LBF": {
+          "file": "routes/LBF.csv",
+          "origin_airport_id": 12899,
+          "rows": 12,
+          "bytes": 468,
+          "sha256": "68354991ad3d279f0a4d501551e1e32c2eccf5fc73d18eb0d4c04e41e76e03e1"
+        },
+        "LBL": {
+          "file": "routes/LBL.csv",
+          "origin_airport_id": 12902,
+          "rows": 12,
+          "bytes": 465,
+          "sha256": "e3c9cef0433d8b627e80b4887e2618c734d53fc2ba6e5efa9e489339dfd2176e"
+        },
+        "LCH": {
+          "file": "routes/LCH.csv",
+          "origin_airport_id": 12915,
+          "rows": 22,
+          "bytes": 737,
+          "sha256": "2031643f119ed39171d9a04579c21355f2a030a3278532d8508e5733d32ea029"
+        },
+        "LCK": {
+          "file": "routes/LCK.csv",
+          "origin_airport_id": 12917,
+          "rows": 91,
+          "bytes": 2563,
+          "sha256": "c5eb6766e3671b08e6a725078256454bc38e0c7434f1d13d130b5b1b93765631"
+        },
+        "LEX": {
+          "file": "routes/LEX.csv",
+          "origin_airport_id": 12945,
+          "rows": 215,
+          "bytes": 6015,
+          "sha256": "13c5a538467c93c1852b447d7854153a7aadf3a549c6e39fe19bc7380a299172"
+        },
+        "LFT": {
+          "file": "routes/LFT.csv",
+          "origin_airport_id": 12951,
+          "rows": 62,
+          "bytes": 1838,
+          "sha256": "aa0a6a4e174fd489640c5f212f85be7ee1bd8bf51591eea4ba69d9d2a5fbeb5e"
+        },
+        "LGA": {
+          "file": "routes/LGA.csv",
+          "origin_airport_id": 12953,
+          "rows": 1497,
+          "bytes": 42716,
+          "sha256": "58a54ef5f4c8a1a503375fb7332c675d87b871a8ad8d92066ab0e5bc1ef77696"
+        },
+        "LGB": {
+          "file": "routes/LGB.csv",
+          "origin_airport_id": 12954,
+          "rows": 271,
+          "bytes": 7666,
+          "sha256": "0bb04229724256a8fedc2c4777b45366f7e4e4e1195a3382f7c22ef0b337d245"
+        },
+        "LIH": {
+          "file": "routes/LIH.csv",
+          "origin_airport_id": 12982,
+          "rows": 259,
+          "bytes": 7261,
+          "sha256": "d30635470730dc7df0e8739283e77ab4eb507d36ef59a1c7f77218698a0aee35"
+        },
+        "LIT": {
+          "file": "routes/LIT.csv",
+          "origin_airport_id": 12992,
+          "rows": 267,
+          "bytes": 7438,
+          "sha256": "c9ba5abb0d57c290013e4e14618084f3f6abde3b6d6300495de67bb94b9bfe5c"
+        },
+        "LNK": {
+          "file": "routes/LNK.csv",
+          "origin_airport_id": 13029,
+          "rows": 26,
+          "bytes": 902,
+          "sha256": "7a0c443ec5d67dc2ee5cbb1ed2ee151e14e26268e5001b872049fb668bcbd149"
+        },
+        "LRD": {
+          "file": "routes/LRD.csv",
+          "origin_airport_id": 13061,
+          "rows": 27,
+          "bytes": 882,
+          "sha256": "75745baf90e6ed2d18f5b98fc97632f00ba7f507d32cb003d6ae81129db4e5f8"
+        },
+        "LSE": {
+          "file": "routes/LSE.csv",
+          "origin_airport_id": 13076,
+          "rows": 12,
+          "bytes": 468,
+          "sha256": "4e0dc4fc028cd82870a4f52fecccfc82b415e6463fb4ad146b0913876ed071c1"
+        },
+        "LWS": {
+          "file": "routes/LWS.csv",
+          "origin_airport_id": 13127,
+          "rows": 26,
+          "bytes": 837,
+          "sha256": "fed0422a9fdc3e6c626a6e90cb8209b663073bddcc123d234b5bbf371498d682"
+        },
+        "MAF": {
+          "file": "routes/MAF.csv",
+          "origin_airport_id": 13158,
+          "rows": 148,
+          "bytes": 4313,
+          "sha256": "eb47a64c515462a05d0e07fbf657c58aa754af05af05578e41b95d270cadc8cb"
+        },
+        "MBS": {
+          "file": "routes/MBS.csv",
+          "origin_airport_id": 13184,
+          "rows": 24,
+          "bytes": 824,
+          "sha256": "b5b46838e4bee70c68b2e2222db3ed8565e97cc8583fbb236a1cd53f33d08f95"
+        },
+        "MCI": {
+          "file": "routes/MCI.csv",
+          "origin_airport_id": 13198,
+          "rows": 932,
+          "bytes": 25820,
+          "sha256": "a5c08f86f979a780a536c9767983251713c858241549f067a42c8cfc2c19afc8"
+        },
+        "MCO": {
+          "file": "routes/MCO.csv",
+          "origin_airport_id": 13204,
+          "rows": 2245,
+          "bytes": 63121,
+          "sha256": "03d3a27b9016bbd73f5dec9f9eb7d7d4837e4bc358531715410b59171b7b3021"
+        },
+        "MCW": {
+          "file": "routes/MCW.csv",
+          "origin_airport_id": 13211,
+          "rows": 12,
+          "bytes": 469,
+          "sha256": "0b080312b9fce41c4317c6b93bc52a1e999b7371e8bcea2303679d8e7cc6c837"
+        },
+        "MDT": {
+          "file": "routes/MDT.csv",
+          "origin_airport_id": 13230,
+          "rows": 200,
+          "bytes": 5486,
+          "sha256": "027b7cdb94ad43438ca1cff3af7fcc65b26cb2f674461d6410131bcb9ac62469"
+        },
+        "MDW": {
+          "file": "routes/MDW.csv",
+          "origin_airport_id": 13232,
+          "rows": 1052,
+          "bytes": 29714,
+          "sha256": "20ad5ee3eb683a2dfaf61ca29c5a46005eca0cb37d6d4044c6f4dbbc1a20117d"
+        },
+        "MEI": {
+          "file": "routes/MEI.csv",
+          "origin_airport_id": 13241,
+          "rows": 12,
+          "bytes": 465,
+          "sha256": "d7ad83cd9e9245c6cd810ecb27a908ea947e991f0939f40b5a5afa42357c8595"
+        },
+        "MEM": {
+          "file": "routes/MEM.csv",
+          "origin_airport_id": 13244,
+          "rows": 570,
+          "bytes": 15704,
+          "sha256": "987113755c912a8bf9db5ac33e0776870418a2b5d0d0dfc87dd5ba91fb93b75d"
+        },
+        "MFE": {
+          "file": "routes/MFE.csv",
+          "origin_airport_id": 13256,
+          "rows": 97,
+          "bytes": 2796,
+          "sha256": "5b203d3a68ee589753861e815adbf720737bedc89a637c8661bea593f1dcdf75"
+        },
+        "MFR": {
+          "file": "routes/MFR.csv",
+          "origin_airport_id": 13264,
+          "rows": 114,
+          "bytes": 3214,
+          "sha256": "f68eaadaaf4fa03eb06f49fdca2a206c6c4e889d99800a36b1bf441387ce942d"
+        },
+        "MGM": {
+          "file": "routes/MGM.csv",
+          "origin_airport_id": 13277,
+          "rows": 52,
+          "bytes": 1566,
+          "sha256": "e228f03cd705dfb93c5fd4ba9a7fed1b7bb855d97fa9fd25ab407e26c4d238b6"
+        },
+        "MGW": {
+          "file": "routes/MGW.csv",
+          "origin_airport_id": 13282,
+          "rows": 24,
+          "bytes": 790,
+          "sha256": "0b9a7b805ac7454287826f7519585b9fa32645cfa10ba731d208628aaa0c6a74"
+        },
+        "MHK": {
+          "file": "routes/MHK.csv",
+          "origin_airport_id": 13290,
+          "rows": 28,
+          "bytes": 904,
+          "sha256": "2e2354cf4a9303f755aa824d2a7947402db2edc8a68f5732cbbb7ffe0789630e"
+        },
+        "MHT": {
+          "file": "routes/MHT.csv",
+          "origin_airport_id": 13296,
+          "rows": 114,
+          "bytes": 3291,
+          "sha256": "f5f7ce1313275b43326530e02176739e9c596173039dc1d7a5e10337a24feebf"
+        },
+        "MIA": {
+          "file": "routes/MIA.csv",
+          "origin_airport_id": 13303,
+          "rows": 1981,
+          "bytes": 54789,
+          "sha256": "e07431f19331af473a71e2a6a711c1e1cf7e3787ea70fd652760e2bc16de336a"
+        },
+        "MKE": {
+          "file": "routes/MKE.csv",
+          "origin_airport_id": 13342,
+          "rows": 521,
+          "bytes": 14456,
+          "sha256": "713b00fd4e45af2ed44ff6294d8b1bcced73485f7bad9b9362b8608b9b614f9d"
+        },
+        "MLB": {
+          "file": "routes/MLB.csv",
+          "origin_airport_id": 13360,
+          "rows": 59,
+          "bytes": 1729,
+          "sha256": "51b0cf9ee57602e64bbf9ded5a4d56687cd0f5da49e8481fda51d462d9d60d60"
+        },
+        "MLI": {
+          "file": "routes/MLI.csv",
+          "origin_airport_id": 13367,
+          "rows": 122,
+          "bytes": 3392,
+          "sha256": "a514d21c9928f5f5835eec6317d3daa426752866d8347b7d2ca92b83638d1ae9"
+        },
+        "MLU": {
+          "file": "routes/MLU.csv",
+          "origin_airport_id": 13377,
+          "rows": 12,
+          "bytes": 470,
+          "sha256": "522375f2eca3a64d169d0740a7ef0cab03000a9977e9bd3cb023e18a733b00d1"
+        },
+        "MOB": {
+          "file": "routes/MOB.csv",
+          "origin_airport_id": 13422,
+          "rows": 41,
+          "bytes": 1245,
+          "sha256": "65d799139bcb538b755d2ad2746379e0822bb8fdbca6a52b9bee9def84ee8f34"
+        },
+        "MOT": {
+          "file": "routes/MOT.csv",
+          "origin_airport_id": 13433,
+          "rows": 52,
+          "bytes": 1563,
+          "sha256": "db7d5c039f9ad6fd380d2c90ba8a5fa47b2e48a9dbdcfdd5ac86f52fc9b5ad85"
+        },
+        "MQT": {
+          "file": "routes/MQT.csv",
+          "origin_airport_id": 13459,
+          "rows": 36,
+          "bytes": 1122,
+          "sha256": "c704f4fb8204d09b69108e748d749725c5f1373a37776ee519ac2e4d3d4e3cdd"
+        },
+        "MRY": {
+          "file": "routes/MRY.csv",
+          "origin_airport_id": 13476,
+          "rows": 106,
+          "bytes": 3027,
+          "sha256": "721c9ea65b77a23f8db7e9e2ea3535b6e5a3023c8994373d3e9d7710ef794c6e"
+        },
+        "MSN": {
+          "file": "routes/MSN.csv",
+          "origin_airport_id": 13485,
+          "rows": 280,
+          "bytes": 7804,
+          "sha256": "ea29d4b22200323ca7bbd9ca5c1bf9a47594debae36d3f6ab863eb3134d5486a"
+        },
+        "MSO": {
+          "file": "routes/MSO.csv",
+          "origin_airport_id": 13486,
+          "rows": 151,
+          "bytes": 4207,
+          "sha256": "c2d8908018f7fa21be4a692308074c9790c3907f8142cadbf7f711e346a9d207"
+        },
+        "MSP": {
+          "file": "routes/MSP.csv",
+          "origin_airport_id": 13487,
+          "rows": 1840,
+          "bytes": 51426,
+          "sha256": "ed3e0a0b2c13e3d312bd97319480fa5d9311ac8351c89101b2c2080d785077b1"
+        },
+        "MSY": {
+          "file": "routes/MSY.csv",
+          "origin_airport_id": 13495,
+          "rows": 982,
+          "bytes": 27202,
+          "sha256": "639813d59806e4c2cfb5cae384398e1d8956b98e0fe51925f41e00399e7be3cb"
+        },
+        "MTJ": {
+          "file": "routes/MTJ.csv",
+          "origin_airport_id": 13502,
+          "rows": 89,
+          "bytes": 2523,
+          "sha256": "3b7d2aada897b7f908783e42d7b75263bafb403fa87cf8a6f74c2cd9cbedae6c"
+        },
+        "MVY": {
+          "file": "routes/MVY.csv",
+          "origin_airport_id": 13541,
+          "rows": 39,
+          "bytes": 1178,
+          "sha256": "d57ad0112a70861a1df097261391ad14d8a844b378679c7aab51df7bb479e29d"
+        },
+        "MYR": {
+          "file": "routes/MYR.csv",
+          "origin_airport_id": 13577,
+          "rows": 536,
+          "bytes": 14484,
+          "sha256": "ae60b7de0dfc3bc9e81c3b1a2690b5431d9a658fe28099443823f0a4f4bd8971"
+        },
+        "OAJ": {
+          "file": "routes/OAJ.csv",
+          "origin_airport_id": 13795,
+          "rows": 11,
+          "bytes": 431,
+          "sha256": "21e1352172841db40086abe7b80e5198f5e3555141263712e275244b385b6e41"
+        },
+        "OAK": {
+          "file": "routes/OAK.csv",
+          "origin_airport_id": 13796,
+          "rows": 465,
+          "bytes": 13129,
+          "sha256": "ebbef6863d6c37802752603ee42fa0911de7d1ec83902001e276ad26ca6e5321"
+        },
+        "OGG": {
+          "file": "routes/OGG.csv",
+          "origin_airport_id": 13830,
+          "rows": 425,
+          "bytes": 11811,
+          "sha256": "813b2c4f2049ca4de44b7f3227dcc7079cab4d03199c87d9e9733250a00bc2cf"
+        },
+        "OKC": {
+          "file": "routes/OKC.csv",
+          "origin_airport_id": 13851,
+          "rows": 476,
+          "bytes": 13259,
+          "sha256": "e557a2ba9dbd0d3cb2537758a71f7308f76de92e532a629e541c4602ebe18f6a"
+        },
+        "OMA": {
+          "file": "routes/OMA.csv",
+          "origin_airport_id": 13871,
+          "rows": 557,
+          "bytes": 15357,
+          "sha256": "7828c387e3980dfacc00fe67a9215c527c14c1d15bbf7e8913588fb0b68199da"
+        },
+        "OME": {
+          "file": "routes/OME.csv",
+          "origin_airport_id": 13873,
+          "rows": 12,
+          "bytes": 460,
+          "sha256": "6b0ed8cb500b56ea56f5338e9fba07c2c157e8f0c2cef1b3cefbde53fe222b70"
+        },
+        "ONT": {
+          "file": "routes/ONT.csv",
+          "origin_airport_id": 13891,
+          "rows": 432,
+          "bytes": 12183,
+          "sha256": "a8ebfff4a826fcee3c23ee9dc656ccb72f07dc6fc2ea82a4e97af5ff140015aa"
+        },
+        "ORD": {
+          "file": "routes/ORD.csv",
+          "origin_airport_id": 13930,
+          "rows": 5040,
+          "bytes": 141016,
+          "sha256": "53b250fd56ad7c80372fb5699f40ebc033af051e084457db58d97268b5d0b899"
+        },
+        "ORF": {
+          "file": "routes/ORF.csv",
+          "origin_airport_id": 13931,
+          "rows": 451,
+          "bytes": 12455,
+          "sha256": "484de9ecd9d5ba7a7223c6744e319bea4d1234cba42ed3a3954f02e92d087dbf"
+        },
+        "ORH": {
+          "file": "routes/ORH.csv",
+          "origin_airport_id": 13933,
+          "rows": 38,
+          "bytes": 1162,
+          "sha256": "465ecef62249c838f1f5b0f072f1ebc35fa43fdcc4a0f74ee0b325b6dc524526"
+        },
+        "OTH": {
+          "file": "routes/OTH.csv",
+          "origin_airport_id": 13964,
+          "rows": 18,
+          "bytes": 622,
+          "sha256": "c34b1009e67fef00e907fb56aac9cff94d515140583d373e6ef92d6bd74fba35"
+        },
+        "OTZ": {
+          "file": "routes/OTZ.csv",
+          "origin_airport_id": 13970,
+          "rows": 12,
+          "bytes": 458,
+          "sha256": "63f86b0b029bb2c673a343c41ce37e151983d48ac6fd5a32762998a6f46e390a"
+        },
+        "PAE": {
+          "file": "routes/PAE.csv",
+          "origin_airport_id": 14004,
+          "rows": 48,
+          "bytes": 1401,
+          "sha256": "0b47e4edd231d6725caadc3f2a68d1f04baf8e4a33f74c4edabc7f105100f203"
+        },
+        "PBG": {
+          "file": "routes/PBG.csv",
+          "origin_airport_id": 14025,
+          "rows": 46,
+          "bytes": 1338,
+          "sha256": "96bc656ff8df78e6d1170bfc37bb1248f279e5acf03cc35efca73aa8c550155f"
+        },
+        "PBI": {
+          "file": "routes/PBI.csv",
+          "origin_airport_id": 14027,
+          "rows": 478,
+          "bytes": 13445,
+          "sha256": "38e6a391bea7a2d7f54b9ae02925d25345777521d27287f34ef58c6d1a2c0154"
+        },
+        "PDX": {
+          "file": "routes/PDX.csv",
+          "origin_airport_id": 14057,
+          "rows": 1067,
+          "bytes": 29719,
+          "sha256": "4134b8cc3ba837df3e91e2b97351f20bb56a794b0456fe985b640c0878b8ea2c"
+        },
+        "PGD": {
+          "file": "routes/PGD.csv",
+          "origin_airport_id": 14082,
+          "rows": 516,
+          "bytes": 13855,
+          "sha256": "e53453a94387eba5ea44562255fb0d6b045141f21f57afa050978bf740f8f86d"
+        },
+        "PHF": {
+          "file": "routes/PHF.csv",
+          "origin_airport_id": 14098,
+          "rows": 1,
+          "bytes": 157,
+          "sha256": "b2ac505a0b8e5335b84b13c1bf31e0f7ee4ae12e010118b6e3835cfba6d3ea93"
+        },
+        "PHL": {
+          "file": "routes/PHL.csv",
+          "origin_airport_id": 14100,
+          "rows": 1852,
+          "bytes": 51318,
+          "sha256": "e79fcd09e321c0cec7de4185e17d07bcb0abf9b0a2bbe6753fd4059f28592bb5"
+        },
+        "PHX": {
+          "file": "routes/PHX.csv",
+          "origin_airport_id": 14107,
+          "rows": 2820,
+          "bytes": 79140,
+          "sha256": "e032f02f9763e61d559aa791cfafbc8cf93b6ce46de8414e3011760e444302b3"
+        },
+        "PIA": {
+          "file": "routes/PIA.csv",
+          "origin_airport_id": 14108,
+          "rows": 166,
+          "bytes": 4618,
+          "sha256": "3715dde63cbf474c5ec576ff3f8ba2d39d00b99b0b86e24daf4d08b481655098"
+        },
+        "PIB": {
+          "file": "routes/PIB.csv",
+          "origin_airport_id": 14109,
+          "rows": 12,
+          "bytes": 461,
+          "sha256": "27766c739078f84df925ef30d43dc8a55e0653431e32fa3bb784eff564a7b248"
+        },
+        "PIE": {
+          "file": "routes/PIE.csv",
+          "origin_airport_id": 14112,
+          "rows": 646,
+          "bytes": 17229,
+          "sha256": "82395a2c2fb1bfc706aac666e26ed54e7c71f3f4d20619f7f31798290c4216c2"
+        },
+        "PIH": {
+          "file": "routes/PIH.csv",
+          "origin_airport_id": 14113,
+          "rows": 12,
+          "bytes": 458,
+          "sha256": "aa3a38fa0063d27aa721f3e3675425de14026028f2b0ee814bd0f13f18a57a69"
+        },
+        "PIR": {
+          "file": "routes/PIR.csv",
+          "origin_airport_id": 14120,
+          "rows": 5,
+          "bytes": 272,
+          "sha256": "2ee52da84a68c5f42c862bb6b6c58c4b102394a15771eccf178e07c5ac8fdc32"
+        },
+        "PIT": {
+          "file": "routes/PIT.csv",
+          "origin_airport_id": 14122,
+          "rows": 884,
+          "bytes": 24457,
+          "sha256": "e1e4c77d436f5db46533dd4f5a24e4d1ff02fe909660856e642c91d538d104fe"
+        },
+        "PLN": {
+          "file": "routes/PLN.csv",
+          "origin_airport_id": 14150,
+          "rows": 18,
+          "bytes": 626,
+          "sha256": "05cf9cc15e6674396766053e4dea4e0d779f29c0be561fd8e2c8d14e89b1bc95"
+        },
+        "PNS": {
+          "file": "routes/PNS.csv",
+          "origin_airport_id": 14193,
+          "rows": 308,
+          "bytes": 8563,
+          "sha256": "22d6700523b7e6248df2caaa096753d2a68c04fa37465e39477e0690283ca654"
+        },
+        "PPG": {
+          "file": "routes/PPG.csv",
+          "origin_airport_id": 14222,
+          "rows": 12,
+          "bytes": 457,
+          "sha256": "1b525b6b3d004e7da1f9ad2c472e965a376cb425ba60a9a77982ad7416120fa0"
+        },
+        "PQI": {
+          "file": "routes/PQI.csv",
+          "origin_airport_id": 14231,
+          "rows": 12,
+          "bytes": 458,
+          "sha256": "806a12469787e4a0430432a02c67a7c7150b688df24e991695a32babd066d96b"
+        },
+        "PRC": {
+          "file": "routes/PRC.csv",
+          "origin_airport_id": 14237,
+          "rows": 24,
+          "bytes": 792,
+          "sha256": "471775e548d8ce1c78f7b210dd334a49fdfeb918b589ffb190b8dcd16107086b"
+        },
+        "PSC": {
+          "file": "routes/PSC.csv",
+          "origin_airport_id": 14252,
+          "rows": 146,
+          "bytes": 4134,
+          "sha256": "2690c26153c184334d67314d1c0f9b807759d8ccb196bd7e91bebbdb85f906a6"
+        },
+        "PSE": {
+          "file": "routes/PSE.csv",
+          "origin_airport_id": 14254,
+          "rows": 30,
+          "bytes": 941,
+          "sha256": "840c577d44c34ef50269ea0fc7df0a0bdf5f4bc1dbb1293b00ce61ab9b885e5e"
+        },
+        "PSG": {
+          "file": "routes/PSG.csv",
+          "origin_airport_id": 14256,
+          "rows": 24,
+          "bytes": 785,
+          "sha256": "6e12aa4d6867a54d52467fd622b3201cd2781724789ac5f90c2c82c7eadb77fc"
+        },
+        "PSM": {
+          "file": "routes/PSM.csv",
+          "origin_airport_id": 14259,
+          "rows": 36,
+          "bytes": 1085,
+          "sha256": "bd07eabed679fad788ef2f27bf67f2227d305a499795f2f3a1360b4964b72389"
+        },
+        "PSP": {
+          "file": "routes/PSP.csv",
+          "origin_airport_id": 14262,
+          "rows": 329,
+          "bytes": 9169,
+          "sha256": "c42c77c870cfcf18ff27e23311559a5a7b57d8ad028ed7f414290afba7cf1197"
+        },
+        "PVD": {
+          "file": "routes/PVD.csv",
+          "origin_airport_id": 14307,
+          "rows": 351,
+          "bytes": 9797,
+          "sha256": "eb15b3532501928a31af1caa0c2d49313d49a2fdfaa352bf4dc08912f95b945d"
+        },
+        "PVU": {
+          "file": "routes/PVU.csv",
+          "origin_airport_id": 14314,
+          "rows": 122,
+          "bytes": 3351,
+          "sha256": "4b67ebb80b3cb1ecb254fbb4ac507fbe17aa4aca823db641ab5932311cd36c18"
+        },
+        "PWM": {
+          "file": "routes/PWM.csv",
+          "origin_airport_id": 14321,
+          "rows": 269,
+          "bytes": 7488,
+          "sha256": "9c753f914b2f19d6213c9c75c6ff4060d0cd356db19de1e66541fc2d8b321865"
+        },
+        "RAP": {
+          "file": "routes/RAP.csv",
+          "origin_airport_id": 14457,
+          "rows": 113,
+          "bytes": 3196,
+          "sha256": "1787e6850dc5a9b425d8868a837c27815118688c203cc40772feee1d74794288"
+        },
+        "RDD": {
+          "file": "routes/RDD.csv",
+          "origin_airport_id": 14487,
+          "rows": 43,
+          "bytes": 1310,
+          "sha256": "08b2771c192aed16faba6a068888c07a1f1d4de27ac2f9c377fb23b0e1e40644"
+        },
+        "RDM": {
+          "file": "routes/RDM.csv",
+          "origin_airport_id": 14489,
+          "rows": 122,
+          "bytes": 3511,
+          "sha256": "8c19c47196f0163a60da6c48f55d98edffb353ee14e4ef1a7b4fe650b137131b"
+        },
+        "RDU": {
+          "file": "routes/RDU.csv",
+          "origin_airport_id": 14492,
+          "rows": 1001,
+          "bytes": 27842,
+          "sha256": "0e9ad5dc6a90d658db3a5ffc9b163decced2c4c600d7217266ea2ebf9e31a758"
+        },
+        "RFD": {
+          "file": "routes/RFD.csv",
+          "origin_airport_id": 14512,
+          "rows": 77,
+          "bytes": 2173,
+          "sha256": "d4e16d38ebb3a61b645af96947e1514baf96934b367e4bd68f6e6dd3a3a7893a"
+        },
+        "RHI": {
+          "file": "routes/RHI.csv",
+          "origin_airport_id": 14520,
+          "rows": 17,
+          "bytes": 596,
+          "sha256": "07ba9f28a9224c04660859a0afcb3b9cb03bc495d6ef3a4f5b6eabcddede4ee1"
+        },
+        "RIC": {
+          "file": "routes/RIC.csv",
+          "origin_airport_id": 14524,
+          "rows": 374,
+          "bytes": 10416,
+          "sha256": "b0cf5fea706a91d2822e31bb4a45174b830f16fdce9a4d7f6dd315312fd229ea"
+        },
+        "RIW": {
+          "file": "routes/RIW.csv",
+          "origin_airport_id": 14534,
+          "rows": 12,
+          "bytes": 465,
+          "sha256": "64a03a9df38862ee6567f53c070befaf99add006a5f1595069b927bd511cf4b0"
+        },
+        "RKS": {
+          "file": "routes/RKS.csv",
+          "origin_airport_id": 14543,
+          "rows": 12,
+          "bytes": 466,
+          "sha256": "7b052e2c6d5e6fd24654dfd3b40a118f5a77c40d7f08a8806753a56633564dbf"
+        },
+        "RNO": {
+          "file": "routes/RNO.csv",
+          "origin_airport_id": 14570,
+          "rows": 356,
+          "bytes": 9991,
+          "sha256": "ba045107cbff4f022041a88368f7f98c72c1eae23263a17f6f36d1bdf601ab99"
+        },
+        "ROA": {
+          "file": "routes/ROA.csv",
+          "origin_airport_id": 14574,
+          "rows": 76,
+          "bytes": 2182,
+          "sha256": "774e19f375422a85db14e28a5572bc3393a6a009b9581dee6554b814a75f5020"
+        },
+        "ROC": {
+          "file": "routes/ROC.csv",
+          "origin_airport_id": 14576,
+          "rows": 268,
+          "bytes": 7416,
+          "sha256": "95f7293e2b8fc217f910d417f6f4e109aa9897b6e2011429d81310ac67e0d026"
+        },
+        "ROW": {
+          "file": "routes/ROW.csv",
+          "origin_airport_id": 14588,
+          "rows": 13,
+          "bytes": 495,
+          "sha256": "8659b594b3c5dc22e70005b8b406100656d0f93b420fec1411ea6e5c82add7b8"
+        },
+        "RST": {
+          "file": "routes/RST.csv",
+          "origin_airport_id": 14633,
+          "rows": 22,
+          "bytes": 741,
+          "sha256": "626a5ffd1686079e6a486ce2d2bb745f3460e297f6fa403f6c3b5affee6d29bb"
+        },
+        "RSW": {
+          "file": "routes/RSW.csv",
+          "origin_airport_id": 14635,
+          "rows": 669,
+          "bytes": 18588,
+          "sha256": "6ccf9b35e8064d8b9e39a3aa12d699e2b2d8898cc6d316216e7eeb09c606caa2"
+        },
+        "SAF": {
+          "file": "routes/SAF.csv",
+          "origin_airport_id": 14674,
+          "rows": 48,
+          "bytes": 1497,
+          "sha256": "ae98ece82022ba3730267dd7cbe859c6260021987e3ad0b7574d30c86687287f"
+        },
+        "SAN": {
+          "file": "routes/SAN.csv",
+          "origin_airport_id": 14679,
+          "rows": 1196,
+          "bytes": 33923,
+          "sha256": "3191963ccc34f54de8a4ff4f5859aa93463b541d6d73db303f5319ca4a5c0ae3"
+        },
+        "SAT": {
+          "file": "routes/SAT.csv",
+          "origin_airport_id": 14683,
+          "rows": 702,
+          "bytes": 19576,
+          "sha256": "de6561621a3de9a9f143bc6ab8fa4a8280377ab32b21959f5b8ae9378b08d3d0"
+        },
+        "SAV": {
+          "file": "routes/SAV.csv",
+          "origin_airport_id": 14685,
+          "rows": 503,
+          "bytes": 13761,
+          "sha256": "0fa99edc5282e27c11f78c724dc85ca8f4f19c3dd71167289a3de32b1d1b5f05"
+        },
+        "SBA": {
+          "file": "routes/SBA.csv",
+          "origin_airport_id": 14689,
+          "rows": 188,
+          "bytes": 5311,
+          "sha256": "114effd04979e50ad67ebb75ad8632a461956aee8cfcce1320c3d7870c676c44"
+        },
+        "SBN": {
+          "file": "routes/SBN.csv",
+          "origin_airport_id": 14696,
+          "rows": 192,
+          "bytes": 5334,
+          "sha256": "9f3d1f2fb0a2e9301cc758779ab3e37ac314fa2534cea41c423384462aaa5572"
+        },
+        "SBP": {
+          "file": "routes/SBP.csv",
+          "origin_airport_id": 14698,
+          "rows": 125,
+          "bytes": 3582,
+          "sha256": "65e8e2b6de8e3c19c8c167413a58c9526117dae53c4d15b6370e2cae00a53ba3"
+        },
+        "SCC": {
+          "file": "routes/SCC.csv",
+          "origin_airport_id": 14709,
+          "rows": 12,
+          "bytes": 459,
+          "sha256": "b3e54e731aebcbda781f4ce6f6b41ae19cb5af81b6864c09dd658e374fb2da7d"
+        },
+        "SCE": {
+          "file": "routes/SCE.csv",
+          "origin_airport_id": 14711,
+          "rows": 18,
+          "bytes": 615,
+          "sha256": "48c80a7f3a321145f53e5f6c331574ca406aabf13ce7043ee3150b92c0a6a3ef"
+        },
+        "SCK": {
+          "file": "routes/SCK.csv",
+          "origin_airport_id": 14716,
+          "rows": 28,
+          "bytes": 879,
+          "sha256": "23d6c2c2ad747e22f366df195fb77ffab66406ec6abfc37c5d70d54ca28ac8f0"
+        },
+        "SDF": {
+          "file": "routes/SDF.csv",
+          "origin_airport_id": 14730,
+          "rows": 550,
+          "bytes": 15096,
+          "sha256": "eb54f5e8dcb28cb4966fa8f41b58f3e950390d9cad0d8eef82dff96fb0698ea5"
+        },
+        "SEA": {
+          "file": "routes/SEA.csv",
+          "origin_airport_id": 14747,
+          "rows": 2035,
+          "bytes": 57751,
+          "sha256": "b986fe3187a39cab7b259d94f3a7526866c4ecb2bd92b326c53950c02dde7e68"
+        },
+        "SFB": {
+          "file": "routes/SFB.csv",
+          "origin_airport_id": 14761,
+          "rows": 696,
+          "bytes": 18594,
+          "sha256": "2f15713fe343ce5b3e60ed60eb4ac45a511c91c68f6ab4d2ea7d752980bcd39e"
+        },
+        "SFO": {
+          "file": "routes/SFO.csv",
+          "origin_airport_id": 14771,
+          "rows": 1774,
+          "bytes": 50270,
+          "sha256": "fcf0c6c482a5d8ec43e014d9428f0f140c6439debdc166686c1dd1c6491bbbe9"
+        },
+        "SGF": {
+          "file": "routes/SGF.csv",
+          "origin_airport_id": 14783,
+          "rows": 176,
+          "bytes": 4970,
+          "sha256": "b08117579a058821f39fba90280db4de29b2fdc0ae62cfb203857cec8d97e456"
+        },
+        "SGU": {
+          "file": "routes/SGU.csv",
+          "origin_airport_id": 14794,
+          "rows": 60,
+          "bytes": 1816,
+          "sha256": "1c19a24cce9a7b27045d54fc2df74bff3af56ff4cc200b7b1c06b60608d84863"
+        },
+        "SHR": {
+          "file": "routes/SHR.csv",
+          "origin_airport_id": 14812,
+          "rows": 12,
+          "bytes": 465,
+          "sha256": "89c7a3f77a6344656e2d59ed2b2f241be26abd1a7094f58392a9201f72b5385b"
+        },
+        "SHV": {
+          "file": "routes/SHV.csv",
+          "origin_airport_id": 14814,
+          "rows": 113,
+          "bytes": 3246,
+          "sha256": "b969abc8c7fdce138fe159d19d0e0b40003dcff8bfe21ced5b299638689b0fca"
+        },
+        "SIT": {
+          "file": "routes/SIT.csv",
+          "origin_airport_id": 14828,
+          "rows": 31,
+          "bytes": 979,
+          "sha256": "7e575fae3fcf539727b70d6f36768c70ed307d5c2977013175067397961bc9c0"
+        },
+        "SJC": {
+          "file": "routes/SJC.csv",
+          "origin_airport_id": 14831,
+          "rows": 644,
+          "bytes": 18108,
+          "sha256": "7442ab4fca210f503bc1107f75a2bfd0859a4104f9615c51b7e8a48ef2a3ebd8"
+        },
+        "SJT": {
+          "file": "routes/SJT.csv",
+          "origin_airport_id": 14842,
+          "rows": 12,
+          "bytes": 469,
+          "sha256": "8865b06a3dc8bca54c29a71c475c7aee034ea614fb98a4e733f73d26e81ebd89"
+        },
+        "SJU": {
+          "file": "routes/SJU.csv",
+          "origin_airport_id": 14843,
+          "rows": 741,
+          "bytes": 20518,
+          "sha256": "d453d42655906f60be9084420abcfd2ed4dbf677f785d3c4d10f9f1e580d1658"
+        },
+        "SLC": {
+          "file": "routes/SLC.csv",
+          "origin_airport_id": 14869,
+          "rows": 1872,
+          "bytes": 52162,
+          "sha256": "c9b6be3ec41ca6214641ef0f4a756cce473c6e1451cbab485d205a5d491f074b"
+        },
+        "SLN": {
+          "file": "routes/SLN.csv",
+          "origin_airport_id": 14877,
+          "rows": 32,
+          "bytes": 1013,
+          "sha256": "3a39bbf9dcc29f530362fb24d9106860d44190d38c3181865fd7955f86b83624"
+        },
+        "SMF": {
+          "file": "routes/SMF.csv",
+          "origin_airport_id": 14893,
+          "rows": 763,
+          "bytes": 21546,
+          "sha256": "25da08bf40eea2b16da3f45b5588346a7b299854c2b8de18f7160a6e1feab58d"
+        },
+        "SMX": {
+          "file": "routes/SMX.csv",
+          "origin_airport_id": 14905,
+          "rows": 15,
+          "bytes": 520,
+          "sha256": "09a7655a931ab78eda62117e7d0c86a82af33aeece14b24e0fbb2d35b9e9e02d"
+        },
+        "SNA": {
+          "file": "routes/SNA.csv",
+          "origin_airport_id": 14908,
+          "rows": 535,
+          "bytes": 15204,
+          "sha256": "e44934effc592a7e5eaba1d1470fb8c64eed62c377c8843cbddc08e02da79c47"
+        },
+        "SPI": {
+          "file": "routes/SPI.csv",
+          "origin_airport_id": 14952,
+          "rows": 26,
+          "bytes": 829,
+          "sha256": "3be6f31eff0d51b58f90e17978ff2546b07f148d64fd735879a4a3ed7c1005ff"
+        },
+        "SPN": {
+          "file": "routes/SPN.csv",
+          "origin_airport_id": 14955,
+          "rows": 12,
+          "bytes": 458,
+          "sha256": "5dd4c304d8ad1d8d1e4e3a9ccd3e178108aa3e9f5194d789202aa85ec30ec2e9"
+        },
+        "SPS": {
+          "file": "routes/SPS.csv",
+          "origin_airport_id": 14960,
+          "rows": 14,
+          "bytes": 520,
+          "sha256": "488d30e7367788a44b0d8f5b0b418f9abedf1f6cc05492469c0fa0a47ec91df3"
+        },
+        "SRQ": {
+          "file": "routes/SRQ.csv",
+          "origin_airport_id": 14986,
+          "rows": 716,
+          "bytes": 19209,
+          "sha256": "29e98153a7ee2c52ed6115241efa32649ffa5e2ee8b967b4c8c4b34dde887849"
+        },
+        "STC": {
+          "file": "routes/STC.csv",
+          "origin_airport_id": 15008,
+          "rows": 17,
+          "bytes": 571,
+          "sha256": "a3148eb8c08aa2a6e73495ebea9cad1137c8d6d2a263d51d7bf489fa0a2c774c"
+        },
+        "STL": {
+          "file": "routes/STL.csv",
+          "origin_airport_id": 15016,
+          "rows": 1108,
+          "bytes": 30971,
+          "sha256": "360ccfd746a8d7b8612b466647289048b9a987e03db0dd593c3304624681d5ce"
+        },
+        "STS": {
+          "file": "routes/STS.csv",
+          "origin_airport_id": 15023,
+          "rows": 128,
+          "bytes": 3645,
+          "sha256": "e23e6748940aa19bd3c87e58edc2b3c155ea8e0aceffea66b48caaad7d93f7c7"
+        },
+        "STT": {
+          "file": "routes/STT.csv",
+          "origin_airport_id": 15024,
+          "rows": 170,
+          "bytes": 4701,
+          "sha256": "937390867104e745651f67db51c3ebd645ad1212c3147b699fa36a1a1371f277"
+        },
+        "STX": {
+          "file": "routes/STX.csv",
+          "origin_airport_id": 15027,
+          "rows": 59,
+          "bytes": 1710,
+          "sha256": "15c426e29a88768e574082bb7741ecc4254908a75760e2a490c061dc51b4acb4"
+        },
+        "SUN": {
+          "file": "routes/SUN.csv",
+          "origin_airport_id": 15041,
+          "rows": 59,
+          "bytes": 1734,
+          "sha256": "66355398f7d6d12a1712ed34582063323a50cb51500081a944036aa160e98f78"
+        },
+        "SUX": {
+          "file": "routes/SUX.csv",
+          "origin_airport_id": 15048,
+          "rows": 24,
+          "bytes": 797,
+          "sha256": "741d7479f7c5bb263e5d4284aa4e6e793c3e7bdf0702ca6d35c91c22496e943c"
+        },
+        "SWF": {
+          "file": "routes/SWF.csv",
+          "origin_airport_id": 15070,
+          "rows": 59,
+          "bytes": 1670,
+          "sha256": "305b6066cfc8d9f604356fc78e53228eb070f6457e5447fa0871e915cf790790"
+        },
+        "SWO": {
+          "file": "routes/SWO.csv",
+          "origin_airport_id": 15074,
+          "rows": 13,
+          "bytes": 490,
+          "sha256": "fc4a2676924a507f33d7df43cde601dfce8c4ca9936faf0ac8fbf4406309da78"
+        },
+        "SYR": {
+          "file": "routes/SYR.csv",
+          "origin_airport_id": 15096,
+          "rows": 360,
+          "bytes": 9845,
+          "sha256": "0cb389d54b37ecfe0f426be55a48ff6709bc33cffb470fcea757b23d4981e460"
+        },
+        "TLH": {
+          "file": "routes/TLH.csv",
+          "origin_airport_id": 15249,
+          "rows": 73,
+          "bytes": 2171,
+          "sha256": "4bda4758dbabb9a7980dfad2d2a9fe02d7ccc0b144ad344d1654970a0c7272b7"
+        },
+        "TOL": {
+          "file": "routes/TOL.csv",
+          "origin_airport_id": 15295,
+          "rows": 38,
+          "bytes": 1131,
+          "sha256": "9e6d9cb5d2973a35bfd507f175569ea004e39207838b21a99c57c4304211e021"
+        },
+        "TPA": {
+          "file": "routes/TPA.csv",
+          "origin_airport_id": 15304,
+          "rows": 1352,
+          "bytes": 37728,
+          "sha256": "272052659f8717c36bf6f211631711b4cfed0ac4bc21b225c94d1a5623af978c"
+        },
+        "TRI": {
+          "file": "routes/TRI.csv",
+          "origin_airport_id": 15323,
+          "rows": 46,
+          "bytes": 1362,
+          "sha256": "b85cb4c6b737a495d6ea3c6ef4278b0813e2e17514bab81fc9a30e85c82f75b1"
+        },
+        "TTN": {
+          "file": "routes/TTN.csv",
+          "origin_airport_id": 15356,
+          "rows": 44,
+          "bytes": 1308,
+          "sha256": "16ed9a0b44e961cb56aefc7019ecdaae1793c52cec7c645e7b85d4855d0ead12"
+        },
+        "TUL": {
+          "file": "routes/TUL.csv",
+          "origin_airport_id": 15370,
+          "rows": 404,
+          "bytes": 11171,
+          "sha256": "9445abce5bde4b8362ab85ff60c08bd96c9411b3cf8961e418042d33f75e8725"
+        },
+        "TUS": {
+          "file": "routes/TUS.csv",
+          "origin_airport_id": 15376,
+          "rows": 338,
+          "bytes": 9471,
+          "sha256": "ca05bdb182375e8d56a169633452d2c16427583266cdac37602ed83192357545"
+        },
+        "TVC": {
+          "file": "routes/TVC.csv",
+          "origin_airport_id": 15380,
+          "rows": 212,
+          "bytes": 5775,
+          "sha256": "5c89cf0b78f9c18d17647d0a06cc2bcb96ea546cf09f273631dcbcf78629f98e"
+        },
+        "TWF": {
+          "file": "routes/TWF.csv",
+          "origin_airport_id": 15389,
+          "rows": 12,
+          "bytes": 459,
+          "sha256": "abda70a54aa2a1c5355cfa5f7efc4ecce7cfa56d12b25355fe0c9cf41414d084"
+        },
+        "TXK": {
+          "file": "routes/TXK.csv",
+          "origin_airport_id": 15401,
+          "rows": 13,
+          "bytes": 492,
+          "sha256": "2ee67143dfe3bfe28bebeadc250d36d0eeaa7175f459666aa65562bfe0259595"
+        },
+        "TYR": {
+          "file": "routes/TYR.csv",
+          "origin_airport_id": 15411,
+          "rows": 14,
+          "bytes": 524,
+          "sha256": "7064c964145df7b5640c28411055b11b2ecbc734fd6189a9ee47bd9b10985f69"
+        },
+        "TYS": {
+          "file": "routes/TYS.csv",
+          "origin_airport_id": 15412,
+          "rows": 431,
+          "bytes": 11691,
+          "sha256": "64e2454ae38d01a1e66ed09b82e85b2289e2587a7eb675b349adfcb5d22a795c"
+        },
+        "USA": {
+          "file": "routes/USA.csv",
+          "origin_airport_id": 12544,
+          "rows": 48,
+          "bytes": 1434,
+          "sha256": "2957f7ef50851eb88c48e41d20ec8a95257c95a8c2ce0a663299b6ad1cb5e0cb"
+        },
+        "VCT": {
+          "file": "routes/VCT.csv",
+          "origin_airport_id": 15569,
+          "rows": 12,
+          "bytes": 464,
+          "sha256": "3662ea20653bf1b18134cacc1f6eaab5f3e32df47dd972fec680c3fa1534936f"
+        },
+        "VPS": {
+          "file": "routes/VPS.csv",
+          "origin_airport_id": 15624,
+          "rows": 399,
+          "bytes": 10748,
+          "sha256": "eef95b1a4845d1ef4c759d774452e7de66216678fd3144f76fee736250211f3d"
+        },
+        "VRB": {
+          "file": "routes/VRB.csv",
+          "origin_airport_id": 15628,
+          "rows": 2,
+          "bytes": 188,
+          "sha256": "e0041ab9df070c014851b56f13ed7f1489f2d93c48df3cce6baa37ba1a54abf7"
+        },
+        "WRG": {
+          "file": "routes/WRG.csv",
+          "origin_airport_id": 15841,
+          "rows": 24,
+          "bytes": 785,
+          "sha256": "62f01585f59e0eb4ab076adad308fad087a18a4e2187dbb0fbd3f41f54150c27"
+        },
+        "WYS": {
+          "file": "routes/WYS.csv",
+          "origin_airport_id": 15897,
+          "rows": 11,
+          "bytes": 432,
+          "sha256": "3e5a7fdd5d3caebbf57e4c1dde003e9ab7cb066438dbb9a25612ea36815be4b6"
+        },
+        "XNA": {
+          "file": "routes/XNA.csv",
+          "origin_airport_id": 15919,
+          "rows": 354,
+          "bytes": 9702,
+          "sha256": "f505af4e1eeef1989c1fd9143bb09391684018b7c6c7ced2e6419fb2a3632dd4"
+        },
+        "XWA": {
+          "file": "routes/XWA.csv",
+          "origin_airport_id": 16869,
+          "rows": 24,
+          "bytes": 828,
+          "sha256": "c8f4a8863d09316a8837693fbd0f528c389e722e510cba2c779ddc7643475aac"
+        },
+        "YAK": {
+          "file": "routes/YAK.csv",
+          "origin_airport_id": 15991,
+          "rows": 24,
+          "bytes": 785,
+          "sha256": "0bbd8c6e8b423127563ccebe6f7c6fae5d3c5d4ca10767ecbb4000ec3cb54c90"
+        },
+        "YUM": {
+          "file": "routes/YUM.csv",
+          "origin_airport_id": 16218,
+          "rows": 35,
+          "bytes": 1095,
+          "sha256": "296f35f081c85c1e28fc392460baed09928cbba8fcad2dd4f36457978d614062"
+        }
+      }
+    },
+    "temporal": {
+      "path": "site/data/temporal",
+      "grain": "One file per month; rows are Reporting_Airline x OriginAirportID x Origin x Weekday x ScheduledDepHour with the five core counts; ScheduledDepHour 2400 maps to 0 and invalid times stay missing.",
+      "count": 12,
+      "total_rows": 774182,
+      "total_bytes": 23564871,
+      "files": {
+        "2025-01": {
+          "file": "temporal/2025-01.csv",
+          "rows": 63956,
+          "bytes": 1927331,
+          "sha256": "5e01a775090916339916c6f008d811c36a05ad48cddd1d186c2076131c2e6351"
+        },
+        "2025-02": {
+          "file": "temporal/2025-02.csv",
+          "rows": 61569,
+          "bytes": 1854785,
+          "sha256": "5cfa01147916f6a41d40b3170c5827358596dba1ba376f2c69de080cf724a2a9"
+        },
+        "2025-03": {
+          "file": "temporal/2025-03.csv",
+          "rows": 64269,
+          "bytes": 1941270,
+          "sha256": "da9bd8c318dd336f75f823c979ef7af8861477a2d621e2ad6b4c3089e86780b5"
+        },
+        "2025-04": {
+          "file": "temporal/2025-04.csv",
+          "rows": 62909,
+          "bytes": 1899274,
+          "sha256": "7611f3ecfb11239baa19469f9c83c915fdb9361c86728c91822b33b5e9c143d6"
+        },
+        "2025-05": {
+          "file": "temporal/2025-05.csv",
+          "rows": 65543,
+          "bytes": 1979310,
+          "sha256": "2822f4102f3ed619437a38adf65f8a16ae7caa20bb0904ef481350bef4cb4391"
+        },
+        "2025-06": {
+          "file": "temporal/2025-06.csv",
+          "rows": 67514,
+          "bytes": 2037409,
+          "sha256": "71edb983f52de312726a8668fc5a340f6434c9140f7ba05fbba1f1bc0f91926b"
+        },
+        "2025-07": {
+          "file": "temporal/2025-07.csv",
+          "rows": 61271,
+          "bytes": 1854786,
+          "sha256": "434970a488e48bae53d4b9e8bfa445487d74ba6e67d1c7fe9fd1e827d627b558"
+        },
+        "2025-08": {
+          "file": "temporal/2025-08.csv",
+          "rows": 67362,
+          "bytes": 2031682,
+          "sha256": "575535ae21e70d64c6cff5846c09dc7ddeaf03562e5a0b1179140886d83ba0d1"
+        },
+        "2025-09": {
+          "file": "temporal/2025-09.csv",
+          "rows": 58596,
+          "bytes": 1768830,
+          "sha256": "7de71269cb7c9a935c0d77d5433af1126fc27bb9933a7925b635a003f4be5fe8"
+        },
+        "2025-10": {
+          "file": "temporal/2025-10.csv",
+          "rows": 64715,
+          "bytes": 2018552,
+          "sha256": "9bbef72ba77d15413b279cb0d128c386d3c285c0d55bf2e1779d1f2b61b78864"
+        },
+        "2025-11": {
+          "file": "temporal/2025-11.csv",
+          "rows": 66564,
+          "bytes": 2073432,
+          "sha256": "69ff4a2302294dcdd7a9e7559fd9bb347da757e8490fc34b768f31942616b6ca"
+        },
+        "2025-12": {
+          "file": "temporal/2025-12.csv",
+          "rows": 69914,
+          "bytes": 2178210,
+          "sha256": "c21b18506aa170a76fd54088e3e7aa692ad1510323665058acb06549aef937c7"
+        }
+      }
+    }
+  },
   "sources": {
     "reports/verification.json": "8b0f274c6b80186ca667cae3ebade9cc4e9cf285e16365562cfd874a3883603b",
     "reports/quality_report.json": "24500fcb798e9da99a44fae44e1078fd5c4c641779c206ba8b3e76568d1cffe6",
@@ -42,7 +2627,22 @@
     "data/processed/flights_2025_09.parquet": "e0c26d70326ce24fc1093c2961b68fa88eb15af64815181cca3d0519a748800e",
     "data/processed/flights_2025_10.parquet": "8d70f8f5e55b87eabd13ad79a8c9ea2ad3cbf05df05c3fa8efb3436b972f31a7",
     "data/processed/flights_2025_11.parquet": "c687573f01dcdaf58829ada29a9bc9d6a67f2088eecd9befafdeb0593df742d9",
-    "data/processed/flights_2025_12.parquet": "c7e14b0731a19e8fb0c39f5e96d323fb6b6d8f72d0d5201d77dea3711b70e875"
+    "data/processed/flights_2025_12.parquet": "c7e14b0731a19e8fb0c39f5e96d323fb6b6d8f72d0d5201d77dea3711b70e875",
+    "data/summaries/airport_month_airline.csv": "c6f9ad494c33bbec5c49082bf78e520963c2ab389688cb01b0ef02801508ffcc",
+    "data/summaries/airline_month.csv": "4e9199a13edcb2b16e7ebd83d1bc43e6e38949fd660fdb3549504c8190028b8d",
+    "data/summaries/route_month_airline.csv": "bc0d6fa7e35a6e32e7a221723f08a047763b1ec06306d47e885b6f9df7d90296",
+    "data/summaries/temporal/2025-01.csv": "e3d83170403fcce18fd573e875130c3cbf91868140358b159e735b06f55eec86",
+    "data/summaries/temporal/2025-02.csv": "83a32f8943d9966363aa1a70a75437acd68a61aec9aca83c437e3886aa3dbd6c",
+    "data/summaries/temporal/2025-03.csv": "dcd57e098c3d35128425e630a1625b3fdc5042adf01a5918aaf51ddc168db285",
+    "data/summaries/temporal/2025-04.csv": "cd3daf026dc6754db0a0f3749607ad7b18466a505e0372d52fcf9da024db5e27",
+    "data/summaries/temporal/2025-05.csv": "904403c8c247c817aac36b7a60175a45b9e6a7213fff997808d7be1656c6fbb3",
+    "data/summaries/temporal/2025-06.csv": "0b045a3c042b0b31e5992d3f0bceb10c9b9f1f153cdb0b98be18812137cb888a",
+    "data/summaries/temporal/2025-07.csv": "02ce5f6a0c1038c1506872ca0355da8261a031285c16da05c5e4eaf4883e2964",
+    "data/summaries/temporal/2025-08.csv": "0118f71c96fa30ec2f37100ddd8fea069a7e7fbfdf06454c210534a6d219d004",
+    "data/summaries/temporal/2025-09.csv": "ede058577ca57b9d36662c709ad4343b72a5fc0d701aedd29c8a78a98a494539",
+    "data/summaries/temporal/2025-10.csv": "b685d012ae553cf669660100c8edcf9bc4b203c5e4e24f2a230fd2179a3542fe",
+    "data/summaries/temporal/2025-11.csv": "0fc2eaa22c36f47de90c5ec69a3a17d6c88c85df03b22f58f66e45763aeb8e42",
+    "data/summaries/temporal/2025-12.csv": "6844aa719f0983e27db187379aafaa426564e774c2ad88b060b64c0d05bbf695"
   },
   "files": {
     "airline_annual.csv": {
@@ -50,10 +2650,25 @@
       "rows": 14,
       "bytes": 1413
     },
+    "airline_month.csv": {
+      "sha256": "d5b3bf3ae51944dede1f7256142fb3078692e82c95e519e9325d5524f196a571",
+      "rows": 168,
+      "bytes": 19409
+    },
     "airport_annual.csv": {
       "sha256": "d558ffca7e12cc42202cbba5657790a07b8721f1094b1ed2d424f0ff9621e161",
       "rows": 352,
       "bytes": 29748
+    },
+    "airport_directory.csv": {
+      "sha256": "ade4a3d275ef226444414e93c01696e10840d2f8ebcf39adbaf7d8d8fa5d3a24",
+      "rows": 352,
+      "bytes": 30911
+    },
+    "airport_month_airline.csv": {
+      "sha256": "2917c970db3c93cbbb36df74f182d0e8ad98911b3361bafd0270e1adf98ced62",
+      "rows": 17791,
+      "bytes": 1475284
     },
     "city_routes.csv": {
       "sha256": "5293d15c6cab42a0a250b03e87a308bf6a9d2ddba99dec71b4b194e876e4611f",

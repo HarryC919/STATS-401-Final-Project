@@ -1,0 +1,13 @@
+Month,Reporting_Airline,DestAirportID,Dest,scheduled_flights,eligible_arrivals,delayed_arrivals,cancelled_flights,diverted_flights
+1,HA,12173,HNL,10,9,2,1,0
+2,HA,12173,HNL,12,11,2,1,0
+3,HA,12173,HNL,13,13,4,0,0
+4,HA,12173,HNL,13,13,0,0,0
+5,HA,12173,HNL,10,10,2,0,0
+6,HA,12173,HNL,13,13,3,0,0
+7,HA,12173,HNL,14,14,4,0,0
+8,HA,12173,HNL,12,12,0,0,0
+9,HA,12173,HNL,14,14,1,0,0
+10,HA,12173,HNL,13,13,1,0,0
+11,HA,12173,HNL,12,12,0,0,0
+12,HA,12173,HNL,14,14,2,0,0

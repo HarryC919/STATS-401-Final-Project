@@ -1,0 +1,14 @@
+Month,Reporting_Airline,DestAirportID,Dest,scheduled_flights,eligible_arrivals,delayed_arrivals,cancelled_flights,diverted_flights
+1,OO,11298,DFW,93,87,20,6,0
+2,OO,11298,DFW,84,73,13,11,0
+3,OO,11298,DFW,93,86,16,7,0
+4,OO,11298,DFW,90,85,26,5,0
+5,OO,11298,DFW,93,87,22,6,0
+6,OH,11298,DFW,77,72,24,5,0
+6,OO,11298,DFW,13,13,2,0,0
+7,OH,11298,DFW,92,91,24,1,0
+8,OH,11298,DFW,93,91,33,2,0
+9,OH,11298,DFW,90,89,12,1,0
+10,OH,11298,DFW,92,89,19,2,1
+11,OH,11298,DFW,87,80,22,7,0
+12,OH,11298,DFW,91,87,35,4,0

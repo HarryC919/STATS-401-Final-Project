@@ -1,0 +1,2 @@
+Month,Reporting_Airline,DestAirportID,Dest,scheduled_flights,eligible_arrivals,delayed_arrivals,cancelled_flights,diverted_flights
+3,YX,11618,EWR,4,4,0,0,0

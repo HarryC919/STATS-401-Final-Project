@@ -1,0 +1,3 @@
+Month,Reporting_Airline,DestAirportID,Dest,scheduled_flights,eligible_arrivals,delayed_arrivals,cancelled_flights,diverted_flights
+11,OH,11057,CLT,26,25,5,0,1
+12,OH,11057,CLT,13,13,3,0,0
