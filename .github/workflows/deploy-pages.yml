@@ -9,6 +9,11 @@ on:
     paths:
       - 'site/**'
       - '.github/workflows/deploy-pages.yml'
+      - '.nvmrc'
+      - 'package.json'
+      - 'scripts/test_filter_state.mjs'
+      - 'scripts/test_site_data.py'
+      - 'scripts/export_site_data.py'
   workflow_dispatch:
 
 permissions:
@@ -36,6 +41,15 @@ jobs:
         run: |
           uv sync --locked
           uv run --locked python scripts/test_site_data.py
+
+      # JS checks run on the Node version pinned in .nvmrc.
+      - name: Set up Node from .nvmrc
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+
+      - name: Run filter module unit tests
+        run: node scripts/test_filter_state.mjs
 
       - name: Configure Pages (enables Pages on first run)
         uses: actions/configure-pages@v5

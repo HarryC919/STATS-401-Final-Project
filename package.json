@@ -1,0 +1,9 @@
+{
+  "name": "stats-401-final-project",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "description": "Static site modules are ES modules; scripts/*.cjs remain CommonJS. Node 24 is pinned in .nvmrc."
+}
