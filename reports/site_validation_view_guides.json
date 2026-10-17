@@ -78,17 +78,17 @@
       "reference": {
         "left": 155.24038696289062,
         "right": 511.9903869628906,
-        "top": 544.4434814453125,
-        "bottom": 559.4434814453125
+        "top": 866.4434814453125,
+        "bottom": 881.4434814453125
       },
       "svg": {
         "left": 149,
         "right": 1291,
-        "top": 527.375,
-        "bottom": 1067.21875
+        "top": 849.375,
+        "bottom": 1389.21875
       },
       "overlapCount": 0,
-      "firstBarTop": 583.5234375
+      "firstBarTop": 905.5234375
     },
     {
       "scope": "January–March, UA highlighted",
@@ -96,17 +96,17 @@
       "reference": {
         "left": 30.82115364074707,
         "right": 249.461763381958,
-        "top": 835.0680541992188,
-        "bottom": 844.0680541992188
+        "top": 1158.4742431640625,
+        "bottom": 1167.4742431640625
       },
       "svg": {
         "left": 27,
         "right": 727,
-        "top": 824.25,
-        "bottom": 1155.15625
+        "top": 1147.65625,
+        "bottom": 1478.5625
       },
       "overlapCount": 0,
-      "firstBarTop": 858.6671142578125
+      "firstBarTop": 1182.0733642578125
     }
   ],
   "checked": [
@@ -120,8 +120,8 @@
     "live deployment"
   ],
   "source_sha256": {
-    "site/index.html": "622af7773e0c0d3075881d50251db227422da961a3087f62df5bde9fe4a6316b",
-    "site/css/style.css": "4255c3c83d90d7370b0eda7877eb4bcf16fcf8e5ecac58efe80091c1589a1545",
+    "site/index.html": "80991ec29188497afb8d8fbc7620a48f8bb5c0e66f638ce64ac4f51d50fec185",
+    "site/css/style.css": "66854d5e32e13139959d067089f4ccd9801e9ee7b90d184d9185b7655578fbdb",
     "site/js/charts.js": "ca24ae438aa25926b741a270972d12cf1b3fc5217b0550bc1292c42e4b383b5b",
     "site/js/app.js": "5c9f3a45bb530f7875aa917517f4caa68c706126a0b35965f7bd77bde4506bf6",
     "site/js/aggregate.js": "3cb8fac563555c207c8f4ff0c86dc3c13ff95a6e7067e6ed57282c66e132cab5",

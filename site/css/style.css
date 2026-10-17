@@ -67,11 +67,20 @@ header {
   border-bottom: 3px solid var(--amber);
 }
 header h1 {
-  margin: 0 0 12px;
+  margin: 0 0 6px;
   font-family: var(--font-serif);
   font-size: 31px;
   font-weight: 700;
   letter-spacing: .01em;
+}
+header h2 {
+  margin: 0 0 16px;
+  font-family: var(--font-serif);
+  font-size: 19px;
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: .01em;
+  opacity: .92;
 }
 header p {
   margin: 0;
@@ -381,12 +390,44 @@ section svg { width: 100%; height: auto; display: block; }
 .map-legend-text { font-size: 10px; fill: #5f7383; }
 
 /* ============================================================
+   Footer — mirrors the header band
+   ============================================================ */
+footer {
+  background: linear-gradient(155deg, var(--ink-900) 0%, #1b3f63 72%, #21496f 100%);
+  color: #fff;
+  border-top: 3px solid var(--amber);
+  padding: 34px 48px 38px;
+}
+.footer-brand {
+  margin: 0 0 10px;
+  font-family: var(--font-serif);
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: .01em;
+}
+.footer-line {
+  margin: 4px 0;
+  font-size: 13px;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, .8);
+}
+.footer-line a {
+  color: #fff;
+  text-decoration-color: rgba(255, 255, 255, .45);
+  text-underline-offset: 2px;
+}
+.footer-line a:hover { text-decoration-color: #fff; }
+footer a:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+/* ============================================================
    Narrow screens
    ============================================================ */
 @media (max-width: 650px) {
   header { padding: 28px 18px 26px; }
   header h1 { font-size: 24px; }
+  header h2 { font-size: 15.5px; margin-bottom: 12px; }
   header p { letter-spacing: .09em; }
+  footer { padding: 26px 18px 30px; }
   .container { padding: 20px 12px; }
   .kpi-row { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
   .kpi { padding: 12px 14px 14px; }

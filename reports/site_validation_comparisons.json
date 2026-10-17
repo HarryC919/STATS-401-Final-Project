@@ -362,8 +362,8 @@
     "live deployment"
   ],
   "source_sha256": {
-    "site/index.html": "622af7773e0c0d3075881d50251db227422da961a3087f62df5bde9fe4a6316b",
-    "site/css/style.css": "4255c3c83d90d7370b0eda7877eb4bcf16fcf8e5ecac58efe80091c1589a1545",
+    "site/index.html": "80991ec29188497afb8d8fbc7620a48f8bb5c0e66f638ce64ac4f51d50fec185",
+    "site/css/style.css": "66854d5e32e13139959d067089f4ccd9801e9ee7b90d184d9185b7655578fbdb",
     "site/js/app.js": "5c9f3a45bb530f7875aa917517f4caa68c706126a0b35965f7bd77bde4506bf6",
     "site/js/charts.js": "ca24ae438aa25926b741a270972d12cf1b3fc5217b0550bc1292c42e4b383b5b",
     "site/js/aggregate.js": "3cb8fac563555c207c8f4ff0c86dc3c13ff95a6e7067e6ed57282c66e132cab5",
