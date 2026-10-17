@@ -389,8 +389,8 @@ async function start() {
           }
           const selection = scatterBrushLabels;
           d3.select('#scatterChart').selectAll('.scatter-point')
-            .attr('stroke', row => (selection.has(row.label) ? '#d9534f'
-              : (selectedLabel != null && String(row.id) === String(selectedLabel) ? '#14304d' : '#fff')))
+            .attr('stroke', row => (selection.has(row.label) ? '#c14a44'
+              : (selectedLabel != null && String(row.id) === String(selectedLabel) ? '#16304a' : '#fff')))
             .attr('stroke-width', row => (selection.has(row.label) ? 2.4
               : (selectedLabel != null && String(row.id) === String(selectedLabel) ? 2.6 : 1)));
           document.querySelector('#scatter-brush-count').textContent = box

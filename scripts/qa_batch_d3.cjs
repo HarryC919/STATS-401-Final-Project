@@ -317,14 +317,14 @@ async function clickablePoint(page) {
       'the brush reports a highlight-only set');
     const brushedCount = Number(brushNote.match(/Brushed: (\d+)/)[1]);
     const stroked = await page.locator('#scatterChart .scatter-point')
-      .evaluateAll(els => els.filter(el => getComputedStyle(el).stroke === 'rgb(217, 83, 79)').length);
+      .evaluateAll(els => els.filter(el => getComputedStyle(el).stroke === 'rgb(193, 74, 68)').length);
     assert.equal(stroked, brushedCount, 'brushed points carry the highlight stroke');
     assert.ok((await page.locator('#kpis').textContent()).includes('7,001,619'),
       'brushing never changes the national denominator');
     await page.locator('#scatter-clear-brush').click();
     assert.match(await page.locator('#scatter-brush-count').innerText(), /Brush cleared/);
     const cleared = await page.locator('#scatterChart .scatter-point')
-      .evaluateAll(els => els.filter(el => getComputedStyle(el).stroke === 'rgb(217, 83, 79)').length);
+      .evaluateAll(els => els.filter(el => getComputedStyle(el).stroke === 'rgb(193, 74, 68)').length);
     assert.equal(cleared, 0, 'clearing the brush removes the highlight');
     const selectionLeft = await page.locator('#scatterChart .scatter-brush .selection')
       .evaluateAll(boxes => boxes.filter(box => Number(box.getAttribute('width')) > 1).length);
@@ -373,7 +373,7 @@ async function clickablePoint(page) {
     assert.doesNotMatch(scopeAfterFilter, /[1-9]\d* currently brushed/,
       'no stale brushed count survives the filter change');
     const strokesAfterFilter = await page.locator('#scatterChart .scatter-point')
-      .evaluateAll(els => els.filter(el => getComputedStyle(el).stroke === 'rgb(217, 83, 79)').length);
+      .evaluateAll(els => els.filter(el => getComputedStyle(el).stroke === 'rgb(193, 74, 68)').length);
     assert.equal(strokesAfterFilter, 0, 'no highlight strokes survive the filter change');
     const boxAfterFilter = await page.locator('#scatterChart .scatter-brush .selection')
       .evaluateAll(boxes => boxes.filter(box => Number(box.getAttribute('width')) > 1).length);
@@ -408,7 +408,7 @@ async function clickablePoint(page) {
         const ua = els.find(el => el.__data__.label === 'UA');
         return ua ? getComputedStyle(ua).stroke : null;
       });
-    assert.equal(uaStroke, 'rgb(20, 48, 77)', 'the UA point carries the selection stroke');
+    assert.equal(uaStroke, 'rgb(22, 48, 74)', 'the UA point carries the selection stroke');
     await page.locator('#airline-select').selectOption('');
     await page.locator('#tab-scatter section').screenshot({ path: path.join(assets, 'scatter-airlines.png') });
 

@@ -1,184 +1,394 @@
+/* ============================================================
+   Design tokens
+   ============================================================ */
+:root {
+  /* Brand ink (headers, selection strokes, emphasis) */
+  --ink-900: #122a44;
+  --ink-800: #16304a;
+  --ink-700: #1f4468;
 
-  body { font-family: "Segoe UI", Arial, sans-serif; margin: 0; background: #f7f8fa; color: #222; }
-  header { background: #1a3a5c; color: #fff; padding: 32px 48px; }
-  header h1 { margin: 0 0 8px; font-size: 28px; }
-  header p { margin: 0; opacity: .85; }
-  .container { max-width: 1200px; margin: 0 auto; padding: 32px 24px 64px; }
+  /* Data hues: delay = red, cancellation/primary = blue.
+     Category hues (NAS amber, Security green, Late Aircraft purple) match
+     the CAUSE_DEFS constants in js/charts.js — keep them in sync. */
+  --blue: #34689e;
+  --red: #c14a44;
+  --amber: #d99a33;
+  --green: #4e9060;
+  --purple: #7d63a8;
 
-  .tabs {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 24px;
-  }
-  .tab-btn {
-    border: 1px solid #cdd6e0;
-    background: #fff;
-    color: #1a3a5c;
-    padding: 10px 16px;
-    border-radius: 8px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: all .15s;
-  }
-  .tab-btn:hover { background: #eef3fa; }
-  .tab-btn.active {
-    background: #1a3a5c;
-    color: #fff;
-    border-color: #1a3a5c;
-    font-weight: 600;
-  }
+  /* Keyboard focus ring (kept highly visible on both white and navy) */
+  --focus: #e59a2f;
 
-  .tab-panel { display: none; }
-  .tab-panel.active { display: block; }
+  /* Neutrals */
+  --text: #1e2a38;
+  --text-muted: #52657b;
+  --text-subtle: #7d90a3;
+  --border: #dce3ec;
+  --border-strong: #c2cedb;
+  --bg: #f3f5f9;
+  --card: #ffffff;
 
-  section { background: #fff; border-radius: 10px; padding: 24px; margin-bottom: 32px; box-shadow: 0 2px 8px rgba(0,0,0,.06); }
-  section h2 { margin: 0 0 4px; font-size: 20px; }
-  section .sub { color: #666; font-size: 14px; margin-bottom: 16px; }
-  section svg { width: 100%; height: auto; display: block; }
-  .axis text { font-size: 12px; fill: #555; }
-  .axis path, .axis line { stroke: #ccc; }
-  .grid line { stroke: #eee; }
-  .grid path { stroke: none; }
-  .bar { fill: #3b7dd8; }
-  .bar.highlight { fill: #d9534f; }
-  .tooltip {
-    position: fixed; display: none; pointer-events: none; z-index: 10;
-    background: rgba(0,0,0,.8); color: #fff;
-    padding: 6px 10px; border-radius: 6px; font-size: 12px;
-    opacity: 0; transition: opacity .15s;
-  }
-  .pie-label { font-size: 12px; fill: #333; }
-  .pie-legend text { font-size: 12px; fill: #333; }
+  /* Elevation */
+  --shadow-sm: 0 1px 2px rgba(18, 42, 68, .07);
+  --shadow-md: 0 1px 2px rgba(18, 42, 68, .05), 0 6px 20px rgba(18, 42, 68, .07);
+  --shadow-lg: 0 10px 34px rgba(18, 42, 68, .18);
 
-  .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 32px; }
-  .kpi { background: #fff; border-radius: 10px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,.06); }
-  .kpi .label { font-size: 13px; color: #666; }
-  .kpi .value { font-size: 30px; font-weight: 700; margin-top: 6px; }
-  .kpi .value small { font-size: 15px; font-weight: 400; color: #888; }
+  --radius: 14px;
+  --radius-sm: 9px;
 
-  /* ===== Hanchi: flight network map ===== */
-  .network-map-wrap { position: relative; width:100%; border:1px solid #e1e7ed;
-    border-radius:10px; overflow:hidden; background:#fbfdfe; }
-  #networkMap { width:100%; height:auto; display:block; }
-  .map-state { fill:#e8eef2; stroke:#fff; stroke-width:1.1; }
-  .map-state-border { fill:none; stroke:#b4c1ca; stroke-width:.75; pointer-events:none; }
-  .map-route { fill:none; stroke:#5a7180; stroke-opacity:.115; stroke-linecap:round; mix-blend-mode:multiply; }
-  .map-route.top { stroke-opacity:.21; }
-  .map-node { stroke:#fff; stroke-width:1.35; }
-  .map-hub-label { font-size:10px; font-weight:700; fill:#354955; paint-order:stroke;
-    stroke:#fff; stroke-width:3px; stroke-linejoin:round; }
-  .map-legend-box { fill:rgba(255,255,255,.95); stroke:#dbe3e9; stroke-width:1; }
-  .map-legend-title { font-size:12px; font-weight:700; fill:#263640; }
-  .map-legend-text { font-size:10px; fill:#617481; }
+  /* Serif is reserved for headings and the lede paragraph (editorial tone);
+     sans handles body copy, controls, and chart text. Both stacks are
+     system-local so the site keeps working offline. */
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  --font-serif: Georgia, "Iowan Old Style", ui-serif, "Times New Roman", serif;
+}
 
+/* ============================================================
+   Base
+   ============================================================ */
+body {
+  font-family: var(--font-sans);
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14.5px;
+  line-height: 1.55;
+}
 
-.method-note { font-size: 14px; line-height: 1.65; color: #45576a; }
-#load-status, #network-status { font-size: 13px; color: #45576a; }
-.tab-btn:focus-visible { outline: 3px solid #eea638; outline-offset: 3px; }
+header {
+  background: linear-gradient(155deg, var(--ink-900) 0%, #1b3f63 72%, #21496f 100%);
+  color: #fff;
+  padding: 44px 48px 40px;
+  border-bottom: 3px solid var(--amber);
+}
+header h1 {
+  margin: 0 0 12px;
+  font-family: var(--font-serif);
+  font-size: 31px;
+  font-weight: 700;
+  letter-spacing: .01em;
+}
+header p {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  opacity: .75;
+}
 
-/* ===== Batch B: shared month/airline filter bar ===== */
+.container { max-width: 1200px; margin: 0 auto; padding: 34px 24px 72px; }
+
+.method-note {
+  font-family: var(--font-serif);
+  font-size: 15.5px;
+  line-height: 1.7;
+  color: #3c4f64;
+  max-width: 108ch;
+  margin: 0 0 18px;
+}
+#load-status, #network-status { font-size: 13px; color: var(--text-muted); }
+
+/* ============================================================
+   Tabs — segmented control
+   ============================================================ */
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 26px;
+  padding: 5px;
+  background: #e3e9f1;
+  border-radius: 12px;
+}
+.tab-btn {
+  border: 0;
+  background: transparent;
+  color: #3c5068;
+  padding: 9px 15px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  cursor: pointer;
+  transition: background .15s, color .15s, box-shadow .15s;
+}
+.tab-btn:hover { background: rgba(255, 255, 255, .7); color: var(--ink-800); }
+.tab-btn.active {
+  background: var(--card);
+  color: var(--ink-800);
+  font-weight: 600;
+  box-shadow: var(--shadow-sm);
+}
+.tab-btn:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* ============================================================
+   Cards & chart sections
+   ============================================================ */
+section {
+  background: var(--card);
+  border: 1px solid rgba(18, 42, 68, .05);
+  border-radius: var(--radius);
+  padding: 26px 28px;
+  margin-bottom: 34px;
+  box-shadow: var(--shadow-md);
+}
+section h2 {
+  margin: 0 0 6px;
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--ink-800);
+}
+section .sub {
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.65;
+  margin: 0 0 16px;
+  max-width: 110ch;
+}
+section svg { width: 100%; height: auto; display: block; }
+
+.axis text { font-size: 12px; fill: #5b6d80; }
+.axis path, .axis line { stroke: #c9d3de; }
+.grid line { stroke: #e9edf3; }
+.grid path { stroke: none; }
+
+.bar { fill: var(--blue); }
+.bar.highlight { fill: var(--red); }
+.bar-selected { stroke: var(--ink-800); stroke-width: 2.5px; }
+.range-band { fill: var(--blue); opacity: .08; }
+
+.tooltip {
+  position: fixed; display: none; pointer-events: none; z-index: 10;
+  background: rgba(17, 30, 46, .94); color: #fff;
+  padding: 8px 12px; border-radius: 8px; font-size: 12.5px; line-height: 1.5;
+  box-shadow: var(--shadow-lg);
+  opacity: 0; transition: opacity .15s;
+}
+
+.pie-label { font-size: 12px; fill: #3a4c5e; }
+.pie-legend text { font-size: 12px; fill: #3a4c5e; }
+
+.chart-scope { font-size: 12px; fill: var(--text-muted); }
+.chart-empty { font-size: 16px; fill: #a13e38; }
+
+/* ============================================================
+   KPI cards — top accent echoes each metric's data hue
+   ============================================================ */
+.kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-bottom: 34px; }
+.kpi {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 18px 22px 20px;
+  box-shadow: var(--shadow-md);
+  border-top: 3px solid var(--ink-700);
+}
+.kpi:nth-child(2) { border-top-color: var(--red); }
+.kpi:nth-child(3) { border-top-color: var(--blue); }
+.kpi:nth-child(4) { border-top-color: var(--amber); }
+.kpi .label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+}
+.kpi .value {
+  font-size: 31px;
+  font-weight: 700;
+  margin-top: 8px;
+  color: var(--ink-800);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -.01em;
+}
+.kpi .value small { font-size: 15px; font-weight: 500; color: var(--text-subtle); }
+
+/* ============================================================
+   Shared filter bar
+   ============================================================ */
 .filter-bar {
-  display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
-  margin: 0 0 20px; padding: 10px 14px;
-  background: #fff; border: 1px solid #d7dee6; border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,.06);
+  display: flex; flex-wrap: wrap; align-items: center; gap: 12px;
+  margin: 0 0 22px; padding: 14px 18px;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
 }
-.filter-bar label { font-size: 13px; font-weight: 600; color: #33475b; }
-.filter-sep { font-size: 13px; color: #66788a; }
+.filter-bar label {
+  font-size: 12px; font-weight: 700; letter-spacing: .05em;
+  text-transform: uppercase; color: var(--text-subtle);
+}
+.filter-sep { font-size: 13px; color: var(--text-subtle); }
 .filter-bar select {
-  font: inherit; font-size: 14px; padding: 4px 8px;
-  border: 1px solid #b8c4d0; border-radius: 6px; background: #fff; color: #222;
+  font: inherit; font-size: 14px; padding: 6px 10px;
+  border: 1px solid var(--border-strong); border-radius: 8px;
+  background: #fff; color: var(--text);
 }
-#filter-summary { font-size: 13px; color: #45576a; margin-left: auto; }
+#filter-summary { font-size: 13px; color: var(--text-muted); margin-left: auto; }
 #filter-reset {
-  font: inherit; font-size: 14px; padding: 5px 16px; cursor: pointer;
-  border: 1px solid #b8c4d0; border-radius: 6px; background: #fff; color: #1a3a5c;
+  font: inherit; font-size: 14px; padding: 6px 18px; cursor: pointer;
+  border: 1px solid var(--border-strong); border-radius: 8px;
+  background: #fff; color: var(--ink-700);
 }
-#filter-reset:hover { background: #eef3fa; }
-.filter-bar select:focus-visible, #filter-reset:focus-visible { outline: 3px solid #eea638; outline-offset: 2px; }
+#filter-reset:hover { background: #f0f4fa; border-color: #a9b8c9; }
+.filter-bar select:focus-visible, #filter-reset:focus-visible {
+  outline: 3px solid var(--focus); outline-offset: 2px;
+}
 
-.chart-scope { font-size: 12px; fill: #4a5b6c; }
-.chart-empty { font-size: 16px; fill: #8a2b2b; }
-.bar-selected { stroke: #14304d; stroke-width: 2.5px; }
-.range-band { fill: #3b7dd8; opacity: .08; }
+/* ============================================================
+   Per-chart controls, guides, notes
+   ============================================================ */
+.comparison-controls {
+  display: flex; flex-wrap: wrap; gap: 12px 22px;
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  margin: 12px 0; padding: 14px 16px;
+  background: #fafbfd;
+}
+.comparison-controls legend {
+  font-size: 12px; font-weight: 700; letter-spacing: .05em;
+  text-transform: uppercase; color: var(--text-subtle); padding: 0 6px;
+}
+.comparison-controls label {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 7px; font-size: 14px;
+}
+.comparison-controls select, .comparison-controls input {
+  font: inherit; color: var(--text); background: #fff;
+  border: 1px solid var(--border-strong); border-radius: 7px; padding: 6px 8px;
+  max-width: 100%;
+}
+.comparison-controls input { width: 110px; }
+.comparison-controls :focus-visible, .inline-link:focus-visible {
+  outline: 3px solid var(--focus); outline-offset: 2px;
+}
 
-/* ===== Batch D3: volume-reliability scatterplot ===== */
-#scatter-min-volume { width: 180px; accent-color: #1a3a5c; }
-#scatter-min-volume:focus-visible { outline: 3px solid #eea638; outline-offset: 2px; }
-#scatter-min-volume-out { font-variant-numeric: tabular-nums; color: #33475b; font-weight: 600; }
-#scatter-clear-brush {
-  font: inherit; font-size: 13px; padding: 5px 12px; cursor: pointer;
-  border: 1px solid #b8c4d0; border-radius: 6px; background: #fff; color: #1a3a5c;
-}
-#scatter-clear-brush:hover { background: #eef3fa; }
-#scatter-clear-brush:focus-visible { outline: 3px solid #eea638; outline-offset: 2px; }
-#scatter-brush-count { font-size: 13px; color: #45576a; }
-.scatter-brush .selection { stroke: #14304d; }
+.metric-help, .comparison-note { font-size: 13px; line-height: 1.6; color: var(--text-muted); }
 
-/* ===== Batch D2: cause comparison ===== */
-.cause-mode { display: flex; gap: 18px; margin: 10px 0 4px; }
-.cause-mode label { font-size: 14px; color: #33475b; display: inline-flex; align-items: center; gap: 6px; }
-.cause-mode input { accent-color: #1a3a5c; }
-.cause-mode input:focus-visible { outline: 3px solid #eea638; outline-offset: 2px; }
-.cause-none { font-style: italic; }
+.chart-guide { font-size: 13.5px; line-height: 1.65; color: var(--text-muted); margin: 12px 0; }
+.chart-guide summary { cursor: pointer; color: var(--ink-700); font-weight: 600; }
+.chart-guide summary:hover { color: var(--ink-800); }
+.chart-guide summary:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.chart-guide ul { margin: 10px 0 4px; padding-left: 22px; }
+.chart-guide li { margin-bottom: 5px; }
 
-/* ===== Batch C: airport selection, detail, map layers ===== */
-#airport-search {
-  font: inherit; font-size: 14px; padding: 4px 8px; width: 200px;
-  border: 1px solid #b8c4d0; border-radius: 6px; background: #fff; color: #222;
+.inline-link {
+  border: 0; padding: 0; background: none; color: var(--ink-700);
+  font: inherit; text-decoration: underline; cursor: pointer;
 }
-#airport-search:focus-visible { outline: 3px solid #eea638; outline-offset: 2px; }
-#airportChart .bar { cursor: pointer; }
-#detail-status { font-size: 13px; color: #45576a; }
-.detail-heading { font-size: 15px; color: #33475b; margin: 22px 0 6px; }
-.map-node { cursor: pointer; }
-.map-outgoing { fill: none; stroke: #d9534f; stroke-opacity: .55; stroke-linecap: round; }
-.map-airport-selected { fill: rgba(20,48,77,.15); stroke: #14304d; stroke-width: 2.5; }
-.map-airport-label { font-size: 11px; font-weight: 700; fill: #14304d; paint-order: stroke;
-  stroke: #fff; stroke-width: 3px; stroke-linejoin: round; }
-.airport-chooser {
-  position: fixed; z-index: 20; display: grid; gap: 6px; max-width: 330px;
-  background: #fff; border: 1px solid #b8c4d0; border-radius: 10px;
-  box-shadow: 0 4px 16px rgba(0,0,0,.18); padding: 12px 14px;
-}
-.airport-chooser[hidden] { display: none; }
-.airport-chooser p { margin: 0 0 2px; font-size: 13px; font-weight: 600; color: #33475b; }
-.airport-chooser button {
-  font: inherit; font-size: 13px; text-align: left; cursor: pointer;
-  padding: 6px 10px; border: 1px solid #cdd6e0; border-radius: 6px; background: #fff;
-}
-.airport-chooser button:hover { background: #eef3fa; }
-.airport-chooser button:focus-visible { outline: 3px solid #eea638; outline-offset: 1px; }
+.inline-link:hover { color: var(--ink-800); }
 
 .scope-note {
-  font-size: 13px; line-height: 1.5; color: #6b5a23;
-  background: #fdf6e3; border: 1px solid #ead9a8; border-radius: 6px;
-  padding: 6px 10px; margin: 8px 0 0;
+  font-size: 13px; line-height: 1.55; color: #6d5c22;
+  background: #fcf6e7; border: 1px solid #ecdcb0; border-radius: 8px;
+  padding: 8px 12px; margin: 10px 0 0;
 }
 
+/* ============================================================
+   Scatterplot controls (Batch D3)
+   ============================================================ */
+#scatter-min-volume { width: 180px; accent-color: var(--ink-700); }
+#scatter-min-volume:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+#scatter-min-volume-out { font-variant-numeric: tabular-nums; color: var(--ink-700); font-weight: 600; }
+#scatter-clear-brush {
+  font: inherit; font-size: 13px; padding: 6px 13px; cursor: pointer;
+  border: 1px solid var(--border-strong); border-radius: 8px;
+  background: #fff; color: var(--ink-700);
+}
+#scatter-clear-brush:hover { background: #f0f4fa; border-color: #a9b8c9; }
+#scatter-clear-brush:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+#scatter-brush-count { font-size: 13px; color: var(--text-muted); }
+.scatter-brush .selection { stroke: var(--ink-800); }
+
+/* ============================================================
+   Cause comparison controls (Batch D2)
+   ============================================================ */
+.cause-mode { display: flex; flex-wrap: wrap; gap: 12px 20px; margin: 12px 0 6px; }
+.cause-mode label {
+  font-size: 14px; color: var(--text);
+  display: inline-flex; align-items: center; gap: 7px;
+}
+.cause-mode input { accent-color: var(--ink-700); }
+.cause-mode input:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.cause-none { font-style: italic; }
+
+/* ============================================================
+   Airport selection, detail, map layers (Batch C)
+   ============================================================ */
+#airport-search {
+  font: inherit; font-size: 14px; padding: 6px 10px; width: 210px;
+  border: 1px solid var(--border-strong); border-radius: 8px;
+  background: #fff; color: var(--text);
+}
+#airport-search:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+#airportChart .bar { cursor: pointer; }
+#detail-status { font-size: 13px; color: var(--text-muted); }
+.detail-heading {
+  font-family: var(--font-serif);
+  font-size: 17px; font-weight: 700; color: var(--ink-800);
+  margin: 28px 0 8px;
+}
+
+.map-node { cursor: pointer; }
+.map-outgoing { fill: none; stroke: var(--red); stroke-opacity: .55; stroke-linecap: round; }
+.map-airport-selected { fill: rgba(22, 48, 74, .15); stroke: var(--ink-800); stroke-width: 2.5; }
+.map-airport-label {
+  font-size: 11px; font-weight: 700; fill: var(--ink-800);
+  paint-order: stroke; stroke: #fff; stroke-width: 3px; stroke-linejoin: round;
+}
+
+.airport-chooser {
+  position: fixed; z-index: 20; display: grid; gap: 6px; max-width: 330px;
+  background: #fff; border: 1px solid var(--border-strong); border-radius: var(--radius);
+  box-shadow: var(--shadow-lg); padding: 13px 15px;
+}
+.airport-chooser[hidden] { display: none; }
+.airport-chooser p { margin: 0 0 2px; font-size: 13px; font-weight: 600; color: var(--ink-800); }
+.airport-chooser button {
+  font: inherit; font-size: 13px; text-align: left; cursor: pointer;
+  padding: 7px 11px; border: 1px solid var(--border); border-radius: 8px; background: #fff;
+}
+.airport-chooser button:hover { background: #f0f4fa; border-color: #a9b8c9; }
+.airport-chooser button:focus-visible { outline: 3px solid var(--focus); outline-offset: 1px; }
+
+/* ============================================================
+   City network map
+   ============================================================ */
+.network-map-wrap {
+  position: relative; width: 100%;
+  border: 1px solid var(--border); border-radius: var(--radius);
+  overflow: hidden; background: #fcfdfe;
+}
+#networkMap { width: 100%; height: auto; display: block; }
+.map-state { fill: #e9edf3; stroke: #fff; stroke-width: 1.1; }
+.map-state-border { fill: none; stroke: #b8c5d0; stroke-width: .75; pointer-events: none; }
+.map-route {
+  fill: none; stroke: #57707f; stroke-opacity: .115;
+  stroke-linecap: round; mix-blend-mode: multiply;
+}
+.map-route.top { stroke-opacity: .21; }
+.map-node { stroke: #fff; stroke-width: 1.35; }
+.map-hub-label {
+  font-size: 10px; font-weight: 700; fill: #31485a;
+  paint-order: stroke; stroke: #fff; stroke-width: 3px; stroke-linejoin: round;
+}
+.map-legend-box { fill: rgba(255, 255, 255, .95); stroke: #d9e1e9; stroke-width: 1; }
+.map-legend-title { font-size: 12px; font-weight: 700; fill: #22394c; }
+.map-legend-text { font-size: 10px; fill: #5f7383; }
+
+/* ============================================================
+   Narrow screens
+   ============================================================ */
 @media (max-width: 650px) {
-  header { padding: 24px 16px; }
-  header h1 { font-size: 23px; }
+  header { padding: 28px 18px 26px; }
+  header h1 { font-size: 24px; }
+  header p { letter-spacing: .09em; }
   .container { padding: 20px 12px; }
   .kpi-row { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-  .kpi { padding: 12px; }
-  .kpi .value { font-size: 22px; }
+  .kpi { padding: 12px 14px 14px; }
+  .kpi .value { font-size: 23px; }
   section { padding: 14px; overflow-x: auto; }
   section svg { min-width: 700px; }
   .network-map-wrap { min-width: 700px; }
   #filter-summary { margin-left: 0; flex-basis: 100%; }
 }
-
-/* Comparison controls and expandable reading guides. */
-.comparison-controls { display: flex; flex-wrap: wrap; gap: 12px 20px; border: 1px solid #d7dee6; border-radius: 6px; margin: 12px 0; padding: 12px; }
-.comparison-controls legend { font-size: 13px; font-weight: 600; color: #33475b; padding: 0 4px; }
-.comparison-controls label { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 14px; }
-.comparison-controls select, .comparison-controls input { font: inherit; color: #222; background: #fff; border: 1px solid #b8c4d0; border-radius: 4px; padding: 5px 6px; max-width: 100%; }
-.comparison-controls input { width: 110px; }
-.comparison-controls :focus-visible, .inline-link:focus-visible { outline: 3px solid #eea638; outline-offset: 2px; }
-.metric-help, .comparison-note { font-size: 13px; line-height: 1.6; color: #45576a; }
-.chart-guide { font-size: 13px; line-height: 1.6; color: #45576a; margin: 10px 0; }
-.chart-guide summary { cursor: pointer; color: #1a3a5c; }
-.chart-guide summary:focus-visible { outline: 3px solid #eea638; outline-offset: 2px; }
-.inline-link { border: 0; padding: 0; background: none; color: #1a3a5c; font: inherit; text-decoration: underline; cursor: pointer; }

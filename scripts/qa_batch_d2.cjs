@@ -14,8 +14,8 @@ const CAUSES = ['CarrierDelay', 'WeatherDelay', 'NASDelay', 'SecurityDelay', 'La
 const CAUSE_LABELS = { CarrierDelay: 'Carrier', WeatherDelay: 'Weather', NASDelay: 'NAS',
                        SecurityDelay: 'Security', LateAircraftDelay: 'Late Aircraft' };
 /* The five stable category colors as rendered (inline styles beat the .bar CSS). */
-const CAUSE_FILLS = ['rgb(59, 125, 216)', 'rgb(217, 83, 79)', 'rgb(240, 173, 78)',
-                     'rgb(92, 184, 92)', 'rgb(142, 107, 191)'];
+const CAUSE_FILLS = ['rgb(52, 104, 158)', 'rgb(193, 74, 68)', 'rgb(217, 154, 51)',
+                     'rgb(78, 144, 96)', 'rgb(125, 99, 168)'];
 
 function csvRows(text) {
   const records = [];

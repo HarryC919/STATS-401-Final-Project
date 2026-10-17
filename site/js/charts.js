@@ -128,29 +128,29 @@ function drawMonthly(data, options = {}) {
     .call(d3.axisLeft(y).ticks(5).tickFormat(d3.format(".0%")));
 
   g.append("path").datum(data)
-    .attr("fill", "none").attr("stroke", "#d9534f").attr("stroke-width", 2.5)
+    .attr("fill", "none").attr("stroke", "#c14a44").attr("stroke-width", 2.5)
     .attr("d", d3.line().defined(d => hasNumber(d[delayKey])).x(d => x(+d[monthKey])).y(d => y(+d[delayKey])));
 
   g.append("path").datum(data)
-    .attr("fill", "none").attr("stroke", "#3b7dd8").attr("stroke-width", 2.5)
+    .attr("fill", "none").attr("stroke", "#34689e").attr("stroke-width", 2.5)
     .attr("d", d3.line().defined(d => hasNumber(d[cancelKey])).x(d => x(+d[monthKey])).y(d => y(+d[cancelKey])));
 
   g.selectAll(".dot-delay").data(data.filter(d => hasNumber(d[delayKey]))).join("circle")
     .attr("cx", d => x(+d[monthKey])).attr("cy", d => y(d[delayKey]))
-    .attr("r", 4).attr("fill", "#d9534f")
+    .attr("r", 4).attr("fill", "#c14a44")
     .on("mousemove", (e,d) => showTip(`Month ${d[monthKey]}<br>Delay rate: ${fmtPct(d[delayKey])}`, e))
     .on("mouseleave", hideTip);
 
   g.selectAll(".dot-cancel").data(data.filter(d => hasNumber(d[cancelKey]))).join("circle")
     .attr("cx", d => x(+d[monthKey])).attr("cy", d => y(d[cancelKey]))
-    .attr("r", 4).attr("fill", "#3b7dd8")
+    .attr("r", 4).attr("fill", "#34689e")
     .on("mousemove", (e,d) => showTip(`Month ${d[monthKey]}<br>Cancellation rate: ${fmtPct(d[cancelKey])}`, e))
     .on("mouseleave", hideTip);
 
   const legend = g.append("g").attr("transform", `translate(${w - 160}, 0)`);
-  legend.append("rect").attr("width",12).attr("height",12).attr("fill","#d9534f");
+  legend.append("rect").attr("width",12).attr("height",12).attr("fill","#c14a44");
   legend.append("text").attr("x",18).attr("y",10).text("Delay rate").attr("font-size",12);
-  legend.append("rect").attr("y",20).attr("width",12).attr("height",12).attr("fill","#3b7dd8");
+  legend.append("rect").attr("y",20).attr("width",12).attr("height",12).attr("fill","#34689e");
   legend.append("text").attr("x",18).attr("y",30).text("Cancellation rate").attr("font-size",12);
 }
 
@@ -202,7 +202,7 @@ function drawAirline(data, national, options = {}) {
   g.append("line")
     .attr("x1", x(avg)).attr("x2", x(avg))
     .attr("y1", 0).attr("y2", h)
-    .attr("stroke", "#999").attr("stroke-dasharray", "4 4");
+    .attr("stroke", "#9aa7b4").attr("stroke-dasharray", "4 4");
 
   g.append("text")
     .attr("class", "chart-scope airline-reference")
@@ -244,8 +244,8 @@ function comparisonRowTargets(g, data, y, width, labelKey, metric, onSelect, sel
   events(g.selectAll('.comparison-zero').data(zeros).join('circle')
     .attr('class', 'comparison-zero').attr('cx', 0)
     .attr('cy', row => y(row[labelKey]) + y.bandwidth() / 2).attr('r', 3)
-    .attr('fill', '#3b7dd8')
-    .attr('stroke', row => String(row.OriginAirportID) === String(selectedId) ? '#14304d' : 'none')
+    .attr('fill', '#34689e')
+    .attr('stroke', row => String(row.OriginAirportID) === String(selectedId) ? '#16304a' : 'none')
     .attr('stroke-width', 2.5));
   g.selectAll('.comparison-zero-label').data(zeros).join('text')
     .attr('class', 'comparison-zero-label').attr('x', 7)
@@ -389,7 +389,7 @@ function drawCauses(data) {
 
   const color = d3.scaleOrdinal()
     .domain(totals.map(d => d.label))
-    .range(["#3b7dd8", "#d9534f", "#f0ad4e", "#5cb85c", "#8e6bbf"]);
+    .range(["#34689e", "#c14a44", "#d99a33", "#4e9060", "#7d63a8"]);
 
   const g = svg.append("g").attr("transform", `translate(${W / 2 - 120},${H / 2})`);
 
@@ -416,7 +416,7 @@ function drawCauses(data) {
       pos2[0] = radius * 0.95 * (midAngle(d) < Math.PI ? 1 : -1);
       return [pos, outerArc.centroid(d), pos2];
     })
-    .attr("stroke", "#999").attr("fill", "none").attr("stroke-width", 1);
+    .attr("stroke", "#9aa7b4").attr("fill", "none").attr("stroke-width", 1);
 
   arcs.append("text")
     .attr("class", "pie-label")
@@ -442,11 +442,11 @@ function drawCauses(data) {
 
 /* ===== Batch C: airport detail views ===== */
 const CAUSE_DEFS = [
-  { key: "CarrierDelay_minutes",      label: "Carrier",       color: "#3b7dd8" },
-  { key: "WeatherDelay_minutes",      label: "Weather",       color: "#d9534f" },
-  { key: "NASDelay_minutes",          label: "NAS",           color: "#f0ad4e" },
-  { key: "SecurityDelay_minutes",     label: "Security",      color: "#5cb85c" },
-  { key: "LateAircraftDelay_minutes", label: "Late Aircraft", color: "#8e6bbf" },
+  { key: "CarrierDelay_minutes",      label: "Carrier",       color: "#34689e" },
+  { key: "WeatherDelay_minutes",      label: "Weather",       color: "#c14a44" },
+  { key: "NASDelay_minutes",          label: "NAS",           color: "#d99a33" },
+  { key: "SecurityDelay_minutes",     label: "Security",      color: "#4e9060" },
+  { key: "LateAircraftDelay_minutes", label: "Late Aircraft", color: "#7d63a8" },
 ];
 
 // Reported cause composition for one airport under the current filters: shares of
@@ -816,7 +816,7 @@ function drawCauseComparison(target, rows, options = {}) {
   if (options.selectedLabel != null) {
     g.selectAll(".tick text")
       .filter(d => d === options.selectedLabel)
-      .attr("font-weight", 700).attr("fill", "#14304d");
+      .attr("font-weight", 700).attr("fill", "#16304a");
   }
 
   // Legend: the five stable category colors.
@@ -888,7 +888,7 @@ function drawScatter(target, rows, options = {}) {
 
   const selectedLabel = options.selectedLabel ?? null;
   const strokeFor = row => (selectedLabel != null && String(row.id) === String(selectedLabel)
-    ? { stroke: "#14304d", width: 2.6 } : { stroke: "#fff", width: 1 });
+    ? { stroke: "#16304a", width: 2.6 } : { stroke: "#fff", width: 1 });
 
   // The brush layer sits UNDER the points: dragging on empty areas defines the
   // highlight set, while clicks land on the points themselves.
@@ -914,7 +914,7 @@ function drawScatter(target, rows, options = {}) {
     .attr("cx", row => x(+row.scheduled_flights))
     .attr("cy", row => y(+row.arrival_delay_rate))
     .attr("r", 5)
-    .attr("fill", "#3b7dd8")
+    .attr("fill", "#34689e")
     .attr("fill-opacity", 0.75)
     .attr("stroke", row => strokeFor(row).stroke)
     .attr("stroke-width", row => strokeFor(row).width)
