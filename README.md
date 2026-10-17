@@ -43,6 +43,16 @@ The city-level Flight Network Map is the first tab and the initial/reset view.
 Selecting a different airport preserves the active tab; open Airport Detail
 explicitly when you want its detailed statistics.
 
+City-pair connections and selected-airport outgoing routes use their pooled
+arrival-delay rates for line color, sharing the city legend's clipped scale:
+blue below the national average, purple at the average, and red above it.
+City routes use 40% opacity (60% for the busiest 25) to reduce clutter; selected-airport
+routes use 95% opacity. The saturated midpoint and minimum city-route width keep
+near-average routes visible against the pale map. Line width represents scheduled
+flight volume. Gray dashed routes have no
+eligible arrivals; observed 0% rates use the blue end of the scale. Hover a route
+for its counts, denominator, and exact rate.
+
 The dashboard has ten tabs: monthly trends, airline comparison, airport comparison,
 directed-route comparison, Airport Detail, temporal patterns, national reported
 delay-cause composition, comparative cause bars, volume–reliability scatterplot, and
@@ -188,6 +198,13 @@ state, aggregation, ranking, and display-name checks. Navigation checks run with
 map-first/reset view, airport selection across all ten tabs, readable code labels,
 and narrow-screen layout. Outputs are `docs/assets/navigation/` and
 [reports/site_validation_navigation.json](reports/site_validation_navigation.json).
+
+`NODE_PATH=<playwright modules> node scripts/qa_map_colors.cjs` checks rendered
+city-pair and directed-route strokes against pooled counts and the shared legend,
+including alpha-composited contrast against land, synthetic missing/zero cases,
+and a real-pointer tooltip check. Evidence
+is stored in [reports/site_validation_map_colors.json](reports/site_validation_map_colors.json)
+and `docs/assets/map-colors/`.
 
 JavaScript checks run on **Node 24** (pinned in [.nvmrc](.nvmrc) and declared by the
 `engines` field in `package.json` — it documents intent but does not stop a directly

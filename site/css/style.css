@@ -334,7 +334,7 @@ section svg { width: 100%; height: auto; display: block; }
 }
 
 .map-node { cursor: pointer; }
-.map-outgoing { fill: none; stroke: var(--red); stroke-opacity: .55; stroke-linecap: round; }
+.map-outgoing { fill: none; stroke-opacity: .95; stroke-linecap: round; }
 .map-airport-selected { fill: rgba(22, 48, 74, .15); stroke: var(--ink-800); stroke-width: 2.5; }
 .map-airport-label {
   font-size: 11px; font-weight: 700; fill: var(--ink-800);
@@ -367,10 +367,10 @@ section svg { width: 100%; height: auto; display: block; }
 .map-state { fill: #e9edf3; stroke: #fff; stroke-width: 1.1; }
 .map-state-border { fill: none; stroke: #b8c5d0; stroke-width: .75; pointer-events: none; }
 .map-route {
-  fill: none; stroke: #57707f; stroke-opacity: .115;
-  stroke-linecap: round; mix-blend-mode: multiply;
+  fill: none; stroke-opacity: .4;
+  stroke-linecap: round;
 }
-.map-route.top { stroke-opacity: .21; }
+.map-route.top { stroke-opacity: .6; }
 .map-node { stroke: #fff; stroke-width: 1.35; }
 .map-hub-label {
   font-size: 10px; font-weight: 700; fill: #31485a;

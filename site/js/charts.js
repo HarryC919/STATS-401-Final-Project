@@ -986,13 +986,7 @@ function drawNetworkMap(nationalRow, isLatest = null, selection = null, onPickCi
 
     const routeWidth = d3.scaleSqrt()
       .domain(d3.extent(proutes,d=>+d.scheduled_flights))
-      .range([0.35,2.25]);
-
-    svg.append("g").selectAll("path")
-      .data(proutes).join("path")
-      .attr("class",d=>d.rank<=25 ? "map-route top":"map-route")
-      .attr("stroke-width",d=>routeWidth(+d.scheduled_flights))
-      .attr("d",d=>cityArc(d.a.x,d.a.y,d.b.x,d.b.y));
+      .range([0.7,2.25]);
 
     const rates = pcities.filter(d=>+d.scheduled_flights>=10000 && hasNumber(d.arrival_delay_rate))
       .map(d=>+d.arrival_delay_rate).sort(d3.ascending);
@@ -1003,8 +997,29 @@ function drawNetworkMap(nationalRow, isLatest = null, selection = null, onPickCi
 
     const color=d3.scaleDiverging()
       .domain([low,national,high])
-      .interpolator(t=>d3.interpolateRgbBasis(["#2c7bb6","#abd9e9","#f1f1f1","#fdae61","#d7191c"])(t))
+      // Keep the national midpoint visible against the pale map background.
+      .interpolator(d3.piecewise(d3.interpolateLab, ["#2166ac","#8064a2","#d7191c"]))
       .clamp(true);
+
+    // Routes use the same legend as cities. Derive their rates from pooled
+    // delayed/eligible counts; an unobserved rate must never become zero.
+    const routeColor = row => {
+      const rate = nationalRate(row);
+      return rate == null ? '#777' : color(rate);
+    };
+    const routeDash = row => nationalRate(row) == null ? '4 3' : null;
+    svg.append("g").selectAll("path")
+      .data(proutes).join("path")
+      .attr("class",d=>d.rank<=25 ? "map-route top":"map-route")
+      .style("stroke", routeColor)
+      .attr("stroke-dasharray", routeDash)
+      .attr("stroke-width",d=>routeWidth(+d.scheduled_flights))
+      .attr("d",d=>cityArc(d.a.x,d.a.y,d.b.x,d.b.y))
+      .on("mousemove", (event, row) => showTip(
+        `${row.city_a} ↔ ${row.city_b}<br>Flights: ${fmtNum(+row.scheduled_flights)}`
+        + `<br>Delay rate: ${fmtPct(nationalRate(row))}<br>Eligible arrivals: ${fmtNum(+row.eligible_arrivals)}`
+        + `<br>Delayed arrivals: ${fmtNum(+row.delayed_arrivals)}<br>City pair · both directions · full-year, all airlines`, event))
+      .on("mouseleave", hideTip);
 
     const radius=d3.scaleSqrt()
       .domain([0,d3.max(pcities,d=>+d.scheduled_flights)])
@@ -1048,10 +1063,14 @@ function drawNetworkMap(nationalRow, isLatest = null, selection = null, onPickCi
         svg.append("g").selectAll("path")
           .data(shown).join("path")
           .attr("class", "map-outgoing")
+          .style("stroke", routeColor)
+          .attr("stroke-dasharray", routeDash)
           .attr("stroke-width", d => outgoingWidth(+d.scheduled_flights))
           .attr("d", d => cityArc(origin[0], origin[1], d.xy[0], d.xy[1]))
           .on("mousemove", (e,d) => showTip(
-            `${selection.code} → ${d.Dest}<br>Flights: ${fmtNum(+d.scheduled_flights)}<br>Delay rate: ${fmtPct(+d.arrival_delay_rate)}<br>Directed · full-year, all airlines`, e))
+            `${selection.code} → ${d.Dest}<br>Flights: ${fmtNum(+d.scheduled_flights)}<br>Delay rate: ${fmtPct(nationalRate(d))}`
+            + `<br>Eligible arrivals: ${fmtNum(+d.eligible_arrivals)}<br>Delayed arrivals: ${fmtNum(+d.delayed_arrivals)}`
+            + `<br>Directed · full-year, all airlines`, e))
           .on("mouseleave", hideTip);
         svg.append("circle")
           .attr("class", "map-airport-selected")
@@ -1086,7 +1105,7 @@ function cityArc(x1,y1,x2,y2) {
 
 function drawNetworkLegend(svg,radius,low,national,high,W,color) {
   const g=svg.append("g").attr("transform",`translate(${W-236},34)`);
-  g.append("rect").attr("class","map-legend-box").attr("width",208).attr("height",235).attr("rx",10);
+  g.append("rect").attr("class","map-legend-box").attr("width",208).attr("height",290).attr("rx",10);
 
   g.append("text").attr("class","map-legend-title").attr("x",14).attr("y",24).text("Traffic volume");
   const vals=[50000,150000,300000], xs=[34,92,158];
@@ -1112,13 +1131,17 @@ function drawNetworkLegend(svg,radius,low,national,high,W,color) {
   g.append("text").attr("class","map-legend-text").attr("x",194).attr("y",161).attr("text-anchor","end")
     .text(d3.format(".1%")(high));
 
-  g.append("text").attr("class","map-legend-title").attr("x",14).attr("y",190).text("Route arcs");
+  g.append("text").attr("class","map-legend-title").attr("x",14).attr("y",190).text("Route width = volume");
   g.append("line").attr("x1",14).attr("x2",72).attr("y1",207).attr("y2",207)
     .attr("stroke","#5a7180").attr("stroke-width",1).attr("stroke-opacity",.35);
   g.append("text").attr("class","map-legend-text").attr("x",82).attr("y",211).text("lower volume");
   g.append("line").attr("x1",14).attr("x2",72).attr("y1",225).attr("y2",225)
     .attr("stroke","#5a7180").attr("stroke-width",3).attr("stroke-opacity",.45);
   g.append("text").attr("class","map-legend-text").attr("x",82).attr("y",229).text("higher volume");
+  g.append("line").attr("x1",14).attr("x2",72).attr("y1",249).attr("y2",249)
+    .attr("stroke","#777").attr("stroke-width",2).attr("stroke-dasharray","4 3");
+  g.append("text").attr("class","map-legend-text").attr("x",82).attr("y",253).text("No eligible arrivals");
+  g.append("text").attr("class","map-legend-text").attr("x",14).attr("y",277).text("Color scale: cities and routes");
 }
 
 

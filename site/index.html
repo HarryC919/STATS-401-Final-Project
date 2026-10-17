@@ -233,14 +233,14 @@
   <div class="tab-panel active" id="tab-network">
     <section>
       <h2>City-level Flight Network Overview</h2>
-      <p class="sub">Locate major departure hubs and busy city connections, then choose an airport to explore its outgoing routes. Circle area shows annual scheduled departures; circle color shows the arrival-delay rate of outgoing flights.</p>
+      <p class="sub">Locate major departure hubs and busy city connections, then choose an airport to explore its outgoing routes. Circle area and line width show flight volume; circle and line colors show arrival-delay rates using the same scale.</p>
       <details class="chart-guide">
         <summary>How to read this view</summary>
         <ul>
-          <li>The overview pools airports into cities. Curved lines show up to 220 busiest projectable city-pairs, combining both directions; line width represents flight volume. Within-city flights are not drawn as city-pair edges.</li>
+          <li>The overview pools airports into cities. Curved lines show up to 220 busiest projectable city-pairs, combining both directions. Line width represents scheduled flights; line color represents delayed / eligible arrivals for that connection. Within-city flights are not drawn as city-pair edges.</li>
           <li>Click a city to choose an airport; cities with several airports ask which one you mean. A selected airport adds its busiest outgoing directed routes at full-year, all-airline scope. Filtered statistics are in Airport Detail.</li>
           <li>The map stays at full-year 2025 scope. It uses departure-weighted airport coordinates and excludes nonprojectable locations only from drawing, not from national totals. All airports remain reachable through the airport selector.</li>
-          <li>Delay rate uses eligible arrivals. Color is clipped to a documented percentile range, so similar colors do not guarantee identical rates; hover a city for its value and member airports.</li>
+          <li>Circles and both route layers share the legend's clipped color scale: blue below the national average, purple at the average, and red above it. Gray dashed routes have no eligible arrivals; an observed 0% rate uses the blue end. Similar colors do not guarantee identical rates beyond the clipped range. Hover cities or route lines for exact values.</li>
         </ul>
       </details>
       <div class="network-map-wrap">
@@ -248,7 +248,7 @@
       </div>
       <p id="network-status" role="status"></p>
       <div class="sub" style="margin-top:10px;margin-bottom:0">
-        City locations are departure-weighted airport coordinates, not city centers. Territories outside the Albers USA projection remain in national totals. Color is clipped to the 5th–95th percentile range among cities with at least 10,000 departures; all projectable cities are drawn. Gray means no eligible arrivals.
+        City locations are departure-weighted airport coordinates, not city centers. Territories outside the Albers USA projection remain in national totals. The shared city/route color scale is clipped to the 5th–95th percentile range among projectable cities with at least 10,000 departures; all projectable cities are drawn. Gray circles and gray dashed routes mean no eligible arrivals.
       </div>
       <p class="scope-note">Fixed scope: this city-level overview always shows the full-year 2025, all reporting airlines, all origin airports, so it does not respond to the month/airline filters. The selected airport is highlighted with its busiest outgoing routes at that same fixed scope; filtered statistics live in Airport Detail.</p>
     </section>

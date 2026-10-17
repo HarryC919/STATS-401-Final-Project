@@ -1,0 +1,42 @@
+{
+  "checks": "passed",
+  "browser": "155.0.8059.82",
+  "cityRouteCount": 220,
+  "outgoingRouteCount": 20,
+  "colorDomain": [
+    0.15194116723464107,
+    0.2230745794306666,
+    0.2572920993266121
+  ],
+  "palette": {
+    "belowNational": "#2166ac",
+    "national": "#8064a2",
+    "aboveNational": "#d7191c",
+    "interpolation": "piecewise Lab"
+  },
+  "minimumRouteContrast": {
+    "city": 1.6458090765314146,
+    "outgoing": 3.886716362240835,
+    "background": "map land fill; alpha-composited stroke; intersections excluded; descriptive measurement only"
+  },
+  "checked": [
+    "computed strokes reconcile with pooled route counts",
+    "shared city and route legend scale",
+    "fixed scope under filters",
+    "observed zero versus missing synthetic routes",
+    "real-pointer missing-rate tooltip",
+    "390px layout"
+  ],
+  "notChecked": [
+    "performance timing",
+    "participant study",
+    "live deployment"
+  ],
+  "source_sha256": {
+    "site/js/charts.js": "ca24ae438aa25926b741a270972d12cf1b3fc5217b0550bc1292c42e4b383b5b",
+    "site/js/app.js": "5c9f3a45bb530f7875aa917517f4caa68c706126a0b35965f7bd77bde4506bf6",
+    "site/css/style.css": "4255c3c83d90d7370b0eda7877eb4bcf16fcf8e5ecac58efe80091c1589a1545",
+    "site/index.html": "622af7773e0c0d3075881d50251db227422da961a3087f62df5bde9fe4a6316b",
+    "site/data/manifest.json": "49f01de58e5ee3c29b3eeafe665db0d0f8c5624ec61a62db8308868a871c8222"
+  }
+}

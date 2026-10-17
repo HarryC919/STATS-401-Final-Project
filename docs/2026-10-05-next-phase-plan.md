@@ -59,6 +59,20 @@ not implement any batch. That initial assignment is historical; current status f
   covers all 14 reporting codes. [Navigation evidence](../reports/site_validation_navigation.json)
   checks selection across all ten tabs. Reporting-carrier codes and stable airport
   IDs remain the analytical keys, and no rate definition or data aggregate changed.
+- **Map route-color repair: implemented on October 17.** Removed fixed gray city
+  route strokes and fixed red airport-route strokes. Both now use pooled delayed /
+  eligible counts and the same clipped legend scale as city nodes. Width still
+  represents scheduled flights; missing rates use gray dashed lines, while observed
+  zeros use the blue end. Route tooltips expose counts and the actual rate, and the
+  legend explicitly distinguishes width from color. [Color validation](../reports/site_validation_map_colors.json)
+  reconciles computed strokes for 220 city-pair routes and 20 ORD outgoing routes,
+  with synthetic zero/missing fixtures and real-pointer missing-rate hover.
+  The follow-up visibility refinement uses blue–purple–red with the national
+  average at the purple midpoint and a 0.7-unit minimum city-route width. City-route
+  opacity is 40% (60% for the busiest 25) to reduce clutter; selected-airport routes
+  remain at 95%. The validation records alpha-composited route contrast against
+  land as descriptive evidence, without imposing a contrast threshold or claiming
+  accessibility certification.
 - **Data baseline:** the retained [verification record](../reports/verification.json)
   covers all twelve months of 2025 and 7,001,619 flight records. This documentation
   update does not rerun preparation or full-year verification.
