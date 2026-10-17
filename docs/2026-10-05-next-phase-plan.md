@@ -2,6 +2,8 @@
 
 Date: October 5, 2026
 
+Last status update: October 17, 2026
+
 ## Goal and ownership
 
 Build a complete exploration flow: national overview -> month/airline selection ->
@@ -14,8 +16,105 @@ handoffs and controls Git commits and publication. Completing implementation doe
 not constitute acceptance. Do not begin the next batch until its release is explicit.
 
 This plan authorizes the scope of each batch only when that batch is assigned.
-The initial assignment is **Batch A only**. No implementation has been performed
-as part of writing this plan.
+At creation, the initial assignment was **Batch A only** and writing the plan did
+not implement any batch. That initial assignment is historical; current status follows.
+
+## Current status: October 17, 2026
+
+- **A–D3: implemented and functionally validated.** The project owner confirmed
+  validation on October 16. Filter-ready data, shared filters, Airport Detail,
+  geographic entry points, the temporal heatmap, comparative cause bars, and the
+  volume–reliability scatterplot are present. The retained
+  [B](../reports/site_validation_batch_b.json),
+  [C](../reports/site_validation_batch_c.json),
+  [D1](../reports/site_validation_batch_d1.json),
+  [D2](../reports/site_validation_batch_d2.json), and
+  [D3](../reports/site_validation_batch_d3.json) browser reports record passing
+  checks of that implementation. They remain historical snapshots; the current
+  refinement has separate evidence below.
+- **Refinements 1 and 2: implemented on October 17.** The header describes
+  interactive exploration, and the fixed national cause view links to the working
+  Cause Comparison tab. Airport and route comparisons offer arrival-delay versus
+  cancellation rate, busiest/highest/lowest ranking, and a minimum sample.
+  The [new browser report](../reports/site_validation_comparisons.json) records
+  independently pooled counts, rankings, metric-specific sample thresholds,
+  exclusions, national references, Reset, zero-rate interactions, and mobile layout.
+- **View explanations and airline-label repair: implemented on October 17.** All
+  ten tabs have a visible metric/purpose introduction and an expandable reading
+  guide. The airline national-reference label now occupies a separate band above
+  the plotting area. [Browser evidence](../reports/site_validation_view_guides.json)
+  covers guide interaction at 1440px and 390px, and measured label/bar separation
+  in annual and filtered states. These are layout checks, not timing measurements.
+- **Appearance refresh:** the dashboard now uses shared CSS design tokens, system
+  font stacks, updated cards/controls, and a coordinated chart palette. The retained
+  comparison and guide evidence was refreshed after these appearance changes.
+  Cause-category and scatter-highlight color assertions were updated to the new
+  palette; their numeric, missingness, filter, and Reset checks remain in place.
+- **Data baseline:** the retained [verification record](../reports/verification.json)
+  covers all twelve months of 2025 and 7,001,619 flight records. This documentation
+  update does not rerun preparation or full-year verification.
+- **Batch E:** functional validation is confirmed; documentation is synchronized
+  with the implemented dashboard. Quantitative performance evidence remains
+  unrecorded. No measured loading-time distribution or achievement of the cached
+  update target is claimed. Final publication is still the owner's action; this
+  update does not verify the deployed website.
+- **Classmate study: deferred by the owner.** Recruiting and testing classmates is
+  not practical at present. It does not block current documentation or refinement.
+  No participant responses, task completion times, clarity ratings, or empirical
+  usability conclusions are available. Automated checks are not a participant study.
+- The Batch A–D3 handoffs retain their original review-stage wording and revision
+  history. This section supersedes their pending-review and remaining-work statements.
+  The interim document and its images remain unchanged historical submission evidence.
+
+## Refinement priorities after functional validation
+
+Items 1, 2, and 5 were approved and implemented; items 3–4 remain recommendations,
+not new batch assignments. Preserve existing metric definitions and obtain agreement
+on a concrete change before implementing the remaining recommendations.
+
+1. **Completed: make the interface describe the current product accurately.**
+   Replaced the outdated static-analysis header and planned-cause-comparison wording.
+   Added a direct action from the fixed national cause overview to Cause Comparison,
+   retaining visible fixed-scope versus filtered-scope explanations.
+2. **Completed: make reliability questions easier to answer.** Airport and route
+   comparisons retain the busiest-groups default and add highest/lowest rate ranking,
+   delay/cancellation metric selection, and a minimum sample. Counts are pooled
+   before recomputing rates. Delay thresholds use eligible arrivals; cancellation
+   thresholds use scheduled records. Thresholds apply before choosing the top 15.
+   The selected airport is appended only if it meets the sample/missingness rules,
+   with an explicit note when outside the ranking. The page states the filtered
+   scope, qualifying groups, missing/zero-denominator exclusions, and sample exclusions.
+   The national reference retains selected months across all airlines and airports,
+   independent of the sample threshold. Global Reset restores both comparison panels
+   even when the shared filters are already at their defaults. Tooltips expose counts
+   and denominators; visible zero markers and row targets retain access to zero rates.
+3. **Provide keyboard and touch access to chart details.** SVG marks currently use
+   mouse movement for tooltips and clicks for airport selection. Add focusable
+   selection targets with Enter/Space activation, focus-triggered detail text, and
+   a touch-friendly way to inspect values without accidentally opening another view.
+   A compact accessible data table could expose the same counts and rates. Check
+   focus placement after opening Airport Detail and after dismissing the city chooser.
+   Existing keyboard checks of filter controls do not establish chart accessibility.
+4. **Measure loading and aggregation before choosing an optimization.**
+   `loadRoutePartitions()` reads all 352 origin files for the filtered national route
+   comparison; the twelve temporal files total 23,564,871 uncompressed CSV bytes in
+   the current snapshot. These are workload observations, not measured bottlenecks.
+   Separate transfer, CSV parsing, pooling, and rendering costs. If measurements
+   justify it, consider an additional compact national-route aggregate, smaller
+   startup dependencies, and cached pooled results for repeated temporal/scatter
+   scopes. Any new aggregate must be generated and reconcile with the existing
+   counts; do not hand-edit publication data or claim faster interaction from size alone.
+5. **Completed: explain each view in two layers.** All ten tabs have a short visible
+   introduction explaining the measure and its purpose. Expandable guides cover
+   denominators, filter/highlight scope, reading the marks, and relevant limitations.
+   The temporal guide explains local scheduled hours, low samples, and missing cells;
+   cause guides distinguish minute shares from flight counts; scatterplot guidance
+   explains the log axis and highlight-only brushing. Airport Detail explains the
+   full-year context trend separately from filtered headline/cause/route statistics.
+   Guide controls support keyboard open/close, and expanded text stays within the
+   page at desktop and narrow-screen widths. The airline reference label was also
+   moved out of the bars into a reserved upper band, preserving its numeric value
+   and selected-month national scope.
 
 ## Sources and current baseline
 
@@ -23,7 +122,8 @@ Read [AGENTS.md](../AGENTS.md), [proposal.md](../proposal.md),
 [interim-check.md](interim-check.md), [README.md](../README.md), and the relevant
 current source files before implementation. Preserve edits made since this plan.
 
-The October 5 read-only inspection found:
+The original October 5 read-only inspection found the following historical baseline
+(superseded by the current-status section above):
 
 - Six static D3 views, national KPI cards, tabs, and hover details on the first five
   charts. The city map is a static overview.
@@ -73,7 +173,8 @@ Execute A -> B -> C -> D1/D2/D3 -> E, with separate acceptance for each batch.
 
 1. **Milestone 1:** A-C deliver the complete airport exploration flow.
 2. **Milestone 2:** D1-D3 cover the remaining proposal questions and interactions.
-3. **Milestone 3:** E provides evaluation evidence and final delivery readiness.
+3. **Milestone 3:** E provides technical evaluation evidence and final delivery
+   readiness, with the classmate study explicitly deferred as of October 16.
 
 No new deadline was supplied. These are dependency milestones, not calendar promises;
 do not reuse elapsed week numbers from the original proposal as current deadlines.
@@ -235,7 +336,8 @@ causal evidence. Use shared month/airline state with explicitly labeled view sco
   browser, dataset size, repeat count, and timing distribution rather than one best run.
 - Treat the interim document's sub-500-ms cached update goal as a target to evaluate,
   not an already achieved result. Report misses and their causes honestly.
-- Prepare participant tasks, source-derived answer keys, and anonymous feedback forms.
+- Participant materials are optional while the study is deferred. If resumed,
+  prepare tasks, source-derived answer keys, and anonymous feedback forms first.
 - After validation, update README and subsequent-stage evidence. Keep interim assets
   intact: `scripts/render_site.cjs` currently overwrites `docs/assets/interim/`, so
   separate the new stage's output before refreshing figures.
@@ -244,14 +346,22 @@ causal evidence. Use shared month/airline state with explicitly labeled view sco
 
 ### Human responsibilities and acceptance
 
-The group recruits and tests 3-5 classmates. Agents may prepare materials and analyze
-real feedback, but must not invent participant responses. Collect task correctness,
-completion time, help requests, misinterpretations, comments, and clarity ratings.
-Prioritize incorrect readings and blocked tasks, then retest affected interactions.
+The original target was to recruit and test 3–5 classmates. **On October 16, the
+owner deferred this work because arranging classmate participation is not practical.**
+It is not a gate for current documentation and refinement. Keep the absence of
+participant evidence explicit in delivery materials; do not claim demonstrated
+usability or invent responses.
 
-Acceptance requires traceable functionality evidence, actual performance measurements,
-honest participant-study status, current documentation, and no unsupported completion
-or causal claims. If participant data is unavailable, mark that portion pending.
+If the study resumes, agents may prepare materials and analyze real feedback.
+Collect task correctness, completion time, help requests, misinterpretations,
+comments, and clarity ratings. Prioritize incorrect readings and blocked tasks,
+then retest affected interactions.
+
+Technical acceptance requires traceable functionality evidence, actual performance
+measurements, current documentation, and no unsupported completion or causal claims.
+The owner's functional-validation confirmation does not establish a timing result.
+Until timings are recorded, keep that technical evaluation item open and the
+sub-500-ms goal unmeasured. Record the participant study separately as deferred.
 
 ## Verification commands and conditions
 

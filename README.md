@@ -7,7 +7,8 @@ Explore geographic differences, monthly patterns, and reported delay attribution
 BTS reporting-carrier data. The verified baseline contains **7,001,619 flight records**
 across all twelve months of 2025. Comparisons are descriptive, not causal.
 
-**Start here:** [Interim check and six actual visualizations](docs/interim-check.md) ·
+**Start here:** [Current status and refinement priorities](docs/2026-10-05-next-phase-plan.md#current-status-october-17-2026) ·
+[Historical interim check](docs/interim-check.md) ·
 [Project proposal](proposal.md) · [Data documentation](data/README.md) ·
 [Data quality report](reports/quality_report.md)
 
@@ -28,7 +29,7 @@ Open **<http://127.0.0.1:8765/>**. Stop with **Ctrl+C**. If that port is occupie
 use `uv run --locked python scripts/serve_site.py --port 8766` and open port 8766.
 The server never stops another process and serves only `site/`.
 
-The small [website data snapshot](site/data/) and pinned [vendor assets](site/vendor/)
+The [website data snapshot](site/data/) and pinned [vendor assets](site/vendor/)
 are included, so viewing does not require raw data, a frontend build, or CDN access.
 Python is managed by uv at version 3.13. A first `uv sync` may need network access.
 
@@ -38,10 +39,15 @@ document's embedded figures are visible directly on the GitHub repository page.
 
 ## Current implementation
 
-Six real-data D3 views are implemented: monthly trends, airline comparison, airport
-comparison, directed-route comparison, reported delay-cause composition, and a city-level
-network map. KPI cards provide national context. Tabs and hover details on the first five
-charts work.
+The dashboard has ten tabs: monthly trends, airline comparison, airport comparison,
+directed-route comparison, Airport Detail, temporal patterns, national reported
+delay-cause composition, comparative cause bars, volume–reliability scatterplot, and
+the city-level network map. KPI cards provide national context.
+
+Every tab includes a short explanation of what it measures and what questions it
+helps answer, plus an expandable reading guide for definitions, filter scope,
+interactions, and limitations. The airline comparison places its national reference
+label in a dedicated band above the bars so it cannot obscure them.
 
 A shared filter bar drives month-range and reporting-airline selection across the KPI
 cards and the monthly, airline, airport, and route views; rates are recomputed from
@@ -53,8 +59,34 @@ outgoing directed routes. The temporal-patterns heatmap shows the arrival-delay 
 by weekday and scheduled departure hour, the cause-comparison view stacks reported
 attribution across airports or airlines, and the volume–reliability scatterplot plots
 volume (log scale) against delay rate with a minimum-volume filter and a highlight-only
-brush. Performance measurement and the participant study remain future work.
-See the [interim check](docs/interim-check.md) for scope and evaluation plans.
+brush.
+
+As of **October 16, 2026**, Batches A–D3 are implemented and the project owner has
+confirmed functional validation. The retained [B–D3 browser reports](reports/)
+record passing checks of the historical implementation. The original handoffs
+retain their review-stage details as history;
+the [current plan](docs/2026-10-05-next-phase-plan.md#current-status-october-17-2026)
+supersedes their outstanding-review and remaining-work statements.
+
+The **October 17 refinement** adds arrival-delay/cancellation metric selection,
+busiest/highest/lowest rankings, and a minimum sample to airport and directed-route
+comparisons. Rates are recomputed from pooled counts. The sample threshold applies
+to eligible arrivals for delay and scheduled flights for cancellation, before the
+top 15 are chosen. A qualifying selected airport may be added outside that ranking;
+the page states when this happens. Missing denominators and groups below the
+threshold are counted explicitly. Reset restores both comparisons to delay rate,
+the busiest groups, and minimum sample 0. Zero rates remain inspectable, and each
+comparison includes a metric definition and an expandable reading guide. The fixed
+national cause overview now links directly to the filtered Cause Comparison tab.
+See the [comparison validation](reports/site_validation_comparisons.json) for
+independent numeric checks and current source/manifest hashes.
+
+The classmate study is **deferred at the owner's request** and does not block the
+current documentation and refinement work. No participant outcomes or usability
+ratings are claimed. Quantitative loading and interaction timings have not been
+recorded in the repository, so the cached-update goal of less than 500 ms remains
+unmeasured. The [interim check](docs/interim-check.md) and its figures remain the
+September submission record.
 
 ## Reproduce the data
 
@@ -103,7 +135,8 @@ and omit that variable. The tool checks six charts, data/mark counts, national b
 missing-value semantics, tooltips, tabs, keyboard activation, mobile overflow, and loading
 failures/retry. It refreshes `docs/assets/interim/*.png` and
 [reports/site_validation.json](reports/site_validation.json). Inspect the figures visually
-after export. These checks are separate from the planned user study and performance evaluation.
+after export. These checks are separate from performance measurement and from the
+classmate study, which is currently deferred.
 
 Batch B adds two focused checks that never touch the interim figures:
 `node scripts/test_filter_state.mjs` unit-tests the pure filter-state and pooling
@@ -118,7 +151,24 @@ adds `scripts/qa_batch_d1.cjs` for the weekday × hour heatmap; D2 adds
 `scripts/qa_batch_d3.cjs` for the volume–reliability scatterplot (each with its own
 `docs/assets/batch-*/` and `reports/site_validation_batch_*.json`).
 
-Both checks run on **Node 24** (pinned in [.nvmrc](.nvmrc) and declared by the
+The current comparison checks run with
+`NODE_PATH=<playwright modules> node scripts/qa_comparisons.cjs` (the same
+`SITE_URL` and `CHROME_PATH` settings apply). They also require the locked Python
+environment to independently pool publication counts. Outputs go to
+`docs/assets/comparison-refinement/` and
+`reports/site_validation_comparisons.json`, preserving the historical batch and
+interim figures. The checks cover all metric/ranking combinations, thresholds,
+counts, national references, Reset, zero-rate hover/selection, the cause-tab link,
+and narrow-screen controls.
+
+Guide and airline-label layout checks run with
+`NODE_PATH=<playwright modules> node scripts/qa_view_guides.cjs` using the same
+browser settings. They test all ten guides at desktop and 390px widths, keyboard
+open/close, and actual reference-text bounds against the airline bars. Separate
+screenshots are in `docs/assets/view-guides/` and results in
+[reports/site_validation_view_guides.json](reports/site_validation_view_guides.json).
+
+JavaScript checks run on **Node 24** (pinned in [.nvmrc](.nvmrc) and declared by the
 `engines` field in `package.json` — it documents intent but does not stop a directly
 invoked `node`; CI installs the same version from `.nvmrc`).
 Before running them locally, install and select that version with

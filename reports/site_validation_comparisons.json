@@ -1,0 +1,375 @@
+{
+  "checks": "passed",
+  "browser": "155.0.8059.82",
+  "cases": [
+    {
+      "scope": "annual",
+      "kind": "airport",
+      "metric": "delay",
+      "ranking": "busiest",
+      "minSample": 100,
+      "groupsShown": 15,
+      "first": {
+        "label": "DFW",
+        "scheduled_flights": 315854,
+        "eligible_arrivals": 306185,
+        "delayed_arrivals": 87789,
+        "cancelled_flights": 8706,
+        "diverted_flights": 963,
+        "rate": 0.2867188137890491
+      },
+      "referenceNumerator": 1534638,
+      "referenceDenominator": 6879484
+    },
+    {
+      "scope": "annual",
+      "kind": "airport",
+      "metric": "delay",
+      "ranking": "highest",
+      "minSample": 100,
+      "groupsShown": 15,
+      "first": {
+        "label": "CKB",
+        "scheduled_flights": 205,
+        "eligible_arrivals": 199,
+        "delayed_arrivals": 103,
+        "cancelled_flights": 5,
+        "diverted_flights": 1,
+        "rate": 0.5175879396984925
+      },
+      "referenceNumerator": 1534638,
+      "referenceDenominator": 6879484
+    },
+    {
+      "scope": "annual",
+      "kind": "airport",
+      "metric": "delay",
+      "ranking": "lowest",
+      "minSample": 100,
+      "groupsShown": 15,
+      "first": {
+        "label": "EKO",
+        "scheduled_flights": 504,
+        "eligible_arrivals": 503,
+        "delayed_arrivals": 18,
+        "cancelled_flights": 1,
+        "diverted_flights": 0,
+        "rate": 0.03578528827037773
+      },
+      "referenceNumerator": 1534638,
+      "referenceDenominator": 6879484
+    },
+    {
+      "scope": "annual",
+      "kind": "airport",
+      "metric": "cancellation",
+      "ranking": "busiest",
+      "minSample": 100,
+      "groupsShown": 15,
+      "first": {
+        "label": "DCA",
+        "scheduled_flights": 142506,
+        "eligible_arrivals": 136684,
+        "delayed_arrivals": 37089,
+        "cancelled_flights": 5501,
+        "diverted_flights": 321,
+        "rate": 0.03860188342946964
+      },
+      "referenceNumerator": 102876,
+      "referenceDenominator": 7001619
+    },
+    {
+      "scope": "annual",
+      "kind": "airport",
+      "metric": "cancellation",
+      "ranking": "highest",
+      "minSample": 100,
+      "groupsShown": 15,
+      "first": {
+        "label": "ADK",
+        "scheduled_flights": 105,
+        "eligible_arrivals": 97,
+        "delayed_arrivals": 16,
+        "cancelled_flights": 8,
+        "diverted_flights": 0,
+        "rate": 0.0761904761904762
+      },
+      "referenceNumerator": 102876,
+      "referenceDenominator": 7001619
+    },
+    {
+      "scope": "annual",
+      "kind": "airport",
+      "metric": "cancellation",
+      "ranking": "lowest",
+      "minSample": 100,
+      "groupsShown": 15,
+      "first": {
+        "label": "TWF",
+        "scheduled_flights": 716,
+        "eligible_arrivals": 715,
+        "delayed_arrivals": 35,
+        "cancelled_flights": 0,
+        "diverted_flights": 1,
+        "rate": 0
+      },
+      "referenceNumerator": 102876,
+      "referenceDenominator": 7001619
+    },
+    {
+      "scope": "annual",
+      "kind": "airport",
+      "metric": "cancellation",
+      "ranking": "lowest",
+      "minSample": 0,
+      "groupsShown": 15,
+      "first": {
+        "label": "TWF",
+        "scheduled_flights": 716,
+        "eligible_arrivals": 715,
+        "delayed_arrivals": 35,
+        "cancelled_flights": 0,
+        "diverted_flights": 1,
+        "rate": 0
+      },
+      "referenceNumerator": 102876,
+      "referenceDenominator": 7001619
+    },
+    {
+      "scope": "annual",
+      "kind": "route",
+      "metric": "delay",
+      "ranking": "busiest",
+      "minSample": 100,
+      "groupsShown": 15,
+      "first": {
+        "label": "ATL → MCO",
+        "scheduled_flights": 8143,
+        "eligible_arrivals": 8022,
+        "delayed_arrivals": 2560,
+        "cancelled_flights": 92,
+        "diverted_flights": 29,
+        "rate": 0.31912241336325103
+      },
+      "referenceNumerator": 1534638,
+      "referenceDenominator": 6879484
+    },
+    {
+      "scope": "annual",
+      "kind": "route",
+      "metric": "delay",
+      "ranking": "highest",
+      "minSample": 100,
+      "groupsShown": 15,
+      "first": {
+        "label": "ROA → SFB",
+        "scheduled_flights": 128,
+        "eligible_arrivals": 125,
+        "delayed_arrivals": 84,
+        "cancelled_flights": 3,
+        "diverted_flights": 0,
+        "rate": 0.672
+      },
+      "referenceNumerator": 1534638,
+      "referenceDenominator": 6879484
+    },
+    {
+      "scope": "annual",
+      "kind": "route",
+      "metric": "delay",
+      "ranking": "lowest",
+      "minSample": 100,
+      "groupsShown": 15,
+      "first": {
+        "label": "SLC → HLN",
+        "scheduled_flights": 725,
+        "eligible_arrivals": 720,
+        "delayed_arrivals": 20,
+        "cancelled_flights": 3,
+        "diverted_flights": 2,
+        "rate": 0.027777777777777776
+      },
+      "referenceNumerator": 1534638,
+      "referenceDenominator": 6879484
+    },
+    {
+      "scope": "annual",
+      "kind": "route",
+      "metric": "cancellation",
+      "ranking": "busiest",
+      "minSample": 100,
+      "groupsShown": 15,
+      "first": {
+        "label": "DCA → BOS",
+        "scheduled_flights": 9131,
+        "eligible_arrivals": 8829,
+        "delayed_arrivals": 2391,
+        "cancelled_flights": 299,
+        "diverted_flights": 3,
+        "rate": 0.0327455919395466
+      },
+      "referenceNumerator": 102876,
+      "referenceDenominator": 7001619
+    },
+    {
+      "scope": "annual",
+      "kind": "route",
+      "metric": "cancellation",
+      "ranking": "highest",
+      "minSample": 100,
+      "groupsShown": 15,
+      "first": {
+        "label": "ASE → AUS",
+        "scheduled_flights": 167,
+        "eligible_arrivals": 143,
+        "delayed_arrivals": 70,
+        "cancelled_flights": 23,
+        "diverted_flights": 1,
+        "rate": 0.1377245508982036
+      },
+      "referenceNumerator": 102876,
+      "referenceDenominator": 7001619
+    },
+    {
+      "scope": "annual",
+      "kind": "route",
+      "metric": "cancellation",
+      "ranking": "lowest",
+      "minSample": 100,
+      "groupsShown": 15,
+      "first": {
+        "label": "PHX → HNL",
+        "scheduled_flights": 1346,
+        "eligible_arrivals": 1338,
+        "delayed_arrivals": 181,
+        "cancelled_flights": 0,
+        "diverted_flights": 8,
+        "rate": 0
+      },
+      "referenceNumerator": 102876,
+      "referenceDenominator": 7001619
+    },
+    {
+      "scope": "annual",
+      "kind": "route",
+      "metric": "cancellation",
+      "ranking": "lowest",
+      "minSample": 0,
+      "groupsShown": 15,
+      "first": {
+        "label": "PHX → HNL",
+        "scheduled_flights": 1346,
+        "eligible_arrivals": 1338,
+        "delayed_arrivals": 181,
+        "cancelled_flights": 0,
+        "diverted_flights": 8,
+        "rate": 0
+      },
+      "referenceNumerator": 102876,
+      "referenceDenominator": 7001619
+    },
+    {
+      "scope": "annual",
+      "kind": "airport",
+      "metric": "delay",
+      "ranking": "busiest",
+      "minSample": 0,
+      "groupsShown": 15,
+      "first": {
+        "label": "DFW",
+        "scheduled_flights": 315854,
+        "eligible_arrivals": 306185,
+        "delayed_arrivals": 87789,
+        "cancelled_flights": 8706,
+        "diverted_flights": 963,
+        "rate": 0.2867188137890491
+      },
+      "referenceNumerator": 1534638,
+      "referenceDenominator": 6879484
+    },
+    {
+      "scope": "annual",
+      "kind": "route",
+      "metric": "delay",
+      "ranking": "busiest",
+      "minSample": 0,
+      "groupsShown": 15,
+      "first": {
+        "label": "ATL → MCO",
+        "scheduled_flights": 8143,
+        "eligible_arrivals": 8022,
+        "delayed_arrivals": 2560,
+        "cancelled_flights": 92,
+        "diverted_flights": 29,
+        "rate": 0.31912241336325103
+      },
+      "referenceNumerator": 1534638,
+      "referenceDenominator": 6879484
+    },
+    {
+      "scope": "uaJanMar",
+      "kind": "airport",
+      "metric": "cancellation",
+      "ranking": "highest",
+      "minSample": 500,
+      "groupsShown": 15,
+      "first": {
+        "label": "DCA",
+        "scheduled_flights": 1500,
+        "eligible_arrivals": 1447,
+        "delayed_arrivals": 264,
+        "cancelled_flights": 51,
+        "diverted_flights": 2,
+        "rate": 0.034
+      },
+      "referenceNumerator": 30640,
+      "referenceDenominator": 1645503
+    },
+    {
+      "scope": "uaJanMar",
+      "kind": "route",
+      "metric": "cancellation",
+      "ranking": "highest",
+      "minSample": 500,
+      "groupsShown": 15,
+      "first": {
+        "label": "DCA → IAH",
+        "scheduled_flights": 548,
+        "eligible_arrivals": 524,
+        "delayed_arrivals": 86,
+        "cancelled_flights": 22,
+        "diverted_flights": 2,
+        "rate": 0.040145985401459854
+      },
+      "referenceNumerator": 30640,
+      "referenceDenominator": 1645503
+    }
+  ],
+  "checked": [
+    "independent pooled counts and all ranking/metric combinations",
+    "metric-specific denominators and exclusions",
+    "reference rate remains national under airline and sample filters",
+    "default-scope Reset",
+    "all-excluded state and selected-airport sample enforcement",
+    "zero-rate real hover and airport selection",
+    "distinct percent ticks for small/all-zero rates",
+    "cause comparison navigation",
+    "390px layout"
+  ],
+  "notChecked": [
+    "performance timing",
+    "participant study",
+    "live deployment"
+  ],
+  "source_sha256": {
+    "site/index.html": "a21edd783a258042c3fa620e5ee737675b5101a8ccfb8ba7b61876a5759659b6",
+    "site/css/style.css": "bc5e1c6f7bf3a31c77531e5820a9449e995b264d5ff5d54b19aa1244e97472b5",
+    "site/js/app.js": "ad781f2b41040e9feee697fa0e52e382b1321ff64b1dd883923e2a08b9f549a5",
+    "site/js/charts.js": "24ed87af9981e19c7f4bc68ed159df482d6898a558befcff72e91721d9b595ab",
+    "site/js/aggregate.js": "3cb8fac563555c207c8f4ff0c86dc3c13ff95a6e7067e6ed57282c66e132cab5",
+    "site/js/metrics.js": "e4754610b394f075766a2ee6d5883d9a1009d9a3f29d321948adcfa6c99126b3",
+    "site/js/state.js": "83160fe0b953f57bfdbea850be22aa71e33981f2608ab4113dd162f747666394",
+    "site/js/data.js": "5c0ba4a9e8e5887904ac7f32d92864f21b11c465bd6c64803b9bb7eb7412bc59",
+    "site/data/manifest.json": "49f01de58e5ee3c29b3eeafe665db0d0f8c5624ec61a62db8308868a871c8222"
+  }
+}
