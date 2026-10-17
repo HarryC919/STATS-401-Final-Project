@@ -169,3 +169,16 @@
   .network-map-wrap { min-width: 700px; }
   #filter-summary { margin-left: 0; flex-basis: 100%; }
 }
+
+/* Comparison controls and expandable reading guides. */
+.comparison-controls { display: flex; flex-wrap: wrap; gap: 12px 20px; border: 1px solid #d7dee6; border-radius: 6px; margin: 12px 0; padding: 12px; }
+.comparison-controls legend { font-size: 13px; font-weight: 600; color: #33475b; padding: 0 4px; }
+.comparison-controls label { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 14px; }
+.comparison-controls select, .comparison-controls input { font: inherit; color: #222; background: #fff; border: 1px solid #b8c4d0; border-radius: 4px; padding: 5px 6px; max-width: 100%; }
+.comparison-controls input { width: 110px; }
+.comparison-controls :focus-visible, .inline-link:focus-visible { outline: 3px solid #eea638; outline-offset: 2px; }
+.metric-help, .comparison-note { font-size: 13px; line-height: 1.6; color: #45576a; }
+.chart-guide { font-size: 13px; line-height: 1.6; color: #45576a; margin: 10px 0; }
+.chart-guide summary { cursor: pointer; color: #1a3a5c; }
+.chart-guide summary:focus-visible { outline: 3px solid #eea638; outline-offset: 2px; }
+.inline-link { border: 0; padding: 0; background: none; color: #1a3a5c; font: inherit; text-decoration: underline; cursor: pointer; }

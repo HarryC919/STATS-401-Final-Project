@@ -3,7 +3,7 @@ import { drawKPIs, drawMonthly, drawAirline, drawAirport, drawRoute, drawCauses,
          WEEKDAY_NAMES, LOW_SAMPLE_THRESHOLD, clearChart, chartError } from './charts.js';
 import { createFilterState } from './state.js';
 import { loadCsv, loadRoutePartition, loadRoutePartitions, loadTemporalPartitions } from './data.js';
-import { filterRows, poolAll, poolBy, poolByMonth } from './aggregate.js';
+import { filterRows, poolAll, poolBy, poolByMonth, COMPARISON_METRICS } from './aggregate.js';
 
 const status = document.querySelector('#load-status');
 const buttons = [...document.querySelectorAll('.tab-btn')];
@@ -50,6 +50,27 @@ async function start() {
   let scatterMinVolume = 0;
   let scatterBrushLabels = new Set();
   let scatterClearBrush = null;
+  const comparisonOptions = {};
+  const comparisonDefaults = () => ({ metric: 'delay', ranking: 'busiest', minSample: 0 });
+
+  function syncComparisonControls(prefix) {
+    const options = comparisonOptions[prefix];
+    const metric = COMPARISON_METRICS[options.metric];
+    document.querySelector(`#${prefix}-metric`).value = options.metric;
+    document.querySelector(`#${prefix}-ranking`).value = options.ranking;
+    document.querySelector(`#${prefix}-min-sample`).value = options.minSample;
+    document.querySelector(`#${prefix}-sample-label`).textContent = `Minimum ${metric.sampleLabel}`;
+    const definition = options.metric === 'delay'
+      ? 'Arrival-delay rate = arrivals at least 15 minutes late / eligible arrivals. Eligible arrivals exclude cancelled, diverted, and missing-delay records.'
+      : 'Cancellation rate = cancelled flights / all scheduled flights, including cancellations and diversions.';
+    const ordering = options.ranking === 'busiest'
+      ? 'The busiest qualifying groups are selected by scheduled flights, then ordered from highest to lowest rate.'
+      : `Groups are selected and ordered from ${options.ranking === 'highest' ? 'highest to lowest' : 'lowest to highest'} rate.`;
+    document.querySelector(`#${prefix}-metric-help`).textContent = definition;
+    document.querySelector(`#${prefix}-reading-help`).textContent = ordering
+      + ' Red bars exceed the national rate for the selected months across all airlines and airports; this reference ignores the minimum sample.'
+      + ' A minimum of 0 applies no extra sample cutoff; increase it to avoid rankings dominated by very small groups.';
+  }
 
   // Shared filter controls: one month range and one airline for every filterable view.
   const monthStart = document.querySelector('#month-start');
@@ -118,6 +139,11 @@ async function start() {
     if (scatterClearBrush) scatterClearBrush(); // clears the selection box + handles
     document.querySelector('#scatter-brush-count').textContent =
       'Brush cleared — no groups are highlighted.';
+    for (const prefix of ['airport', 'route']) {
+      comparisonOptions[prefix] = comparisonDefaults();
+      syncComparisonControls(prefix);
+      drawn.delete(`tab-${prefix}`);
+    }
     state.reset();
     activate(buttons[0]); // Reset returns to the national overview
   });
@@ -207,13 +233,18 @@ async function start() {
       nationalReference(), { selectedAirline: state.snapshot().airline }),
     'tab-airport': () => drawAirport(
       poolBy(filterRows(airportMonth, state.snapshot()), AIRPORT_KEYS),
-      nationalReference(), { selectedId: state.snapshot().airport, onSelect: selectAirport }),
+      nationalReference(), { ...comparisonOptions.airport,
+        scopeLabel: `${scopeText(state.snapshot()).months} · ${scopeText(state.snapshot()).carrier} · all origin airports`,
+        selectedId: state.snapshot().airport, onSelect: selectAirport }),
     'tab-route': async isLatest => {
       // Airport selection does not change this comparison; it lives in the detail
       // view. Default month/airline scope reuses the annual snapshot.
       const rows = state.isFilterDefault() ? routeAnnual : await loadRoutePartitions();
       if (!isLatest()) return; // a newer selection superseded this render
-      drawRoute(poolBy(filterRows(rows, state.snapshot()), ROUTE_KEYS), nationalReference());
+      drawRoute(poolBy(filterRows(rows, state.snapshot()), ROUTE_KEYS), nationalReference(), {
+        ...comparisonOptions.route,
+        scopeLabel: `${scopeText(state.snapshot()).months} · ${scopeText(state.snapshot()).carrier} · all directed routes`,
+      });
     },
     'tab-detail': async isLatest => {
       const snapshot = state.snapshot();
@@ -430,6 +461,8 @@ async function start() {
       return;
     }
     if (isStateDependent(id)) clearChart(id); // never show stale marks from another filter scope
+    const comparisonNote = document.querySelector(`#${id.replace('tab-', '')}-comparison-note`);
+    if (comparisonNote) comparisonNote.textContent = 'Updating comparison for the current controls…';
     status.textContent = isStateDependent(id) ? 'Updating chart…' : 'Rendering chart…';
     renderInFlight = token;
     try {
@@ -440,6 +473,7 @@ async function start() {
     } catch (error) {
       if (token !== renderToken) return;
       chartError(id, `Chart could not load: ${error.message}. Select the tab to retry or change the filters.`);
+      if (comparisonNote) comparisonNote.textContent = 'Comparison unavailable. Select this tab again to retry.';
       status.textContent = `Chart could not load: ${error.message}. Select the tab to retry or change the filters.`;
       console.error(error);
     } finally {
@@ -512,6 +546,26 @@ async function start() {
   document.querySelector('#scatter-clear-brush').addEventListener('click', () => {
     // Moving the brush to null fires the cleared-set path; styling follows there.
     if (scatterClearBrush) scatterClearBrush();
+  });
+
+  for (const prefix of ['airport', 'route']) {
+    comparisonOptions[prefix] = comparisonDefaults();
+    syncComparisonControls(prefix);
+    for (const suffix of ['metric', 'ranking', 'min-sample']) {
+      document.querySelector(`#${prefix}-${suffix}`).addEventListener('change', () => {
+        comparisonOptions[prefix] = {
+          metric: document.querySelector(`#${prefix}-metric`).value,
+          ranking: document.querySelector(`#${prefix}-ranking`).value,
+          minSample: Math.max(0, Math.floor(Number(document.querySelector(`#${prefix}-min-sample`).value) || 0)),
+        };
+        syncComparisonControls(prefix);
+        drawn.delete(`tab-${prefix}`);
+        renderActiveTab();
+      });
+    }
+  }
+  document.querySelector('#open-cause-comparison').addEventListener('click', () => {
+    activate(buttons.find(button => button.dataset.tab === 'tab-cause-compare'));
   });
 
   buttons.forEach(button => {

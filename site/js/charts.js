@@ -1,4 +1,5 @@
 import { hasNumber, nationalRate, causeTotals } from "./metrics.js";
+import { selectComparison } from './aggregate.js';
 const tooltip = d3.select("#tooltip");
 function showTip(html, event) {
   tooltip.html(html)
@@ -157,7 +158,7 @@ function drawAirline(data, national, options = {}) {
   const svg = d3.select("#airlineChart");
   svg.selectAll("*").remove();
   const W = 1100, H = 520;
-  const M = { top: 20, right: 80, bottom: 40, left: 140 };
+  const M = { top: 48, right: 80, bottom: 40, left: 140 };
   const w = W - M.left - M.right, h = H - M.top - M.bottom;
 
   const nameKey = "Reporting_Airline";
@@ -204,9 +205,53 @@ function drawAirline(data, national, options = {}) {
     .attr("stroke", "#999").attr("stroke-dasharray", "4 4");
 
   g.append("text")
-    .attr("x", x(avg) + 4).attr("y", 12)
+    .attr("class", "chart-scope airline-reference")
+    .attr("x", -M.left + 6).attr("y", -20)
     .attr("font-size", 11).attr("fill", "#666")
     .text(`National avg ${fmtPct(avg)} (${REFERENCE_SCOPE})`);
+}
+
+function comparisonSummary(prefix, result, options) {
+  const { metric } = result;
+  const noun = prefix === 'airport' ? 'airports' : 'directed routes';
+  const element = document.querySelector(`#${prefix}-comparison-note`);
+  const selection = result.selectedExtra ? ' Selected airport added outside the top 15.'
+    : result.selectedExcluded ? ' Selected airport has no qualifying rate at this minimum sample.' : '';
+  element.textContent = `${options.scopeLabel}. Showing ${result.rows.length} of ${result.qualifiedCount} qualifying ${noun}`
+    + ` (${result.total} groups in scope). Excluded: ${result.excludedMissing} with missing data or zero denominator;`
+    + ` ${result.excludedSample} below ${fmtNum(options.minSample ?? 0)} ${metric.sampleLabel}.${selection}`;
+}
+
+function comparisonTip(row, label, metric) {
+  return `${label}<br>Flights: ${fmtNum(+row.scheduled_flights)}`
+    + `<br>${metric.tooltipLabel}: ${fmtPct(row.comparison_rate)}`
+    + `<br>${metric.numeratorLabel}: ${fmtNum(+row[metric.numerator])}`
+    + `<br>Denominator: ${fmtNum(+row[metric.denominator])} ${metric.sampleLabel}`;
+}
+
+function comparisonRowTargets(g, data, y, width, labelKey, metric, onSelect, selectedId) {
+  const events = marks => marks
+    .on('mousemove', (event, row) => showTip(comparisonTip(row, row[labelKey], metric), event))
+    .on('mouseleave', hideTip)
+    .on('click', (event, row) => { if (onSelect) onSelect(row.OriginAirportID); });
+  events(g.selectAll('.comparison-hit').data(data).join('rect')
+    .attr('class', 'comparison-hit').attr('x', 0).attr('y', row => y(row[labelKey]))
+    .attr('width', width).attr('height', y.bandwidth()).attr('fill', 'transparent')
+    .style('pointer-events', 'all').style('cursor', onSelect ? 'pointer' : null));
+  // Keep the bar at its true zero width while providing a visible zero and a
+  // real pointer target for reading counts or selecting an airport.
+  const zeros = data.filter(row => row.comparison_rate === 0);
+  events(g.selectAll('.comparison-zero').data(zeros).join('circle')
+    .attr('class', 'comparison-zero').attr('cx', 0)
+    .attr('cy', row => y(row[labelKey]) + y.bandwidth() / 2).attr('r', 3)
+    .attr('fill', '#3b7dd8')
+    .attr('stroke', row => String(row.OriginAirportID) === String(selectedId) ? '#14304d' : 'none')
+    .attr('stroke-width', 2.5));
+  g.selectAll('.comparison-zero-label').data(zeros).join('text')
+    .attr('class', 'comparison-zero-label').attr('x', 7)
+    .attr('y', row => y(row[labelKey]) + y.bandwidth() / 2)
+    .attr('dominant-baseline', 'middle').attr('font-size', 11).attr('fill', '#45576a')
+    .style('pointer-events', 'none').text('0.0%');
 }
 
 function drawAirport(data, national, options = {}) {
@@ -218,28 +263,20 @@ function drawAirport(data, national, options = {}) {
 
   const nameKey = "Origin";
   const idKey = "OriginAirportID";
-  const volKey  = "scheduled_flights";
-  const valKey  = "arrival_delay_rate";
-
-  data = data.filter(d => d[nameKey] && hasNumber(d[valKey]) && hasNumber(d[volKey]));
+  const valKey = 'comparison_rate';
+  const result = selectComparison(data, options);
+  const { metric } = result;
+  comparisonSummary('airport', result, options);
+  data = result.rows;
   if (data.length === 0) {
-    emptyState(svg);
+    emptyState(svg, 'No airports have an observed rate at the selected minimum sample.');
     return;
   }
-  const pool = data;
-  data.sort((a,b) => d3.descending(+a[volKey], +b[volKey]));
-  data = data.slice(0, 15);
-  // Keep the comparison context: a selected airport outside the busiest 15 is
-  // appended so the highlight stays visible.
-  if (options.selectedId != null && !data.some(d => Number(d[idKey]) === Number(options.selectedId))) {
-    const selected = pool.find(d => Number(d[idKey]) === Number(options.selectedId));
-    if (selected) data.push(selected);
-  }
-  data.sort((a,b) => d3.descending(+a[valKey], +b[valKey]));
-  const avg = nationalRate(national);
+  const avg = Number(national?.[metric.denominator]) > 0
+    ? Number(national[metric.numerator]) / Number(national[metric.denominator]) : null;
 
   const x = d3.scaleLinear()
-    .domain([0, d3.max(data, d => +d[valKey]) * 1.1])
+    .domain([0, d3.max(data, d => +d[valKey]) * 1.1 || .01])
     .nice().range([0, w]);
 
   const y = d3.scaleBand()
@@ -250,27 +287,28 @@ function drawAirport(data, national, options = {}) {
 
   g.append("g").attr("class", "axis")
     .attr("transform", `translate(0,${h})`)
-    .call(d3.axisBottom(x).ticks(5).tickFormat(d3.format(".0%")));
+    .call(d3.axisBottom(x).ticks(5).tickFormat(x.tickFormat(5, '%')));
 
   g.append("g").attr("class", "axis").call(d3.axisLeft(y));
 
+  comparisonRowTargets(g, data, y, w, nameKey, metric, options.onSelect, options.selectedId);
   g.selectAll(".bar").data(data).join("rect")
     .attr("class", d => "bar" + (+d[valKey] > avg ? " highlight" : "")
       + (Number(d[idKey]) === Number(options.selectedId) ? " bar-selected" : ""))
     .attr("x", 0).attr("y", d => y(d[nameKey]))
     .attr("width", d => x(+d[valKey])).attr("height", y.bandwidth())
     .on("mousemove", (e,d) => showTip(
-      `${d[nameKey]}<br>Flights: ${fmtNum(+d[volKey])}<br>Delay rate: ${fmtPct(+d[valKey])}`, e))
+      comparisonTip(d, d[nameKey], metric), e))
     .on("mouseleave", hideTip)
     .on("click", (e,d) => { if (options.onSelect) options.onSelect(d[idKey]); });
 
   g.append("text")
     .attr("x", -M.left + 6).attr("y", -6)
     .attr("class", "chart-scope")
-    .text(`Reference: national avg ${fmtPct(avg)} (${REFERENCE_SCOPE})`);
+    .text(`Reference: national ${metric.label.toLowerCase()} ${fmtPct(avg)} (${REFERENCE_SCOPE})`);
 }
 
-function drawRoute(data, national) {
+function drawRoute(data, national, options = {}) {
   const svg = d3.select("#routeChart");
   svg.selectAll("*").remove();
   const W = 1100, H = 520;
@@ -279,25 +317,23 @@ function drawRoute(data, national) {
 
   const originKey = "Origin";
   const destKey   = "Dest";
-  const volKey    = "scheduled_flights";
-  const valKey    = "arrival_delay_rate";
-
-  data = data
-    .filter(d => d[originKey] && d[destKey] && hasNumber(d[valKey]) && hasNumber(d[volKey]))
-    .map(d => ({ ...d, route: `${d[originKey]} → ${d[destKey]}` }));
+  const valKey = 'comparison_rate';
+  const result = selectComparison(data.filter(d => d[originKey] && d[destKey])
+    .map(d => ({ ...d, route: `${d[originKey]} → ${d[destKey]}` })), { ...options, labelKey: 'route' });
+  const { metric } = result;
+  comparisonSummary('route', result, options);
+  data = result.rows;
 
   if (data.length === 0) {
-    emptyState(svg);
+    emptyState(svg, 'No directed routes have an observed rate at the selected minimum sample.');
     return;
   }
 
-  data.sort((a,b) => d3.descending(+a[volKey], +b[volKey]));
-  data = data.slice(0, 15);
-  data.sort((a,b) => d3.descending(+a[valKey], +b[valKey]));
-  const avg = nationalRate(national);
+  const avg = Number(national?.[metric.denominator]) > 0
+    ? Number(national[metric.numerator]) / Number(national[metric.denominator]) : null;
 
   const x = d3.scaleLinear()
-    .domain([0, d3.max(data, d => +d[valKey]) * 1.1])
+    .domain([0, d3.max(data, d => +d[valKey]) * 1.1 || .01])
     .nice().range([0, w]);
 
   const y = d3.scaleBand()
@@ -308,22 +344,23 @@ function drawRoute(data, national) {
 
   g.append("g").attr("class", "axis")
     .attr("transform", `translate(0,${h})`)
-    .call(d3.axisBottom(x).ticks(5).tickFormat(d3.format(".0%")));
+    .call(d3.axisBottom(x).ticks(5).tickFormat(x.tickFormat(5, '%')));
 
   g.append("g").attr("class", "axis").call(d3.axisLeft(y));
 
+  comparisonRowTargets(g, data, y, w, 'route', metric);
   g.selectAll(".bar").data(data).join("rect")
     .attr("class", d => "bar" + (+d[valKey] > avg ? " highlight" : ""))
     .attr("x", 0).attr("y", d => y(d.route))
     .attr("width", d => x(+d[valKey])).attr("height", y.bandwidth())
     .on("mousemove", (e,d) => showTip(
-      `${d.route}<br>Flights: ${fmtNum(+d[volKey])}<br>Delay rate: ${fmtPct(+d[valKey])}`, e))
+      comparisonTip(d, d.route, metric), e))
     .on("mouseleave", hideTip);
 
   g.append("text")
     .attr("x", -M.left + 6).attr("y", -6)
     .attr("class", "chart-scope")
-    .text(`Reference: national avg ${fmtPct(avg)} (${REFERENCE_SCOPE}); directed routes stay separate`);
+    .text(`Reference: national ${metric.label.toLowerCase()} ${fmtPct(avg)} (${REFERENCE_SCOPE})`);
 }
 
 function drawCauses(data) {

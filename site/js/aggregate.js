@@ -117,3 +117,53 @@ export function poolByMonth(rows) {
   }
   return months;
 }
+
+export const COMPARISON_METRICS = {
+  delay: { label: 'Arrival-delay rate', tooltipLabel: 'Delay rate',
+    numerator: 'delayed_arrivals', denominator: 'eligible_arrivals',
+    numeratorLabel: 'Delayed arrivals', sampleLabel: 'eligible arrivals' },
+  cancellation: { label: 'Cancellation rate', tooltipLabel: 'Cancellation rate',
+    numerator: 'cancelled_flights', denominator: 'scheduled_flights',
+    numeratorLabel: 'Cancelled flights', sampleLabel: 'scheduled flights' },
+};
+
+// Input groups must already be pooled under the shared month/airline scope.
+// Filter by the metric's denominator before selecting the top groups. A selected
+// airport may supplement the ranking, but can never bypass sample/missingness rules.
+export function selectComparison(rows, options = {}) {
+  const metric = COMPARISON_METRICS[options.metric] ?? COMPARISON_METRICS.delay;
+  const ranking = ['highest', 'lowest'].includes(options.ranking) ? options.ranking : 'busiest';
+  const minSample = Math.max(0, Math.floor(Number(options.minSample) || 0));
+  const limit = Math.max(1, Math.floor(Number(options.limit) || 15));
+  const labelKey = options.labelKey ?? 'Origin';
+  const idKey = options.idKey ?? 'OriginAirportID';
+  const present = value => value != null && value !== '' && Number.isFinite(Number(value));
+  let excludedMissing = 0;
+  let excludedSample = 0;
+  const qualified = [];
+  for (const row of rows) {
+    const denominator = Number(row[metric.denominator]);
+    if (!row[labelKey] || !present(row.scheduled_flights)
+        || !present(row[metric.numerator]) || !present(row[metric.denominator]) || denominator <= 0) {
+      excludedMissing++;
+    } else if (denominator < minSample) {
+      excludedSample++;
+    } else {
+      qualified.push({ ...row, comparison_rate: Number(row[metric.numerator]) / denominator });
+    }
+  }
+  const byVolume = (a, b) => Number(b.scheduled_flights) - Number(a.scheduled_flights)
+    || String(a[labelKey]).localeCompare(String(b[labelKey]), 'en');
+  const byRate = (a, b) => (ranking === 'lowest' ? 1 : -1)
+    * (a.comparison_rate - b.comparison_rate) || byVolume(a, b);
+  qualified.sort(ranking === 'busiest' ? byVolume : byRate);
+  const shown = qualified.slice(0, limit);
+  const selected = options.selectedId == null ? null
+    : qualified.find(row => String(row[idKey]) === String(options.selectedId));
+  const selectedExtra = Boolean(selected && !shown.includes(selected));
+  if (selectedExtra) shown.push(selected);
+  shown.sort(byRate);
+  return { rows: shown, metric, total: rows.length, qualifiedCount: qualified.length,
+    excludedMissing, excludedSample, selectedExtra,
+    selectedExcluded: options.selectedId != null && !selected };
+}

@@ -4,7 +4,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createFilterState, normalizeRange } from '../site/js/state.js';
-import { filterRows, matchesFilters, poolAll, poolBy, poolByMonth, rate, withRates } from '../site/js/aggregate.js';
+import { filterRows, matchesFilters, poolAll, poolBy, poolByMonth, rate, withRates, selectComparison } from '../site/js/aggregate.js';
 
 function rows(...spec) {
   return spec.map(([month, airline, scheduled, eligible, delayed, cancelled, diverted]) => ({
@@ -157,4 +157,79 @@ test('poolByMonth always returns twelve months with missing rates when absent', 
   assert.equal(months[11].arrival_delay_rate, 0.1);
   assert.equal(months[5].arrival_delay_rate, null);
   assert.equal(months[5].scheduled_flights, 0);
+});
+
+// Literal fixtures catch ranking before sample exclusion, the wrong denominator,
+// averaging/stale rates, and selected airports bypassing the minimum sample.
+const comparisons = [
+  { Origin: 'BIG', OriginAirportID: 1, scheduled_flights: 1000, eligible_arrivals: 900,
+    delayed_arrivals: 90, cancelled_flights: 100, arrival_delay_rate: .99 },
+  { Origin: 'SMALL', OriginAirportID: 2, scheduled_flights: 20, eligible_arrivals: 10,
+    delayed_arrivals: 9, cancelled_flights: 10 },
+  { Origin: 'MID', OriginAirportID: 3, scheduled_flights: 200, eligible_arrivals: 200,
+    delayed_arrivals: 80, cancelled_flights: 0 },
+  { Origin: 'CANCELLED', OriginAirportID: 4, scheduled_flights: 100, eligible_arrivals: 0,
+    delayed_arrivals: 0, cancelled_flights: 100 },
+  { Origin: 'MISSING', OriginAirportID: 5, scheduled_flights: 50, eligible_arrivals: 50,
+    delayed_arrivals: null, cancelled_flights: null },
+];
+const compare = selectComparison;
+
+test('busiest comparison selects by volume, then orders by the recomputed rate', () => {
+  const result = compare(comparisons, { limit: 2 });
+  assert.deepEqual(result?.rows.map(row => [row.Origin, row.comparison_rate]),
+    [['MID', .4], ['BIG', .1]]);
+});
+
+test('highest and lowest rate rankings search all qualifying groups before limiting', () => {
+  assert.deepEqual(compare(comparisons, { ranking: 'highest', limit: 2 })?.rows.map(row => row.Origin),
+    ['SMALL', 'MID']);
+  assert.deepEqual(compare(comparisons, { ranking: 'lowest', limit: 2 })?.rows.map(row => row.Origin),
+    ['BIG', 'MID']);
+});
+
+test('delay sample threshold uses eligible arrivals and accounts for exclusions', () => {
+  const result = compare(comparisons, { ranking: 'highest', minSample: 100 });
+  assert.deepEqual(result && [result.rows.map(row => row.Origin), result.total,
+    result.excludedMissing, result.excludedSample, result.qualifiedCount],
+  [['MID', 'BIG'], 5, 2, 1, 2]);
+});
+
+test('cancellation uses all scheduled flights, including groups with no eligible arrivals', () => {
+  const result = compare(comparisons, { metric: 'cancellation', ranking: 'highest', minSample: 100 });
+  assert.deepEqual(result?.rows.map(row => [row.Origin, row.comparison_rate]),
+    [['CANCELLED', 1], ['BIG', .1], ['MID', 0]]);
+});
+
+test('selected airport outside the top set remains visible only when it qualifies', () => {
+  const appended = compare(comparisons, { limit: 1, selectedId: 3 });
+  assert.deepEqual(appended && [appended.rows.map(row => row.Origin), appended.selectedExtra],
+    [['MID', 'BIG'], true]);
+  const excluded = compare(comparisons, { minSample: 100, selectedId: 2 });
+  assert.deepEqual(excluded && [excluded.rows.map(row => row.Origin), excluded.selectedExcluded],
+    [['MID', 'BIG'], true]);
+});
+
+test('ranking ties break by volume then label without changing source rows', () => {
+  const source = ['ZZZ', 'AAA', 'BBB'].map((Origin, i) => ({ Origin,
+    scheduled_flights: i === 2 ? 20 : 10, eligible_arrivals: 10, delayed_arrivals: 0 }));
+  const before = JSON.stringify(source);
+  assert.deepEqual(compare(source, { ranking: 'lowest' })?.rows.map(row => row.Origin),
+    ['BBB', 'AAA', 'ZZZ']);
+  assert.equal(JSON.stringify(source), before);
+});
+
+test('a threshold excluding all groups returns an empty comparison without a fabricated rate', () => {
+  const result = compare(comparisons, { minSample: 10000 });
+  assert.deepEqual(result && [result.rows, result.qualifiedCount, result.excludedSample,
+    result.excludedMissing], [[], 0, 3, 2]);
+});
+
+test('route comparison retains the two directed routes as separate ranked groups', () => {
+  const routes = [
+    { route: 'AAA → BBB', scheduled_flights: 100, eligible_arrivals: 100, delayed_arrivals: 10 },
+    { route: 'BBB → AAA', scheduled_flights: 100, eligible_arrivals: 100, delayed_arrivals: 50 },
+  ];
+  assert.deepEqual(compare(routes, { labelKey: 'route', ranking: 'highest' })?.rows.map(row => row.route),
+    ['BBB → AAA', 'AAA → BBB']);
 });
