@@ -97,6 +97,9 @@ function topRoutes(rows, { start, end, airline }, limit = 5) {
 async function selectAirport(page, code) {
   await page.locator('#airport-search').fill(code);
   await page.locator('#airport-search').dispatchEvent('change');
+  // Numeric detail assertions explicitly open that tab; selection itself stays put.
+  await page.locator('[data-tab="tab-detail"]').click();
+  await waitSettled(page);
 }
 
 async function assertDetailBars(page, expected, origin) {
@@ -200,7 +203,7 @@ async function waitSettled(page) {
     await mapFirst.locator('[data-tab="tab-network"]').click();
     await mapFirst.waitForFunction(() => document.querySelectorAll('#networkMap .map-route').length === 220);
     assert.equal(await mapFirst.locator('#networkMap .map-airport-selected').count(), 0, 'no selection yet');
-    await selectAirport(mapFirst, 'ORD'); // first state change; opens the detail view
+    await selectAirport(mapFirst, 'ORD'); // first state change, followed by explicit detail navigation
     await waitSettled(mapFirst);
     await mapFirst.locator('[data-tab="tab-network"]').click();
     await mapFirst.waitForFunction(() => document.querySelectorAll('#networkMap .map-route').length === 220);
@@ -231,10 +234,10 @@ async function waitSettled(page) {
     assert.deepEqual(mapFirstErrors, [], 'no page errors in the map-selection regression');
     await mapFirst.close();
 
-    // Airport search: selecting ORD opens the detail view with full-year statistics.
+    // Airport search plus explicit detail navigation shows full-year statistics.
     await selectAirport(page, 'ORD');
     assert.equal(await page.locator('[data-tab="tab-detail"]').getAttribute('aria-pressed'), 'true',
-      'selecting an airport opens the detail view');
+      'explicit detail navigation shows the selected airport');
     assert.match(await page.locator('#detail-sub').innerText(), /ORD — Chicago O'Hare International/);
     await assertHeadline(page, expectations.ordFull, 'ORD full year');
     assert.match(await page.locator('#filter-summary').innerText(), /detail: ORD/);
@@ -347,9 +350,9 @@ async function waitSettled(page) {
       const atl = bars.find(bar => bar.__data__.Origin === 'ATL');
       if (atl) atl.dispatchEvent(new MouseEvent('click', { bubbles: true }));
     });
-    assert.equal(await page.locator('#airport-search').inputValue(), 'ATL', 'clicking a bar selects that airport');
-    assert.equal(await page.locator('[data-tab="tab-detail"]').getAttribute('aria-pressed'), 'true',
-      'bar click opens the detail view');
+    assert.match(await page.locator('#airport-search').inputValue(), /^ATL — /, 'clicking a bar selects that airport');
+    assert.equal(await page.locator('[data-tab="tab-airport"]').getAttribute('aria-pressed'), 'true',
+      'bar click preserves the comparison view');
     await selectAirport(page, 'MDW');
 
     // Empty airport/month/airline combination: HA does not serve ORD.
@@ -385,8 +388,10 @@ async function waitSettled(page) {
     assert.ok(chooserButtons.some(text => text.startsWith('ORD')), 'choice lists ORD');
     assert.ok(chooserButtons.some(text => text.startsWith('MDW')), 'choice lists MDW');
     await page.locator('#airport-chooser button', { hasText: 'MDW' }).click();
-    assert.equal(await page.locator('#airport-search').inputValue(), 'MDW', 'choosing MDW selects it');
-    assert.equal(await page.locator('[data-tab="tab-detail"]').getAttribute('aria-pressed'), 'true');
+    assert.match(await page.locator('#airport-search').inputValue(), /^MDW — /, 'choosing MDW selects it');
+    assert.equal(await page.locator('[data-tab="tab-network"]').getAttribute('aria-pressed'), 'true');
+    await page.locator('[data-tab="tab-detail"]').click();
+    await waitSettled(page);
     assert.match(await page.locator('#detail-sub').innerText(), /MDW/);
 
     // Single-airport cities select directly from the map.
@@ -396,7 +401,7 @@ async function waitSettled(page) {
       const city = circles.find(circle => circle.__data__.city === cityName);
       city.dispatchEvent(new MouseEvent('click', { bubbles: true }));
     }, singleAirportCity.city);
-    assert.equal(await page.locator('#airport-search').inputValue(),
+    assert.equal((await page.locator('#airport-search').inputValue()).split(' — ')[0],
       singleAirportCity.airports.trim(), `single-airport city ${singleAirportCity.city} selects directly`);
 
     // Airports outside the projection stay reachable through the selector; map
@@ -440,14 +445,14 @@ async function waitSettled(page) {
     await page.locator('#filter-reset').click();
     await page.waitForFunction(() => document.querySelector('#kpis').textContent.includes('7,001,619'));
     assert.equal(await page.locator('#airport-search').inputValue(), '', 'reset clears the airport selection');
-    assert.equal(await page.locator('[data-tab="tab-monthly"]').getAttribute('aria-pressed'), 'true',
-      'reset returns to the monthly overview');
+    assert.equal(await page.locator('[data-tab="tab-network"]').getAttribute('aria-pressed'), 'true',
+      'reset returns to the network overview');
     await page.locator('[data-tab="tab-detail"]').click();
     assert.match(await page.locator('#detail-status').innerText(), /No airport selected/);
     assert.deepEqual(errors, [], 'no page errors in the Batch C pass');
 
     const inputs = ['site/index.html', 'site/css/style.css', 'site/js/app.js', 'site/js/charts.js',
-      'site/js/state.js', 'site/js/aggregate.js', 'site/js/data.js', 'site/data/manifest.json'];
+      'site/js/state.js', 'site/js/aggregate.js', 'site/js/data.js', 'site/js/names.js', 'site/data/airline_names.json', 'site/data/manifest.json'];
     const hashes = {};
     for (const file of inputs) hashes[file] = createHash('sha256').update(await fs.readFile(path.join(root, file))).digest('hex');
     const result = {
@@ -464,7 +469,7 @@ async function waitSettled(page) {
         'zero-eligible top-five routes keep place, count, and a missing rate',
         'detail trend labels full-year context, airline, airport, and shading',
         'cause composition asserts rendered colors, pooled minutes, shares, and observation counts',
-        'airport search opens detail with pooled statistics',
+        'airport search and explicit detail navigation show pooled statistics',
         'detail trend, cause composition, and top-5 routes reconcile with source data',
         'ORD and MDW select separately with distinct correct statistics',
         'airport comparison retains context and highlights the selection; bars are clickable',

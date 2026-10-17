@@ -12,6 +12,7 @@ on:
       - '.nvmrc'
       - 'package.json'
       - 'scripts/test_filter_state.mjs'
+      - 'scripts/test_names.mjs'
       - 'scripts/test_site_data.py'
       - 'scripts/export_site_data.py'
   workflow_dispatch:
@@ -48,8 +49,8 @@ jobs:
         with:
           node-version-file: .nvmrc
 
-      - name: Run filter module unit tests
-        run: node scripts/test_filter_state.mjs
+      - name: Run filter and display-name unit tests
+        run: node --test scripts/test_filter_state.mjs scripts/test_names.mjs
 
       - name: Configure Pages (enables Pages on first run)
         uses: actions/configure-pages@v5

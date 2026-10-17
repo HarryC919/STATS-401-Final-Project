@@ -168,7 +168,7 @@ async function assertChart(page, scope, kind, metric, ranking, min) {
     assert.ok(zeroIndex >= 0);
     await page.locator('#airportChart .comparison-hit').nth(zeroIndex).click();
     await settled(page);
-    assert.equal(await page.locator('[data-tab="tab-detail"]').getAttribute('aria-pressed'), 'true');
+    assert.equal(await page.locator('[data-tab="tab-airport"]').getAttribute('aria-pressed'), 'true');
     assert.ok(await page.locator('#airport-search').inputValue());
     await page.locator('[data-tab="tab-cause"]').click();
     await page.locator('#open-cause-comparison').click();
@@ -186,7 +186,7 @@ async function assertChart(page, scope, kind, metric, ranking, min) {
     assert.deepEqual(errors, []);
     const hashes = {};
     for (const name of ['site/index.html', 'site/css/style.css', 'site/js/app.js', 'site/js/charts.js',
-      'site/js/aggregate.js', 'site/js/metrics.js', 'site/js/state.js', 'site/js/data.js', 'site/data/manifest.json']) {
+      'site/js/aggregate.js', 'site/js/metrics.js', 'site/js/state.js', 'site/js/data.js', 'site/js/names.js', 'site/data/airline_names.json', 'site/data/manifest.json']) {
       hashes[name] = createHash('sha256').update(await fs.readFile(path.join(root, name))).digest('hex');
     }
     const result = { checks: 'passed', browser: browser.version(), cases,

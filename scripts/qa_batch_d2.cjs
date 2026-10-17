@@ -295,7 +295,7 @@ const BAR_WIDTH = 740; // viewBox 1100 - margins 190/170: every complete bar spa
     await page.locator('#month-start').selectOption(zeroMonth);
     await page.locator('#airline-select').selectOption(zeroAirline);
     await page.locator('#airport-search').fill(zeroOrigin);
-    await page.locator('#airport-search').dispatchEvent('change'); // opens Airport Detail
+    await page.locator('#airport-search').dispatchEvent('change'); // updates the selected airport without navigating
     await page.locator('[data-tab="tab-cause-compare"]').click();
     await page.waitForFunction(() => document.querySelectorAll('#causeCompareChart .cause-seg').length > 0);
     await waitSettled(page);
@@ -470,7 +470,7 @@ const BAR_WIDTH = 740; // viewBox 1100 - margins 190/170: every complete bar spa
     assert.deepEqual(errors, [], 'no page errors in the D2 pass');
 
     const inputs = ['site/index.html', 'site/css/style.css', 'site/js/app.js', 'site/js/charts.js',
-      'site/js/state.js', 'site/js/aggregate.js', 'site/js/data.js', 'site/data/manifest.json'];
+      'site/js/state.js', 'site/js/aggregate.js', 'site/js/data.js', 'site/js/names.js', 'site/data/airline_names.json', 'site/data/manifest.json'];
     const hashes = {};
     for (const file of inputs) hashes[file] = createHash('sha256').update(await fs.readFile(path.join(root, file))).digest('hex');
     const result = {
@@ -507,6 +507,6 @@ const BAR_WIDTH = 740; // viewBox 1100 - margins 190/170: every complete bar spa
 
 async function selectAirportAppend(page) {
   await page.locator('#airport-search').fill('BQN');
-  await page.locator('#airport-search').dispatchEvent('change'); // opens Airport Detail
+  await page.locator('#airport-search').dispatchEvent('change'); // updates the selected airport without navigating
   await page.locator('[data-tab="tab-cause-compare"]').click();
 }

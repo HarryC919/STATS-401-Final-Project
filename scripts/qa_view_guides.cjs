@@ -91,7 +91,7 @@ async function checkReference(page) {
     assert.deepEqual(errors, []);
     const hashes = {};
     for (const name of ['site/index.html', 'site/css/style.css', 'site/js/charts.js', 'site/js/app.js',
-      'site/js/aggregate.js', 'site/js/metrics.js', 'site/js/state.js', 'site/js/data.js', 'site/data/manifest.json']) {
+      'site/js/aggregate.js', 'site/js/metrics.js', 'site/js/state.js', 'site/js/data.js', 'site/js/names.js', 'site/data/airline_names.json', 'site/data/manifest.json']) {
       hashes[name] = createHash('sha256').update(await fs.readFile(path.join(root, name))).digest('hex');
     }
     const result = { checks: 'passed', browser: browser.version(), guides,

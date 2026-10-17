@@ -194,7 +194,7 @@ async function waitSettled(page) {
     // Cross-partition scope: airport + airline + months change the grid, tooltips
     // pool across the two monthly partitions independently.
     await page.locator('#airport-search').fill('ORD');
-    await page.locator('#airport-search').dispatchEvent('change'); // opens Airport Detail
+    await page.locator('#airport-search').dispatchEvent('change'); // updates the selected airport without navigating
     await page.locator('[data-tab="tab-temporal"]').click(); // return to the heatmap
     await page.waitForFunction(() => document.querySelectorAll('#temporalHeatmap .heat-cell').length > 0);
     await waitSettled(page);
@@ -240,7 +240,7 @@ async function waitSettled(page) {
     await page.locator('#month-start').selectOption('6');
     await page.locator('#airline-select').selectOption('OO');
     await page.locator('#airport-search').fill('MDT');
-    await page.locator('#airport-search').dispatchEvent('change'); // opens Airport Detail
+    await page.locator('#airport-search').dispatchEvent('change'); // updates the selected airport without navigating
     await page.locator('[data-tab="tab-temporal"]').click();
     await page.waitForFunction(() => document.querySelectorAll('#temporalHeatmap .heat-cell').length > 0);
     await waitSettled(page);
@@ -395,7 +395,7 @@ async function waitSettled(page) {
     assert.deepEqual(errors, [], 'no page errors in the D1 pass');
 
     const inputs = ['site/index.html', 'site/css/style.css', 'site/js/app.js', 'site/js/charts.js',
-      'site/js/state.js', 'site/js/aggregate.js', 'site/js/data.js', 'site/data/manifest.json'];
+      'site/js/state.js', 'site/js/aggregate.js', 'site/js/data.js', 'site/js/names.js', 'site/data/airline_names.json', 'site/data/manifest.json'];
     const hashes = {};
     for (const file of inputs) hashes[file] = createHash('sha256').update(await fs.readFile(path.join(root, file))).digest('hex');
     const result = {

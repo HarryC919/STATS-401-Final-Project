@@ -303,8 +303,9 @@ async function assertKpi(page, totals, label) {
     const mapErrors = [];
     mapPage.on('pageerror', error => mapErrors.push(error.message));
     await mapPage.goto(url);
-    await mapPage.waitForFunction(() => document.querySelector('#load-status').textContent.startsWith('Verified'));
-    await mapPage.locator('[data-tab="tab-network"]').click();
+    await mapPage.waitForFunction(() => !document.querySelector('#month-end').disabled
+      && document.querySelector('#month-end').options.length === 12
+      && document.querySelector('#load-status').textContent.startsWith('Rendering'));
     await mapPage.locator('#month-start').selectOption('1'); // filter changes mid-load
     await mapPage.locator('#month-end').selectOption('3');
     await mapPage.waitForFunction(() => document.querySelectorAll('#networkMap .map-route').length > 0);
@@ -364,7 +365,7 @@ async function assertKpi(page, totals, label) {
     await stale.close();
 
     const inputs = ['site/index.html', 'site/css/style.css', 'site/js/app.js', 'site/js/charts.js',
-      'site/js/state.js', 'site/js/aggregate.js', 'site/js/data.js', 'site/data/manifest.json'];
+      'site/js/state.js', 'site/js/aggregate.js', 'site/js/data.js', 'site/js/names.js', 'site/data/airline_names.json', 'site/data/manifest.json'];
     const hashes = {};
     for (const file of inputs) hashes[file] = createHash('sha256').update(await fs.readFile(path.join(root, file))).digest('hex');
     const result = {

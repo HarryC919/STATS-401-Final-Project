@@ -1,8 +1,17 @@
 import { hasNumber, nationalRate, causeTotals } from "./metrics.js";
 import { selectComparison } from './aggregate.js';
+import { createNameLookup } from './names.js';
+let codeNames = createNameLookup();
+export function setCodeNames(lookup) { codeNames = lookup; }
 const tooltip = d3.select("#tooltip");
 function showTip(html, event) {
-  tooltip.html(html)
+  tooltip.html(html);
+  const title = html.split(/<br\s*\/?>/i)[0].replace(/<[^>]*>/g, '').split(' — ')[0];
+  const members = html.match(/<br\s*\/?>Airports:\s*([^<]*)/i)?.[1] ?? '';
+  const descriptions = [...new Set([...codeNames.descriptions(title), ...codeNames.descriptions(members)])];
+  if (descriptions.length) tooltip.append('div').attr('class', 'tooltip-names')
+    .selectAll('div').data(descriptions).join('div').text(value => value);
+  tooltip
     .style("display", "block")
     .style("left", Math.min(event.clientX + 12, window.innerWidth - tooltip.node().offsetWidth - 12) + "px")
     .style("top", Math.max(8, event.clientY - 28) + "px")

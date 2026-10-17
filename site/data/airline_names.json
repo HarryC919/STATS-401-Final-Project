@@ -1,0 +1,21 @@
+{
+  "source": "https://transtats.bts.gov/CarrierList.aspx",
+  "verified_on": "2026-10-17",
+  "scope": "Display names for the 14 reporting-carrier codes in the 2025 project snapshot. Historical reused codes with suffixes are distinct entries in the source and are not substituted here.",
+  "airlines": {
+    "AA": "American Airlines Inc.",
+    "AS": "Alaska Airlines Inc.",
+    "B6": "JetBlue Airways",
+    "DL": "Delta Air Lines Inc.",
+    "F9": "Frontier Airlines Inc.",
+    "G4": "Allegiant Air",
+    "HA": "Hawaiian Airlines Inc.",
+    "MQ": "Envoy Air",
+    "NK": "Spirit Air Lines",
+    "OH": "PSA Airlines Inc.",
+    "OO": "SkyWest Airlines Inc.",
+    "UA": "United Air Lines Inc.",
+    "WN": "Southwest Airlines Co.",
+    "YX": "Republic Airline"
+  }
+}

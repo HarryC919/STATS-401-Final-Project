@@ -412,7 +412,7 @@ async function clickablePoint(page) {
     await page.locator('#airline-select').selectOption('');
     await page.locator('#tab-scatter section').screenshot({ path: path.join(assets, 'scatter-airlines.png') });
 
-    // Clicking an airport point opens its detail with matching statistics.
+    // Clicking an airport point selects it without navigating; detail is explicit.
     await page.locator('input[name="scatter-mode"][value="airports"]').check();
     await page.waitForFunction(() => document.querySelectorAll('#scatterChart .scatter-point').length > 0);
     await waitSettled(page);
@@ -420,8 +420,10 @@ async function clickablePoint(page) {
     assert.ok(clickable.index >= 0, 'a clickable (unoccluded) point exists');
     await page.locator('#scatterChart .scatter-point').nth(clickable.index).click();
     await waitSettled(page);
-    assert.equal(await page.locator('[data-tab="tab-detail"]').getAttribute('aria-pressed'), 'true',
-      'clicking a point opens Airport Detail');
+    assert.equal(await page.locator('[data-tab="tab-scatter"]').getAttribute('aria-pressed'), 'true',
+      'clicking a point preserves the scatter view');
+    await page.locator('[data-tab="tab-detail"]').click();
+    await waitSettled(page);
     assert.match(await page.locator('#detail-sub').innerText(), new RegExp(clickable.label),
       'the detail shows the clicked airport');
     const clickedExpected = poolGroups(airportMonth, row => row.Origin, FULL)
@@ -448,7 +450,7 @@ async function clickablePoint(page) {
     assert.deepEqual(errors, [], 'no page errors in the D3 pass');
 
     const inputs = ['site/index.html', 'site/css/style.css', 'site/js/app.js', 'site/js/charts.js',
-      'site/js/state.js', 'site/js/aggregate.js', 'site/js/data.js', 'site/data/manifest.json'];
+      'site/js/state.js', 'site/js/aggregate.js', 'site/js/data.js', 'site/js/names.js', 'site/data/airline_names.json', 'site/data/manifest.json'];
     const hashes = {};
     for (const file of inputs) hashes[file] = createHash('sha256').update(await fs.readFile(path.join(root, file))).digest('hex');
     const result = {
@@ -471,7 +473,7 @@ async function clickablePoint(page) {
         'minimum-volume filter behaves predictably and updates the scope line',
         'tooltips carry scheduled, eligible, delayed, and rate via real hover',
         'brush defines a highlight-only set; denominators unchanged; clear works',
-        'airlines mode coordinates match; airports points open Airport Detail',
+        'airlines coordinates match; airport selection preserves the scatter view and explicit detail reconciles',
         'reset restores mode, volume filter, and the full plotted set'],
       notChecked: ['interaction timing performance (Batch E)', 'user study (Batch E)'],
       desktopViewport: [1440, 1500],

@@ -1,12 +1,14 @@
 import { drawKPIs, drawMonthly, drawAirline, drawAirport, drawRoute, drawCauses, drawNetworkMap,
          drawDetailCauses, drawDetailRoutes, drawHeatmap, drawCauseComparison, drawScatter,
-         WEEKDAY_NAMES, LOW_SAMPLE_THRESHOLD, clearChart, chartError } from './charts.js';
+         WEEKDAY_NAMES, LOW_SAMPLE_THRESHOLD, clearChart, chartError, setCodeNames } from './charts.js';
 import { createFilterState } from './state.js';
-import { loadCsv, loadRoutePartition, loadRoutePartitions, loadTemporalPartitions } from './data.js';
+import { loadCsv, loadJson, loadRoutePartition, loadRoutePartitions, loadTemporalPartitions } from './data.js';
+import { createNameLookup } from './names.js';
 import { filterRows, poolAll, poolBy, poolByMonth, COMPARISON_METRICS } from './aggregate.js';
 
 const status = document.querySelector('#load-status');
 const buttons = [...document.querySelectorAll('.tab-btn')];
+const DEFAULT_TAB = 'tab-network';
 buttons.forEach(button => { button.disabled = true; });
 
 const AIRPORT_KEYS = ['OriginAirportID', 'Origin'];
@@ -22,7 +24,7 @@ const hasNumberJs = value => value != null && Number.isFinite(Number(value));
 async function start() {
   status.textContent = 'Loading the verified data snapshot…';
   const [national, monthly, airlineAnnual, airportAnnual, routeAnnual, airlineMonth, airportMonth,
-         airportDirectory] = await Promise.all([
+         airportDirectory, airlineNames] = await Promise.all([
     loadCsv('national', 'data/national.csv'),
     loadCsv('monthly', 'data/monthly.csv'),
     loadCsv('airline_annual', 'data/airline_annual.csv'),
@@ -31,9 +33,12 @@ async function start() {
     loadCsv('airline_month', 'data/airline_month.csv'),
     loadCsv('airport_month_airline', 'data/airport_month_airline.csv'),
     loadCsv('airport_directory', 'data/airport_directory.csv'),
+    loadJson('airline_names', 'data/airline_names.json').catch(() => ({ airlines: {} })),
   ]);
   if (national.length !== 1 || monthly.length !== 12) throw new Error('Expected a complete 2025 snapshot.');
   const baseline = national[0];
+  const names = createNameLookup(airportDirectory, airlineNames.airlines);
+  setCodeNames(names);
   const state = createFilterState();
   const airportById = new Map(airportDirectory.map(row => [Number(row.airport_id), row]));
   const codeByAirportId = new Map(airportDirectory.map(row => [Number(row.airport_id), row.airport]));
@@ -83,18 +88,18 @@ async function start() {
     monthEnd.add(new Option(`M${month}`, month));
   }
   for (const code of airlineAnnual.map(row => row.Reporting_Airline).sort()) {
-    airlineSelect.add(new Option(code, code));
+    airlineSelect.add(new Option(names.airlineLabel(code), code));
   }
   for (const airport of [...airportDirectory].sort((a, b) => a.airport.localeCompare(b.airport))) {
     document.querySelector('#airport-options')
-      .append(new Option(`${airport.airport} — ${airport.name}`, airport.airport));
+      .append(new Option(names.airportLabel(airport.airport), names.airportLabel(airport.airport)));
   }
   monthStart.addEventListener('change', () => state.setRange(Number(monthStart.value), Number(monthEnd.value)));
   monthEnd.addEventListener('change', () => state.setRange(Number(monthStart.value), Number(monthEnd.value)));
   airlineSelect.addEventListener('change', () => state.setAirline(airlineSelect.value));
   airportInput.addEventListener('change', () => {
-    const value = airportInput.value.trim().toUpperCase();
-    if (!value) { state.setAirport(null); return; }
+    if (!airportInput.value.trim()) { state.setAirport(null); return; }
+    const value = names.airportCode(airportInput.value);
     const match = airportDirectory.find(airport => airport.airport === value);
     if (match) selectAirport(Number(match.airport_id));
     else syncControls(state.snapshot()); // unknown code: fall back to the current selection
@@ -145,7 +150,7 @@ async function start() {
       drawn.delete(`tab-${prefix}`);
     }
     state.reset();
-    activate(buttons[0]); // Reset returns to the national overview
+    activate(buttons.find(button => button.dataset.tab === DEFAULT_TAB));
   });
 
   function scopeText(snapshot) {
@@ -167,13 +172,13 @@ async function start() {
     monthStart.value = String(snapshot.start);
     monthEnd.value = String(snapshot.end);
     airlineSelect.value = snapshot.airline ?? '';
-    airportInput.value = snapshot.airport == null ? '' : codeByAirportId.get(snapshot.airport) ?? '';
+    airportInput.value = snapshot.airport == null ? '' : names.airportLabel(codeByAirportId.get(snapshot.airport));
   }
 
-  // Airport selection opens the detail view; it never changes national scopes.
+  // Selection updates the current view without navigating or changing national scopes.
   function selectAirport(id) {
     state.setAirport(id);
-    if (id != null) activate(buttons.find(button => button.dataset.tab === 'tab-detail'));
+    syncControls(state.snapshot()); // also normalize reselecting the same airport code
   }
 
   // City nodes with several airports must ask which one is meant instead of
@@ -371,7 +376,7 @@ async function start() {
           ` · drag on empty areas to brush a highlight set (${scatterBrushLabels.size} currently brushed)`,
         minVolume: scatterMinVolume,
         selectedLabel,
-        clickHint: scatterMode === 'airports' ? 'Click to open Airport Detail' : null,
+        clickHint: scatterMode === 'airports' ? 'Click to select this airport; use Airport Detail to inspect it' : null,
         onSelect: scatterMode === 'airports' ? selectAirport : null,
         onReady: handle => { scatterClearBrush = handle.clearBrush; },
         onBrush: box => {
@@ -434,7 +439,7 @@ async function start() {
   // Token-guarded rendering: rapid selection changes let only the newest render
   // finish, so a delayed response can never replace results for a newer selection.
   const drawn = new Set();
-  let activeTab = 'tab-monthly';
+  let activeTab = DEFAULT_TAB;
   let renderToken = 0;
   let renderInFlight = 0;
   let prevSnapshot = null;
@@ -576,7 +581,7 @@ async function start() {
   syncControls(state.snapshot());
   prevSnapshot = state.snapshot(); // the first state change must still invalidate the map
   drawKPIs(poolAll(filterRows(airlineMonth, state.snapshot())));
-  await activate(buttons[0]);
+  await activate(buttons.find(button => button.dataset.tab === DEFAULT_TAB));
 }
 
 start().catch(error => {

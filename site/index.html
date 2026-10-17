@@ -32,7 +32,7 @@
       <option value="">All airlines</option>
     </select>
     <label for="airport-search">Airport</label>
-    <input id="airport-search" list="airport-options" placeholder="e.g. ORD — opens detail"
+    <input id="airport-search" list="airport-options" placeholder="Airport code or full-name option"
            autocomplete="off" aria-label="Airport selection for the detail view (optional)">
     <datalist id="airport-options"></datalist>
     <span id="filter-summary" aria-live="polite"></span>
@@ -42,7 +42,8 @@
   <div class="kpi-row" id="kpis"></div>
 
   <div class="tabs">
-    <button class="tab-btn active" data-tab="tab-monthly">Monthly Trends</button>
+    <button class="tab-btn active" data-tab="tab-network">Flight Network Map</button>
+    <button class="tab-btn" data-tab="tab-monthly">Monthly Trends</button>
     <button class="tab-btn" data-tab="tab-airline">Airline Delay Rate</button>
     <button class="tab-btn" data-tab="tab-airport">Airport Comparison</button>
     <button class="tab-btn" data-tab="tab-route">Route Comparison</button>
@@ -51,10 +52,9 @@
     <button class="tab-btn" data-tab="tab-cause">Delay Causes</button>
     <button class="tab-btn" data-tab="tab-cause-compare">Cause Comparison</button>
     <button class="tab-btn" data-tab="tab-scatter">Volume &amp; Reliability</button>
-    <button class="tab-btn" data-tab="tab-network">Flight Network Map</button>
   </div>
 
-  <div class="tab-panel active" id="tab-monthly">
+  <div class="tab-panel" id="tab-monthly">
     <section>
       <h2>Monthly Delay and Cancellation Trends</h2>
       <p class="sub">See when arrival delays and cancellations are more common across the year. The two lines show the share of eligible arrivals delayed at least 15 minutes and the share of scheduled flights cancelled each month.</p>
@@ -171,7 +171,7 @@
         <ul>
           <li>The horizontal axis uses a log scale: equal distances represent equal ratios of flight volume. The vertical rate excludes cancelled, diverted, and missing-delay records; groups with no eligible arrivals are omitted, not shown as 0%.</li>
           <li>Airport mode applies the shared months and airline; a selected airport is highlighted. Airline mode keeps all reporting airlines for the selected months and airport, highlighting the chosen airline rather than filtering out competitors.</li>
-          <li>Minimum volume uses scheduled flights. Hover for counts and rates, click an airport point to open its detail, or drag empty plot space to highlight a set. Brushing never changes filters or denominators; Clear brush and Reset remove it.</li>
+          <li>Minimum volume uses scheduled flights. Hover for counts, rates, and full names; click an airport point to select it while staying here. Open the Airport Detail tab to inspect it, or drag empty plot space to highlight a set. Brushing never changes filters or denominators; Clear brush and Reset remove it.</li>
           <li>An association between volume and delay does not establish a causal relationship.</li>
         </ul>
       </details>
@@ -185,7 +185,7 @@
         </label>
         <button id="scatter-clear-brush" type="button">Clear brush highlight</button>
       </div>
-      <p class="scope-note">Dragging on empty plot areas brushes a comparison/highlight set — it never changes filters or denominators. Clicking an airport point opens Airport Detail. Descriptive, not causal.</p>
+      <p class="scope-note">Dragging on empty plot areas brushes a comparison/highlight set — it never changes filters or denominators. Clicking an airport point selects it without changing pages; use Airport Detail to inspect it. Descriptive, not causal.</p>
       <p id="scatter-brush-count" role="status">Brush cleared — no groups are highlighted.</p>
       <svg id="scatterChart" viewBox="0 0 1100 620" preserveAspectRatio="xMidYMid meet"></svg>
     </section>
@@ -230,7 +230,7 @@
     </section>
   </div>
 
-  <div class="tab-panel" id="tab-network">
+  <div class="tab-panel active" id="tab-network">
     <section>
       <h2>City-level Flight Network Overview</h2>
       <p class="sub">Locate major departure hubs and busy city connections, then choose an airport to explore its outgoing routes. Circle area shows annual scheduled departures; circle color shows the arrival-delay rate of outgoing flights.</p>

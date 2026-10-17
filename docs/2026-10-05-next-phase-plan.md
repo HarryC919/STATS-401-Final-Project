@@ -50,6 +50,15 @@ not implement any batch. That initial assignment is historical; current status f
   comparison and guide evidence was refreshed after these appearance changes.
   Cause-category and scatter-highlight color assertions were updated to the new
   palette; their numeric, missingness, filter, and Reset checks remain in place.
+- **Feedback refinements: implemented on October 17.** The city-level network map
+  is now the first tab and initial/reset view. Selecting an airport from the shared
+  input, comparison bars, scatterplot points, or map keeps the current page active;
+  Airport Detail is opened explicitly. Choices display codes with full names, while
+  chart labels remain compact and tooltips append names. Airport names reuse the
+  existing directory; the display-only airline list records its BTS source and
+  covers all 14 reporting codes. [Navigation evidence](../reports/site_validation_navigation.json)
+  checks selection across all ten tabs. Reporting-carrier codes and stable airport
+  IDs remain the analytical keys, and no rate definition or data aggregate changed.
 - **Data baseline:** the retained [verification record](../reports/verification.json)
   covers all twelve months of 2025 and 7,001,619 flight records. This documentation
   update does not rerun preparation or full-year verification.

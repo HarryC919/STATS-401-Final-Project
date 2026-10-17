@@ -39,6 +39,10 @@ document's embedded figures are visible directly on the GitHub repository page.
 
 ## Current implementation
 
+The city-level Flight Network Map is the first tab and the initial/reset view.
+Selecting a different airport preserves the active tab; open Airport Detail
+explicitly when you want its detailed statistics.
+
 The dashboard has ten tabs: monthly trends, airline comparison, airport comparison,
 directed-route comparison, Airport Detail, temporal patterns, national reported
 delay-cause composition, comparative cause bars, volume–reliability scatterplot, and
@@ -53,9 +57,10 @@ A shared filter bar drives month-range and reporting-airline selection across th
 cards and the monthly, airline, airport, and route views; rates are recomputed from
 pooled counts, a Reset restores the annual all-airline view, filtered routes load the
 per-origin partitions on demand, and the cause chart and city map state their fixed
-scope. Airport selection (search box, comparison-chart bars, or map cities) opens an
-Airport Detail view — filtered trend, reported cause composition, and the five busiest
-outgoing directed routes. The temporal-patterns heatmap shows the arrival-delay rate
+scope. Airport selection (search box, comparison-chart bars, scatterplot points, or
+map cities) updates the relevant views and highlights without navigating. The Airport
+Detail tab shows the filtered trend context, reported cause composition, and the
+five busiest outgoing directed routes. The temporal-patterns heatmap shows the arrival-delay rate
 by weekday and scheduled departure hour, the cause-comparison view stacks reported
 attribution across airports or airlines, and the volume–reliability scatterplot plots
 volume (log scale) against delay rate with a minimum-volume filter and a highlight-only
@@ -80,6 +85,15 @@ comparison includes a metric definition and an expandable reading guide. The fix
 national cause overview now links directly to the filtered Cause Comparison tab.
 See the [comparison validation](reports/site_validation_comparisons.json) for
 independent numeric checks and current source/manifest hashes.
+
+Airport and airline choices display `code — full name`; chart axes retain compact
+codes and tooltips append the corresponding full names, including both ends of a
+directed route. Airport names come from the publication airport directory. The
+display-only [airline name list](site/data/airline_names.json) was checked against
+the [BTS carrier list](https://transtats.bts.gov/CarrierList.aspx) for all 14 reporting
+codes in this snapshot. These are reporting-carrier identities, including regional
+operators, rather than substituted marketing brands. This maintained label metadata
+is separate from generated analytical CSVs; it does not alter IDs, grouping, or metrics.
 
 The classmate study is **deferred at the owner's request** and does not block the
 current documentation and refinement work. No participant outcomes or usability
@@ -167,6 +181,13 @@ browser settings. They test all ten guides at desktop and 390px widths, keyboard
 open/close, and actual reference-text bounds against the airline bars. Separate
 screenshots are in `docs/assets/view-guides/` and results in
 [reports/site_validation_view_guides.json](reports/site_validation_view_guides.json).
+
+`node --test scripts/test_filter_state.mjs scripts/test_names.mjs` runs the pure
+state, aggregation, ranking, and display-name checks. Navigation checks run with
+`NODE_PATH=<playwright modules> node scripts/qa_navigation.cjs`; they exercise the
+map-first/reset view, airport selection across all ten tabs, readable code labels,
+and narrow-screen layout. Outputs are `docs/assets/navigation/` and
+[reports/site_validation_navigation.json](reports/site_validation_navigation.json).
 
 JavaScript checks run on **Node 24** (pinned in [.nvmrc](.nvmrc) and declared by the
 `engines` field in `package.json` — it documents intent but does not stop a directly
