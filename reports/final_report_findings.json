@@ -1,0 +1,89 @@
+{
+  "generator": "scripts/analyze_final_report.py",
+  "scope": "Full-year 2025, all reporting airlines and origin airports; descriptive analysis.",
+  "volume_method": "One unweighted observation per airport with positive scheduled flights and eligible arrivals; Pearson correlation uses log10 scheduled volume and pooled arrival-delay rate. IQR uses linear-interpolated quartiles.",
+  "volume": {
+    "all": {
+      "airports": 352,
+      "pearson_log10_volume_delay_rate": 0.0204422804816626,
+      "delay_rate_iqr_percentage_points": 6.049510166350144
+    },
+    "below_10000_departures": {
+      "airports": 249,
+      "pearson_log10_volume_delay_rate": 0.042382464063953566,
+      "delay_rate_iqr_percentage_points": 7.190091246573918
+    },
+    "at_least_10000_departures": {
+      "airports": 103,
+      "pearson_log10_volume_delay_rate": 0.32133257929330283,
+      "delay_rate_iqr_percentage_points": 3.590207734454498
+    }
+  },
+  "airlines": {
+    "lowest": {
+      "code": "HA",
+      "rate": 0.17281149555681605
+    },
+    "highest": {
+      "code": "F9",
+      "rate": 0.27911551454230865
+    }
+  },
+  "temporal_extrema": {
+    "ScheduledDepHour": {
+      "lowest": {
+        "value": 5,
+        "rate": 0.08851850141845063
+      },
+      "highest": {
+        "value": 19,
+        "rate": 0.3257949810961046
+      }
+    },
+    "Weekday": {
+      "lowest": {
+        "value": 2,
+        "rate": 0.18388646339749293
+      },
+      "highest": {
+        "value": 7,
+        "rate": 0.263589629707549
+      }
+    }
+  },
+  "cause_shares": {
+    "ATL": {
+      "CarrierDelay_minutes": 0.42022129629096877,
+      "WeatherDelay_minutes": 0.07606963279910306,
+      "NASDelay_minutes": 0.21371049743750808,
+      "SecurityDelay_minutes": 0.0014672004802973526,
+      "LateAircraftDelay_minutes": 0.2885313729921227
+    },
+    "DFW": {
+      "CarrierDelay_minutes": 0.30335154983693063,
+      "WeatherDelay_minutes": 0.09034877605235928,
+      "NASDelay_minutes": 0.1569975473346945,
+      "SecurityDelay_minutes": 0.0012239944056659155,
+      "LateAircraftDelay_minutes": 0.44807813237034966
+    }
+  },
+  "source_sha256": {
+    "scripts/analyze_final_report.py": "945b831ab97909899ad5ccb4eef4470d55590cd9fe5f78d03a6ffb26f294649b",
+    "site/data/national.csv": "c5a762df1f3e7ab01308400ed9c15c2018c12b266f0c2cc319980e2c4357ea94",
+    "site/data/airport_annual.csv": "d558ffca7e12cc42202cbba5657790a07b8721f1094b1ed2d424f0ff9621e161",
+    "site/data/airline_annual.csv": "d4e1e334696b2212bcbc981d9dd8c15960ac9ca42f0f6c83e770724dbd0dcb4f",
+    "site/data/temporal/2025-01.csv": "5e01a775090916339916c6f008d811c36a05ad48cddd1d186c2076131c2e6351",
+    "site/data/temporal/2025-02.csv": "5cfa01147916f6a41d40b3170c5827358596dba1ba376f2c69de080cf724a2a9",
+    "site/data/temporal/2025-03.csv": "da9bd8c318dd336f75f823c979ef7af8861477a2d621e2ad6b4c3089e86780b5",
+    "site/data/temporal/2025-04.csv": "7611f3ecfb11239baa19469f9c83c915fdb9361c86728c91822b33b5e9c143d6",
+    "site/data/temporal/2025-05.csv": "2822f4102f3ed619437a38adf65f8a16ae7caa20bb0904ef481350bef4cb4391",
+    "site/data/temporal/2025-06.csv": "71edb983f52de312726a8668fc5a340f6434c9140f7ba05fbba1f1bc0f91926b",
+    "site/data/temporal/2025-07.csv": "434970a488e48bae53d4b9e8bfa445487d74ba6e67d1c7fe9fd1e827d627b558",
+    "site/data/temporal/2025-08.csv": "575535ae21e70d64c6cff5846c09dc7ddeaf03562e5a0b1179140886d83ba0d1",
+    "site/data/temporal/2025-09.csv": "7de71269cb7c9a935c0d77d5433af1126fc27bb9933a7925b635a003f4be5fe8",
+    "site/data/temporal/2025-10.csv": "9bbef72ba77d15413b279cb0d128c386d3c285c0d55bf2e1779d1f2b61b78864",
+    "site/data/temporal/2025-11.csv": "69ff4a2302294dcdd7a9e7559fd9bb347da757e8490fc34b768f31942616b6ca",
+    "site/data/temporal/2025-12.csv": "c21b18506aa170a76fd54088e3e7aa692ad1510323665058acb06549aef937c7",
+    "site/data/airport_month_airline.csv": "2917c970db3c93cbbb36df74f182d0e8ad98911b3361bafd0270e1adf98ced62"
+  }
+}

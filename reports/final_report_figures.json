@@ -1,0 +1,35 @@
+{
+  "checks": "passed",
+  "browser": "155.0.8059.82",
+  "figures": [
+    {
+      "file": "docs/assets/final-report/temporal-annual.png",
+      "scope": "Full-year 2025, all reporting airlines and origin airports"
+    },
+    {
+      "file": "docs/assets/final-report/causes-airports-annual.png",
+      "scope": "Full-year 2025, all reporting airlines and origin airports"
+    },
+    {
+      "file": "docs/assets/final-report/scatter-airports-annual.png",
+      "scope": "Full-year 2025, all reporting airlines and origin airports"
+    }
+  ],
+  "checked": [
+    "explicit annual unfiltered scope",
+    "352 plotted airport observations match the analysis population",
+    "heatmap reconciles with national scheduled count",
+    "ATL and DFW cause segments match pooled reported minutes"
+  ],
+  "source_sha256": {
+    "scripts/render_final_report.cjs": "4c1efdff466a1516ddd72de6f938b92f6249d3a5ab89ba2c55e597c04e0fc724",
+    "scripts/analyze_final_report.py": "945b831ab97909899ad5ccb4eef4470d55590cd9fe5f78d03a6ffb26f294649b",
+    "site/index.html": "1c73e5caef36e5488af2538b0d0308dae11ff222b216b59277d3662fd95d7b24",
+    "site/css/style.css": "9dfbb762939a1dafa168eeff0b334b77058a3d6803e22c02b92981526304b93a",
+    "site/js/app.js": "40d3a3536df9019ae6094ffa079f510b0ec2fb42b517204999bda11cc6683a7f",
+    "site/js/charts.js": "e1e6e45b46a60a086c68c74f8c09785ae68df939790fe13022bdeef02ed68cf6",
+    "site/js/touch.js": "32031791dac798d0b948a93ece911623a65b37af2bf92c4b1de3c492f06a7207",
+    "site/data/manifest.json": "49f01de58e5ee3c29b3eeafe665db0d0f8c5624ec61a62db8308868a871c8222",
+    "reports/final_report_findings.json": "a3ad1e30231c7cd56a2a090a711cc627af1cedbafa71be8b2ff7bca655b380ea"
+  }
+}

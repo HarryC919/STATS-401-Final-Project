@@ -7,7 +7,8 @@ Explore geographic differences, monthly patterns, and reported delay attribution
 BTS reporting-carrier data. The verified baseline contains **7,001,619 flight records**
 across all twelve months of 2025. Comparisons are descriptive, not causal.
 
-**Start here:** [Current status and refinement priorities](docs/2026-10-05-next-phase-plan.md#current-status-october-17-2026) ·
+**Start here:** [Final report](reports/final_report.md) ·
+[Current status and refinement priorities](docs/2026-10-05-next-phase-plan.md#current-status-october-18-2026) ·
 [Historical interim check](docs/interim-check.md) ·
 [Project proposal](proposal.md) · [Data documentation](data/README.md) ·
 [Data quality report](reports/quality_report.md)
@@ -87,12 +88,14 @@ Invisible touch hit areas make thin map routes easier to tap without changing
 their visible volume-based line widths.
 Touch scatterplot brushing is opt-in: swipes scroll normally until Enable touch
 brushing is selected, and Reset exits that mode.
+Manual touchscreen validation was completed on October 18, 2026 using a
+PLC110 phone running ColorOS 16 (Android), with Chrome and Edge.
 
-As of **October 16, 2026**, Batches A–D3 are implemented and the project owner has
-confirmed functional validation. The retained [B–D3 browser reports](reports/)
+As of **October 16, 2026**, Batches A–D3 are implemented and functionally validated.
+The retained [B–D3 browser reports](reports/)
 record passing checks of the historical implementation. The original handoffs
 retain their review-stage details as history;
-the [current plan](docs/2026-10-05-next-phase-plan.md#current-status-october-17-2026)
+the [current plan](docs/2026-10-05-next-phase-plan.md#current-status-october-18-2026)
 supersedes their outstanding-review and remaining-work statements.
 
 The **October 17 refinement** adds arrival-delay/cancellation metric selection,
@@ -117,7 +120,7 @@ codes in this snapshot. These are reporting-carrier identities, including region
 operators, rather than substituted marketing brands. This maintained label metadata
 is separate from generated analytical CSVs; it does not alter IDs, grouping, or metrics.
 
-The classmate study is **deferred at the owner's request** and does not block the
+The classmate study is **deferred** and does not block the
 current documentation and refinement work. No participant outcomes or usability
 ratings are claimed. Quantitative loading and interaction timings have not been
 recorded in the repository, so the cached-update goal of less than 500 ms remains
@@ -148,9 +151,16 @@ month at a time and leaves the original data unchanged.
 - `site/`: HTML, CSS, JavaScript, generated publication data, and pinned vendor assets.
 - `scripts/`: data acquisition, preparation, verification, website export, and serving.
 - `data/`: source documentation and local raw/processed/summary data.
-- `reports/`: data audits and separate browser-validation evidence.
+- `reports/`: final report, data audits, and separate browser-validation evidence.
 - `docs/`: plans, interim check, and actual chart figures.
 - `proposal.md`: original proposal, preserved separately from implementation status.
+
+To reproduce the final report's descriptive statistics, run
+`uv run --locked python scripts/analyze_final_report.py`; it writes
+[reports/final_report_findings.json](reports/final_report_findings.json).
+With the local site running and the browser environment below configured, run
+`node scripts/render_final_report.cjs` to capture three annual, unfiltered charts in
+`docs/assets/final-report/` and verify their data against the report analysis.
 
 ## Browser checks and figure refresh
 
@@ -224,7 +234,8 @@ airport selection, native airport-picker state, contained chart scrolling, and
 opt-in scatter brushing. Results are in
 [reports/site_validation_touch.json](reports/site_validation_touch.json) and
 `docs/assets/touch/`. Browser emulation does not establish behavior on physical
-phones or Safari; those remain device checks before poster use.
+phones or Safari. Manual touchscreen validation is recorded separately
+from this automated evidence.
 
 JavaScript checks run on **Node 24** (pinned in [.nvmrc](.nvmrc) and declared by the
 `engines` field in `package.json` — it documents intent but does not stop a directly

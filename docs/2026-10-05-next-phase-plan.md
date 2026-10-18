@@ -84,14 +84,20 @@ not implement any batch. That initial assignment is historical; current status f
   without changing visible line widths. Scatter brushing is opt-in on touch and Reset exits
   that mode. [Touch evidence](../reports/site_validation_touch.json) records Chrome
   emulation, not physical-device, Safari, participant, or deployed-site validation.
+  The owner confirmed touchscreen validation on October 18 on a PLC110 phone with
+  ColorOS 16 (Android), using Chrome and Edge. This device confirmation is separate
+  from the automated browser report.
 - **Data baseline:** the retained [verification record](../reports/verification.json)
   covers all twelve months of 2025 and 7,001,619 flight records. This documentation
   update does not rerun preparation or full-year verification.
 - **Batch E:** functional validation is confirmed; documentation is synchronized
   with the implemented dashboard. Quantitative performance evidence remains
   unrecorded. No measured loading-time distribution or achievement of the cached
-  update target is claimed. Final publication is still the owner's action; this
-  update does not verify the deployed website.
+  update target is claimed. Publication remains under the owner's control; this
+  update does not establish a full browser acceptance run of the deployed website.
+  A read-only publication check on October 18 returned HTTP 200 for the public
+  dashboard and its touchscreen module; the downloaded HTML and touchscreen module
+  matched this checkout.
 - **Classmate study: deferred by the owner.** Recruiting and testing classmates is
   not practical at present. It does not block current documentation or refinement.
   No participant responses, task completion times, clarity ratings, or empirical
@@ -126,8 +132,7 @@ on a concrete change before implementing the remaining recommendations.
 3. **Touch access implemented; chart-wide keyboard access remains optional.**
    Touch inspection and explicit airport selection are implemented as described
    above. Mouse movement still provides desktop tooltips. Remaining work: add focusable
-   selection targets with Enter/Space activation, focus-triggered detail text, and
-   a touch-friendly way to inspect values without accidentally opening another view.
+   selection targets with Enter/Space activation and focus-triggered detail text.
    A compact accessible data table could expose the same counts and rates. Check
    focus placement after opening Airport Detail and after dismissing the city chooser.
    Existing keyboard checks of filter controls do not establish chart accessibility.

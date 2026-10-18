@@ -91,7 +91,7 @@ d = selected['eligible_arrivals'].sum()
 rate = n / d if d else None
 ```
 
-These results support descriptive exploration, not causal claims about congestion, weather, or airline behavior. Acquisition and preparation cover the Week 3 data tasks. The D3 static dashboard is integrated in `site/`; linked month, airline, and airport filters remain planned. See [the interim check](../docs/interim-check.md) for current views and separate interface validation.
+These results support descriptive exploration, not causal claims about congestion, weather, or airline behavior. Acquisition and preparation cover the Week 3 data tasks. The interactive D3 dashboard in `site/` implements linked month, airline, and airport selections with the view-specific scopes documented in the interface. See the [current implementation and validation notes](../README.md#current-implementation); the [interim check](../docs/interim-check.md) remains the historical submission record.
 
 ## Website publishing snapshot
 
