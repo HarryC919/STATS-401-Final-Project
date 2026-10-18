@@ -1,5 +1,6 @@
-# docx
+# docx and pptx
 *.docx
+*.pptx
 
 # Requirement files
 Proposal_Requirement.md
