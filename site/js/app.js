@@ -1,6 +1,7 @@
 import { drawKPIs, drawMonthly, drawAirline, drawAirport, drawRoute, drawCauses, drawNetworkMap,
          drawDetailCauses, drawDetailRoutes, drawHeatmap, drawCauseComparison, drawScatter,
-         WEEKDAY_NAMES, LOW_SAMPLE_THRESHOLD, clearChart, chartError, setCodeNames } from './charts.js';
+         WEEKDAY_NAMES, LOW_SAMPLE_THRESHOLD, clearChart, chartError, setCodeNames, inspectChartMark } from './charts.js';
+import { initializeTouch, dismissTouchDetails, touchDevice } from './touch.js';
 import { createFilterState } from './state.js';
 import { loadCsv, loadJson, loadRoutePartition, loadRoutePartitions, loadTemporalPartitions } from './data.js';
 import { createNameLookup } from './names.js';
@@ -9,6 +10,7 @@ import { filterRows, poolAll, poolBy, poolByMonth, COMPARISON_METRICS } from './
 const status = document.querySelector('#load-status');
 const buttons = [...document.querySelectorAll('.tab-btn')];
 const DEFAULT_TAB = 'tab-network';
+initializeTouch(inspectChartMark);
 buttons.forEach(button => { button.disabled = true; });
 
 const AIRPORT_KEYS = ['OriginAirportID', 'Origin'];
@@ -55,6 +57,7 @@ async function start() {
   let scatterMinVolume = 0;
   let scatterBrushLabels = new Set();
   let scatterClearBrush = null;
+  let touchBrushing = false;
   const comparisonOptions = {};
   const comparisonDefaults = () => ({ metric: 'delay', ranking: 'busiest', minSample: 0 });
 
@@ -93,7 +96,11 @@ async function start() {
   for (const airport of [...airportDirectory].sort((a, b) => a.airport.localeCompare(b.airport))) {
     document.querySelector('#airport-options')
       .append(new Option(names.airportLabel(airport.airport), names.airportLabel(airport.airport)));
+    document.querySelector('#airport-touch-select').add(new Option(names.airportLabel(airport.airport), airport.airport_id));
   }
+  document.querySelector('#airport-touch-select').addEventListener('change', event => {
+    state.setAirport(event.target.value ? Number(event.target.value) : null);
+  });
   monthStart.addEventListener('change', () => state.setRange(Number(monthStart.value), Number(monthEnd.value)));
   monthEnd.addEventListener('change', () => state.setRange(Number(monthStart.value), Number(monthEnd.value)));
   airlineSelect.addEventListener('change', () => state.setAirline(airlineSelect.value));
@@ -137,6 +144,10 @@ async function start() {
   }
 
   document.querySelector('#filter-reset').addEventListener('click', () => {
+    touchBrushing = false;
+    document.querySelector('#scatter-brush-toggle').setAttribute('aria-pressed', 'false');
+    document.querySelector('#scatter-brush-toggle').textContent = 'Enable touch brushing';
+    drawn.delete('tab-scatter');
     setCauseCompareMode('airports'); // Reset restores every view's default scope
     setScatterMode('airports');
     setScatterMinVolume(0);
@@ -166,6 +177,7 @@ async function start() {
     const { months, carrier } = scopeText(snapshot);
     const detail = snapshot.airport == null ? '' : ` · detail: ${codeByAirportId.get(snapshot.airport)}`;
     summary.textContent = `Showing: ${months} · ${carrier} · all origin airports${detail}`;
+    document.querySelector('#compact-filter-summary').textContent = `${months} · ${carrier}${detail}`;
   }
 
   function syncControls(snapshot) {
@@ -173,6 +185,7 @@ async function start() {
     monthEnd.value = String(snapshot.end);
     airlineSelect.value = snapshot.airline ?? '';
     airportInput.value = snapshot.airport == null ? '' : names.airportLabel(codeByAirportId.get(snapshot.airport));
+    document.querySelector('#airport-touch-select').value = snapshot.airport == null ? '' : String(snapshot.airport);
   }
 
   // Selection updates the current view without navigating or changing national scopes.
@@ -370,16 +383,19 @@ async function start() {
       if (selectionNote) parts.push(selectionNote);
       document.querySelector('#scatter-brush-count').textContent =
         'Brush cleared — no groups are highlighted.'; // fresh render, fresh brush
+      scatterClearBrush = null; // Disabled touch brushing must not retain a detached brush callback.
       drawScatter('#scatterChart', plotted, {
         scopeText: `${parts.join(' · ')} · minimum volume ${fmt(scatterMinVolume)}` +
           (noEligible > 0 ? ` · ${noEligible} group(s) without eligible arrivals are not plotted (missing rate ≠ 0)` : '') +
           ` · drag on empty areas to brush a highlight set (${scatterBrushLabels.size} currently brushed)`,
         minVolume: scatterMinVolume,
         selectedLabel,
-        clickHint: scatterMode === 'airports' ? 'Click to select this airport; use Airport Detail to inspect it' : null,
+        clickHint: scatterMode === 'airports' ? (touchDevice
+          ? 'Use Select airport to confirm; Airport Detail shows its filtered statistics'
+          : 'Click to select this airport; use Airport Detail to inspect it') : null,
         onSelect: scatterMode === 'airports' ? selectAirport : null,
         onReady: handle => { scatterClearBrush = handle.clearBrush; },
-        onBrush: box => {
+        onBrush: touchDevice && !touchBrushing ? null : box => {
           scatterBrushLabels = new Set();
           if (box) {
             for (const row of plotted) {
@@ -448,7 +464,7 @@ async function start() {
 
   function loadedStatusMessage() {
     if (state.isDefault()) {
-      return 'Verified 2025 snapshot loaded. Hover chart marks for details; the filters above change months and airline.';
+      return 'Verified 2025 snapshot loaded. Tap or hover chart marks for details; the filters above change months and airline.';
     }
     if (state.isFilterDefault()) {
       return `Airport ${codeByAirportId.get(state.snapshot().airport)} selected — the airport comparison highlights it and Airport Detail pools the full year; national scopes stay national.`;
@@ -457,6 +473,7 @@ async function start() {
   }
 
   async function renderActiveTab() {
+    dismissTouchDetails();
     const token = ++renderToken;
     const id = activeTab;
     if (drawn.has(id)) {
@@ -551,6 +568,13 @@ async function start() {
   document.querySelector('#scatter-clear-brush').addEventListener('click', () => {
     // Moving the brush to null fires the cleared-set path; styling follows there.
     if (scatterClearBrush) scatterClearBrush();
+  });
+  document.querySelector('#scatter-brush-toggle').addEventListener('click', event => {
+    touchBrushing = !touchBrushing;
+    event.currentTarget.setAttribute('aria-pressed', String(touchBrushing));
+    event.currentTarget.textContent = touchBrushing ? 'Exit touch brushing' : 'Enable touch brushing';
+    drawn.delete('tab-scatter');
+    renderActiveTab();
   });
 
   for (const prefix of ['airport', 'route']) {

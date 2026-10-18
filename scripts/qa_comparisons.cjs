@@ -185,7 +185,7 @@ async function assertChart(page, scope, kind, metric, ranking, min) {
     await page.screenshot({ path: path.join(assets, 'mobile-route-controls.png'), fullPage: true });
     assert.deepEqual(errors, []);
     const hashes = {};
-    for (const name of ['site/index.html', 'site/css/style.css', 'site/js/app.js', 'site/js/charts.js',
+    for (const name of ['site/index.html', 'site/css/style.css', 'site/js/app.js', 'site/js/charts.js', 'site/js/touch.js',
       'site/js/aggregate.js', 'site/js/metrics.js', 'site/js/state.js', 'site/js/data.js', 'site/js/names.js', 'site/data/airline_names.json', 'site/data/manifest.json']) {
       hashes[name] = createHash('sha256').update(await fs.readFile(path.join(root, name))).digest('hex');
     }

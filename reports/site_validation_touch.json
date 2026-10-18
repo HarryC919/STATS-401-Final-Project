@@ -1,0 +1,52 @@
+{
+  "checks": "passed",
+  "browser": "155.0.8059.82",
+  "layouts": [
+    {
+      "width": 320,
+      "height": 740,
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "overflow": false
+    },
+    {
+      "width": 844,
+      "height": 390,
+      "overflow": false
+    },
+    {
+      "width": 768,
+      "height": 1024,
+      "overflow": false
+    }
+  ],
+  "checked": [
+    "phone disclosures and scope summary",
+    "44px touch navigation",
+    "full-width map and separate phone legend",
+    "tap-to-inspect and explicit airport selection",
+    "enlarged route hit areas preserve visible line widths",
+    "native airport picker and scope summary",
+    "touch chart scrolling without accidental selection",
+    "scatter scroll by default and opt-in touch brushing",
+    "Reset exits touch brush mode",
+    "tap details in all ten views",
+    "320px layout in all ten views"
+  ],
+  "notChecked": [
+    "physical iOS/Android devices",
+    "Safari/WebKit",
+    "live deployment",
+    "participant study"
+  ],
+  "source_sha256": {
+    "site/index.html": "1c73e5caef36e5488af2538b0d0308dae11ff222b216b59277d3662fd95d7b24",
+    "site/css/style.css": "9dfbb762939a1dafa168eeff0b334b77058a3d6803e22c02b92981526304b93a",
+    "site/js/app.js": "40d3a3536df9019ae6094ffa079f510b0ec2fb42b517204999bda11cc6683a7f",
+    "site/js/charts.js": "e1e6e45b46a60a086c68c74f8c09785ae68df939790fe13022bdeef02ed68cf6",
+    "site/js/touch.js": "32031791dac798d0b948a93ece911623a65b37af2bf92c4b1de3c492f06a7207"
+  }
+}

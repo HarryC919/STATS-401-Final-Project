@@ -25,10 +25,11 @@
     "live deployment"
   ],
   "source_sha256": {
-    "site/index.html": "622af7773e0c0d3075881d50251db227422da961a3087f62df5bde9fe4a6316b",
-    "site/css/style.css": "4255c3c83d90d7370b0eda7877eb4bcf16fcf8e5ecac58efe80091c1589a1545",
-    "site/js/app.js": "5c9f3a45bb530f7875aa917517f4caa68c706126a0b35965f7bd77bde4506bf6",
-    "site/js/charts.js": "ca24ae438aa25926b741a270972d12cf1b3fc5217b0550bc1292c42e4b383b5b",
+    "site/index.html": "1c73e5caef36e5488af2538b0d0308dae11ff222b216b59277d3662fd95d7b24",
+    "site/css/style.css": "9dfbb762939a1dafa168eeff0b334b77058a3d6803e22c02b92981526304b93a",
+    "site/js/app.js": "40d3a3536df9019ae6094ffa079f510b0ec2fb42b517204999bda11cc6683a7f",
+    "site/js/charts.js": "e1e6e45b46a60a086c68c74f8c09785ae68df939790fe13022bdeef02ed68cf6",
+    "site/js/touch.js": "32031791dac798d0b948a93ece911623a65b37af2bf92c4b1de3c492f06a7207",
     "site/js/names.js": "35b6270510b564bff1dd947b8c0175f9ab64b6cc4572157a3e3db55243a6f5f9",
     "site/data/airline_names.json": "25ba9448bd3b92f83c31091d3b7684b59d981e629dffcf1631ad54325f61ce55",
     "site/data/manifest.json": "49f01de58e5ee3c29b3eeafe665db0d0f8c5624ec61a62db8308868a871c8222"

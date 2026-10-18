@@ -60,17 +60,17 @@
       "reference": {
         "left": 155.24038696289062,
         "right": 514.3966064453125,
-        "top": 903.4434814453125,
-        "bottom": 918.4434814453125
+        "top": 942.8809814453125,
+        "bottom": 957.8809814453125
       },
       "svg": {
         "left": 149,
         "right": 1291,
-        "top": 886.375,
-        "bottom": 1426.21875
+        "top": 925.8125,
+        "bottom": 1465.65625
       },
       "overlapCount": 0,
-      "firstBarTop": 942.5234375
+      "firstBarTop": 981.9609375
     },
     {
       "scope": "January–March, UA highlighted",
@@ -78,35 +78,35 @@
       "reference": {
         "left": 155.24038696289062,
         "right": 511.9903869628906,
-        "top": 866.4434814453125,
-        "bottom": 881.4434814453125
+        "top": 866.8809814453125,
+        "bottom": 881.8809814453125
       },
       "svg": {
         "left": 149,
         "right": 1291,
-        "top": 849.375,
-        "bottom": 1389.21875
+        "top": 849.8125,
+        "bottom": 1389.65625
       },
       "overlapCount": 0,
-      "firstBarTop": 905.5234375
+      "firstBarTop": 905.9609375
     },
     {
       "scope": "January–March, UA highlighted",
       "viewport": 390,
       "reference": {
-        "left": 30.82115364074707,
-        "right": 249.461763381958,
-        "top": 1158.4742431640625,
-        "bottom": 1167.4742431640625
+        "left": 33,
+        "right": 376.859375,
+        "top": 835.765625,
+        "bottom": 850.765625
       },
       "svg": {
         "left": 27,
-        "right": 727,
-        "top": 1147.65625,
-        "bottom": 1478.5625
+        "right": 1127,
+        "top": 819.765625,
+        "bottom": 1339.765625
       },
       "overlapCount": 0,
-      "firstBarTop": 1182.0733642578125
+      "firstBarTop": 873.8501586914062
     }
   ],
   "checked": [
@@ -120,10 +120,11 @@
     "live deployment"
   ],
   "source_sha256": {
-    "site/index.html": "80991ec29188497afb8d8fbc7620a48f8bb5c0e66f638ce64ac4f51d50fec185",
-    "site/css/style.css": "66854d5e32e13139959d067089f4ccd9801e9ee7b90d184d9185b7655578fbdb",
-    "site/js/charts.js": "ca24ae438aa25926b741a270972d12cf1b3fc5217b0550bc1292c42e4b383b5b",
-    "site/js/app.js": "5c9f3a45bb530f7875aa917517f4caa68c706126a0b35965f7bd77bde4506bf6",
+    "site/index.html": "1c73e5caef36e5488af2538b0d0308dae11ff222b216b59277d3662fd95d7b24",
+    "site/css/style.css": "9dfbb762939a1dafa168eeff0b334b77058a3d6803e22c02b92981526304b93a",
+    "site/js/charts.js": "e1e6e45b46a60a086c68c74f8c09785ae68df939790fe13022bdeef02ed68cf6",
+    "site/js/app.js": "40d3a3536df9019ae6094ffa079f510b0ec2fb42b517204999bda11cc6683a7f",
+    "site/js/touch.js": "32031791dac798d0b948a93ece911623a65b37af2bf92c4b1de3c492f06a7207",
     "site/js/aggregate.js": "3cb8fac563555c207c8f4ff0c86dc3c13ff95a6e7067e6ed57282c66e132cab5",
     "site/js/metrics.js": "e4754610b394f075766a2ee6d5883d9a1009d9a3f29d321948adcfa6c99126b3",
     "site/js/state.js": "83160fe0b953f57bfdbea850be22aa71e33981f2608ab4113dd162f747666394",

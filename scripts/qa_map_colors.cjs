@@ -104,7 +104,7 @@ async function verifyRoutes(page, selector) {
     assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
     await page.screenshot({ path: path.join(assets, 'map-mobile.png'), fullPage: true });
     const hashes = {};
-    for (const name of ['site/js/charts.js','site/js/app.js','site/css/style.css','site/index.html','site/data/manifest.json'])
+    for (const name of ['site/js/charts.js','site/js/app.js','site/js/touch.js','site/css/style.css','site/index.html','site/data/manifest.json'])
       hashes[name] = createHash('sha256').update(await fs.readFile(path.join(root, name))).digest('hex');
     await fs.writeFile(path.join(root, 'reports/site_validation_map_colors.json'), JSON.stringify({ checks:'passed', browser:browser.version(),
       cityRouteCount:city.rows.length, outgoingRouteCount:airport.rows.length, colorDomain:city.domain,

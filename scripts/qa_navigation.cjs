@@ -51,6 +51,7 @@ async function settled(page) {
     const assets = path.join(root, 'docs/assets/navigation'); await fs.mkdir(assets, { recursive: true });
     await page.locator('#tab-network').screenshot({ path: path.join(assets, 'map-home.png') });
     await page.setViewportSize({ width: 390, height: 844 });
+    await page.locator('#filters-disclosure summary').click();
     await page.locator('#airport-search').fill('ORD'); await page.locator('#airport-search').press('Tab'); await settled(page);
     await page.locator('#airline-select').selectOption('UA'); await settled(page);
     assert.equal(await page.locator('.tab-panel.active').getAttribute('id'), 'tab-network');
@@ -58,7 +59,7 @@ async function settled(page) {
     await page.screenshot({ path: path.join(assets, 'map-mobile.png'), fullPage: true });
     assert.deepEqual(errors, []);
     const hashes = {};
-    for (const file of ['site/index.html','site/css/style.css','site/js/app.js','site/js/charts.js','site/js/names.js','site/data/airline_names.json','site/data/manifest.json']) {
+    for (const file of ['site/index.html','site/css/style.css','site/js/app.js','site/js/charts.js','site/js/touch.js','site/js/names.js','site/data/airline_names.json','site/data/manifest.json']) {
       hashes[file] = createHash('sha256').update(await fs.readFile(path.join(root,file))).digest('hex');
     }
     await fs.writeFile(path.join(root,'reports/site_validation_navigation.json'), JSON.stringify({ checks:'passed', browser:browser.version(),

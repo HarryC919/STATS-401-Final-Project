@@ -422,6 +422,57 @@ footer a:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
 /* ============================================================
    Narrow screens
    ============================================================ */
+.mobile-disclosure > summary, .touch-only, .chart-touch-hint,
+#network-touch-legend, .map-touch-hint { display: none; }
+.chart-scroll { width: 100%; overflow-x: auto; touch-action: manipulation; }
+#networkMap, button, select, summary { touch-action: manipulation; }
+.chart-scroll:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+#touch-details[hidden] { display: none; }
+#touch-details {
+  position: fixed; z-index: 40; left: 50%; bottom: 12px;
+  transform: translateX(-50%); width: min(520px, calc(100% - 24px));
+  max-height: min(55dvh, 460px); overflow-y: auto; box-sizing: border-box;
+  background: var(--card); border: 1px solid var(--border-strong);
+  border-radius: var(--radius); box-shadow: var(--shadow-lg);
+  padding: 0 16px max(16px, env(safe-area-inset-bottom));
+}
+.touch-detail-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  position: sticky; top: 0; background: var(--card); padding: 10px 0; }
+.touch-detail-heading h2 { font-size: 17px; margin: 0; color: var(--ink-800); }
+#touch-detail-content { overflow-wrap: anywhere; line-height: 1.65; }
+#touch-detail-content .tooltip-names { border-top-color: var(--border); }
+#touch-details button, #scatter-brush-toggle {
+  font: inherit; min-height: 44px; padding: 8px 14px;
+  border: 1px solid var(--border-strong); border-radius: 8px;
+  background: #fff; color: var(--ink-700); cursor: pointer;
+}
+#touch-detail-action { margin-top: 12px; width: 100%; }
+#touch-details button:focus-visible { outline: 3px solid var(--focus); }
+#scatter-brush-toggle[aria-pressed="true"] { background: var(--ink-700); color: #fff; }
+.map-hub-label, .map-airport-label, .map-airport-selected { pointer-events: none; }
+@media (max-width: 900px) {
+  .chart-scroll > svg { min-width: 1100px; }
+  .chart-touch-hint { display: block; font-size: 13px; color: var(--text-muted); }
+  #networkMap { min-width: 0; }
+  .network-legend { display: none; }
+  #network-touch-legend, .map-touch-hint { display: block; font-size: 13px; color: var(--text-muted); margin: 14px 0; }
+  .map-color-bar { height: 12px; border-radius: 6px; margin: 8px 0 4px; }
+  .map-color-labels { display: flex; justify-content: space-between; font-size: 12px; }
+  #network-touch-legend p { margin-bottom: 0; }
+}
+@media (pointer: coarse) {
+  .touch-only { display: inline-block; }
+  #airport-search { display: none; }
+  #airport-touch-select { max-width: 100%; min-width: 0; }
+  button, select, input:not([type="radio"]):not([type="range"]), .chart-guide summary {
+    min-height: 44px; box-sizing: border-box;
+  }
+  select, input:not([type="radio"]):not([type="range"]) { font-size: 16px !important; }
+  .cause-mode label { min-height: 44px; }
+  input[type="range"] { min-height: 44px; }
+  .chart-touch-hint { display: block; font-size: 13px; color: var(--text-muted); }
+  .airport-chooser { max-height: 50dvh; overflow-y: auto; z-index: 45; }
+}
 @media (max-width: 650px) {
   header { padding: 28px 18px 26px; }
   header h1 { font-size: 24px; }
@@ -432,8 +483,20 @@ footer a:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
   .kpi-row { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
   .kpi { padding: 12px 14px 14px; }
   .kpi .value { font-size: 23px; }
-  section { padding: 14px; overflow-x: auto; }
-  section svg { min-width: 700px; }
-  .network-map-wrap { min-width: 700px; }
+  section { padding: 14px; min-width: 0; }
+  .chart-touch-hint { display: block; font-size: 13px; color: var(--text-muted); }
+  .tabs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tab-btn { min-height: 44px; padding: 8px 6px; }
+  .mobile-disclosure > summary { display: list-item; cursor: pointer; min-height: 44px; padding: 8px 4px; box-sizing: border-box; font-weight: 600; color: var(--ink-700); }
+  .mobile-disclosure > summary:focus-visible { outline: 3px solid var(--focus); }
+  #filters-disclosure { margin-bottom: 18px; }
+  #compact-filter-summary { display: block; font-size: 12px; font-weight: 400; line-height: 1.5; padding-left: 14px; }
+  .filter-bar { padding: 12px; gap: 10px; }
+  .comparison-controls { min-width: 0; }
+  .cause-mode label { flex-wrap: wrap; max-width: 100%; }
+  .filter-bar select, #airport-search { max-width: 100%; box-sizing: border-box; }
+  #airline-select, #airport-touch-select { width: 100%; }
+  .airport-chooser { left: 12px !important; right: 12px; top: auto !important; bottom: 12px; max-width: none; max-height: 55dvh; overflow-y: auto; }
+  .airport-chooser button { min-height: 44px; }
   #filter-summary { margin-left: 0; flex-basis: 100%; }
 }

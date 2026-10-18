@@ -2,7 +2,7 @@
 
 Date: October 5, 2026
 
-Last status update: October 17, 2026
+Last status update: October 18, 2026
 
 ## Goal and ownership
 
@@ -19,7 +19,7 @@ This plan authorizes the scope of each batch only when that batch is assigned.
 At creation, the initial assignment was **Batch A only** and writing the plan did
 not implement any batch. That initial assignment is historical; current status follows.
 
-## Current status: October 17, 2026
+## Current status: October 18, 2026
 
 - **A–D3: implemented and functionally validated.** The project owner confirmed
   validation on October 16. Filter-ready data, shared filters, Airport Detail,
@@ -73,6 +73,17 @@ not implement any batch. That initial assignment is historical; current status f
   remain at 95%. The validation records alpha-composited route contrast against
   land as descriptive evidence, without imposing a contrast threshold or claiming
   accessibility certification.
+- **Touchscreen refinement: implemented on October 18 after owner approval.**
+  Tapping chart marks opens a persistent, dismissible detail card; airport selection
+  uses an explicit card action, while mouse interactions retain their existing flow.
+  Touch devices receive larger controls and a native full-name airport picker.
+  Narrow screens collapse methods/filters with the active scope still visible,
+  fit the complete map to the viewport with a separate legend, and contain other
+  charts' horizontal scrolling in the plot area. City nodes take priority over
+  overlapping route endpoints, and invisible route targets enlarge the touch area
+  without changing visible line widths. Scatter brushing is opt-in on touch and Reset exits
+  that mode. [Touch evidence](../reports/site_validation_touch.json) records Chrome
+  emulation, not physical-device, Safari, participant, or deployed-site validation.
 - **Data baseline:** the retained [verification record](../reports/verification.json)
   covers all twelve months of 2025 and 7,001,619 flight records. This documentation
   update does not rerun preparation or full-year verification.
@@ -91,7 +102,8 @@ not implement any batch. That initial assignment is historical; current status f
 
 ## Refinement priorities after functional validation
 
-Items 1, 2, and 5 were approved and implemented; items 3–4 remain recommendations,
+Items 1, 2, and 5, plus the touch portion of item 3, were approved and implemented.
+The remaining keyboard/table work in item 3 and item 4 remain recommendations,
 not new batch assignments. Preserve existing metric definitions and obtain agreement
 on a concrete change before implementing the remaining recommendations.
 
@@ -111,8 +123,9 @@ on a concrete change before implementing the remaining recommendations.
    independent of the sample threshold. Global Reset restores both comparison panels
    even when the shared filters are already at their defaults. Tooltips expose counts
    and denominators; visible zero markers and row targets retain access to zero rates.
-3. **Provide keyboard and touch access to chart details.** SVG marks currently use
-   mouse movement for tooltips and clicks for airport selection. Add focusable
+3. **Touch access implemented; chart-wide keyboard access remains optional.**
+   Touch inspection and explicit airport selection are implemented as described
+   above. Mouse movement still provides desktop tooltips. Remaining work: add focusable
    selection targets with Enter/Space activation, focus-triggered detail text, and
    a touch-friendly way to inspect values without accidentally opening another view.
    A compact accessible data table could expose the same counts and rates. Check

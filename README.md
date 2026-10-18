@@ -76,6 +76,18 @@ attribution across airports or airlines, and the volume–reliability scatterplo
 volume (log scale) against delay rate with a minimum-volume filter and a highlight-only
 brush.
 
+Phone visitors can tap chart marks to open a persistent detail card, then use an
+explicit Select airport / Choose airport action when appropriate. Mouse hover and
+direct mouse selection remain available. Touch controls have at least 44px height,
+and the airport filter uses a native full-name picker on touchscreens. On narrow
+screens, data notes and shared filters start collapsed with a visible scope summary;
+the complete map fits the screen with a separate legend underneath. Other charts
+scroll horizontally within their own plot area so axes and labels remain readable.
+Invisible touch hit areas make thin map routes easier to tap without changing
+their visible volume-based line widths.
+Touch scatterplot brushing is opt-in: swipes scroll normally until Enable touch
+brushing is selected, and Reset exits that mode.
+
 As of **October 16, 2026**, Batches A–D3 are implemented and the project owner has
 confirmed functional validation. The retained [B–D3 browser reports](reports/)
 record passing checks of the historical implementation. The original handoffs
@@ -205,6 +217,14 @@ including alpha-composited contrast against land, synthetic missing/zero cases,
 and a real-pointer tooltip check. Evidence
 is stored in [reports/site_validation_map_colors.json](reports/site_validation_map_colors.json)
 and `docs/assets/map-colors/`.
+
+`NODE_PATH=<playwright modules> node scripts/qa_touch.cjs` runs Chrome touch-emulation
+checks for phone portrait/landscape and tablet layouts, real tap details, explicit
+airport selection, native airport-picker state, contained chart scrolling, and
+opt-in scatter brushing. Results are in
+[reports/site_validation_touch.json](reports/site_validation_touch.json) and
+`docs/assets/touch/`. Browser emulation does not establish behavior on physical
+phones or Safari; those remain device checks before poster use.
 
 JavaScript checks run on **Node 24** (pinned in [.nvmrc](.nvmrc) and declared by the
 `engines` field in `package.json` — it documents intent but does not stop a directly

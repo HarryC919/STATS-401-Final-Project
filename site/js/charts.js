@@ -1,6 +1,7 @@
 import { hasNumber, nationalRate, causeTotals } from "./metrics.js";
 import { selectComparison } from './aggregate.js';
 import { createNameLookup } from './names.js';
+import { touchDevice } from './touch.js';
 let codeNames = createNameLookup();
 export function setCodeNames(lookup) { codeNames = lookup; }
 const tooltip = d3.select("#tooltip");
@@ -18,6 +19,13 @@ function showTip(html, event) {
     .style("opacity", 1);
 }
 function hideTip() { tooltip.style("opacity", 0).style("display", "none"); }
+
+export function inspectChartMark(mark, event) {
+  d3.select(mark).on('mousemove').call(mark, event, mark.__data__);
+  const html = tooltip.html();
+  hideTip();
+  return html;
+}
 
 const fmtPct = value => hasNumber(value) ? d3.format(".1%")(Number(value)) : "No data";
 const fmtNum = d3.format(",");
@@ -146,13 +154,13 @@ function drawMonthly(data, options = {}) {
 
   g.selectAll(".dot-delay").data(data.filter(d => hasNumber(d[delayKey]))).join("circle")
     .attr("cx", d => x(+d[monthKey])).attr("cy", d => y(d[delayKey]))
-    .attr("r", 4).attr("fill", "#c14a44")
+    .attr("r", touchDevice ? 9 : 4).attr("fill", "#c14a44")
     .on("mousemove", (e,d) => showTip(`Month ${d[monthKey]}<br>Delay rate: ${fmtPct(d[delayKey])}`, e))
     .on("mouseleave", hideTip);
 
   g.selectAll(".dot-cancel").data(data.filter(d => hasNumber(d[cancelKey]))).join("circle")
     .attr("cx", d => x(+d[monthKey])).attr("cy", d => y(d[cancelKey]))
-    .attr("r", 4).attr("fill", "#34689e")
+    .attr("r", touchDevice ? 9 : 4).attr("fill", "#34689e")
     .on("mousemove", (e,d) => showTip(`Month ${d[monthKey]}<br>Cancellation rate: ${fmtPct(d[cancelKey])}`, e))
     .on("mouseleave", hideTip);
 
@@ -922,7 +930,7 @@ function drawScatter(target, rows, options = {}) {
     .attr("class", "scatter-point")
     .attr("cx", row => x(+row.scheduled_flights))
     .attr("cy", row => y(+row.arrival_delay_rate))
-    .attr("r", 5)
+    .attr("r", touchDevice ? 9 : 5)
     .attr("fill", "#34689e")
     .attr("fill-opacity", 0.75)
     .attr("stroke", row => strokeFor(row).stroke)
@@ -1028,7 +1036,7 @@ function drawNetworkMap(nationalRow, isLatest = null, selection = null, onPickCi
     const visible=pcities
       .sort((a,b)=>d3.descending(+a.scheduled_flights,+b.scheduled_flights));
 
-    svg.append("g").selectAll("circle")
+    svg.append("g").attr('class', 'network-nodes').selectAll("circle")
       .data(visible).join("circle")
       .attr("class","map-node")
       .attr("cx",d=>d.x).attr("cy",d=>d.y)
@@ -1036,11 +1044,12 @@ function drawNetworkMap(nationalRow, isLatest = null, selection = null, onPickCi
       .attr("fill",d=>hasNumber(d.arrival_delay_rate) ? color(+d.arrival_delay_rate) : "#777")
       .attr("fill-opacity",.92)
       .on("mousemove", (e,d) => showTip(
-        `${d.city}<br>Departures: ${fmtNum(+d.scheduled_flights)}<br>Delay rate: ${fmtPct(d.arrival_delay_rate)}<br>Airports: ${d.airports}<br>Click to select an airport`, e))
+        `${d.city}<br>Departures: ${fmtNum(+d.scheduled_flights)}<br>Delay rate: ${fmtPct(d.arrival_delay_rate)}<br>Airports: ${d.airports}`
+        + (touchDevice ? '<br>Use Choose airport to select an airport' : '<br>Click to select an airport'), e))
       .on("mouseleave", hideTip)
       .on("click", (e,d) => { if (onPickCity) onPickCity(d, e); });
 
-    svg.append("g").selectAll("text")
+    svg.append("g").attr('class', 'network-labels').selectAll("text")
       .data(visible.slice(0,14)).join("text")
       .attr("class","map-hub-label")
       .attr("x",d=>d.x+7).attr("y",d=>d.y-8)
@@ -1085,7 +1094,30 @@ function drawNetworkMap(nationalRow, isLatest = null, selection = null, onPickCi
       }
     }
 
+    // Invisible touch strokes enlarge route targets without changing volume encoding.
+    if (touchDevice) svg.selectAll('.map-route, .map-outgoing').each(function () {
+      const route = d3.select(this);
+      d3.select(this.parentNode).append('path').datum(route.datum())
+        .attr('class', 'touch-route-target').attr('d', route.attr('d'))
+        .attr('fill', 'none').attr('stroke', 'transparent').attr('stroke-width', 24)
+        .attr('pointer-events', 'stroke')
+        .on('mousemove', route.on('mousemove')).on('mouseleave', hideTip);
+    });
+    // City taps take priority over route endpoints at busy hubs.
+    svg.select('.network-nodes').raise();
+    svg.select('.network-labels').raise();
+    svg.selectAll('.map-airport-selected, .map-airport-label').raise();
     drawNetworkLegend(svg,radius,low,national,high,W,color);
+    const mobileLegend = document.querySelector('#network-touch-legend');
+    mobileLegend.innerHTML = '<strong>Arrival-delay rate</strong><div class="map-color-bar"></div>'
+      + `<div class="map-color-labels"><span>${fmtPct(low)}</span><span>National ${fmtPct(national)}</span><span>${fmtPct(high)}</span></div>`
+      + '<p>Circle area and line width = scheduled flights. Blue = below national; purple = national; red = above national. Gray circles and gray dashed routes = no eligible arrivals.</p>';
+    mobileLegend.querySelector('.map-color-bar').style.background = `linear-gradient(to right, ${d3.range(21).map(i => {
+      const t=i/20; return color(t<=.5 ? low+(national-low)*t*2 : national+(high-national)*(t-.5)*2);
+    }).join(',')})`;
+    const bounds = geoPath.bounds(states);
+    svg.attr('data-mobile-viewbox', `${bounds[0][0]-24} ${bounds[0][1]-30} ${bounds[1][0]-bounds[0][0]+64} ${bounds[1][1]-bounds[0][1]+60}`);
+    updateNetworkViewport();
     document.querySelector("#network-status").textContent = `${pcities.length} of ${cities.length} cities projected; ${proutes.length} city-pair edges shown. Both directions pooled; within-city flights are not drawn as edges.${selectionNote}`;
   }).catch(err => {
     console.error("Network map error:",err);
@@ -1104,7 +1136,7 @@ function cityArc(x1,y1,x2,y2) {
 }
 
 function drawNetworkLegend(svg,radius,low,national,high,W,color) {
-  const g=svg.append("g").attr("transform",`translate(${W-236},34)`);
+  const g=svg.append("g").attr('class', 'network-legend').attr("transform",`translate(${W-236},34)`);
   g.append("rect").attr("class","map-legend-box").attr("width",208).attr("height",290).attr("rx",10);
 
   g.append("text").attr("class","map-legend-title").attr("x",14).attr("y",24).text("Traffic volume");
@@ -1143,6 +1175,13 @@ function drawNetworkLegend(svg,radius,low,national,high,W,color) {
   g.append("text").attr("class","map-legend-text").attr("x",82).attr("y",253).text("No eligible arrivals");
   g.append("text").attr("class","map-legend-text").attr("x",14).attr("y",277).text("Color scale: cities and routes");
 }
+
+function updateNetworkViewport() {
+  const svg = document.querySelector('#networkMap');
+  svg.setAttribute('viewBox', matchMedia('(max-width: 900px)').matches && svg.dataset.mobileViewbox
+    ? svg.dataset.mobileViewbox : '0 0 1100 650');
+}
+matchMedia('(max-width: 900px)').addEventListener('change', updateNetworkViewport);
 
 
 export { drawKPIs, drawMonthly, drawAirline, drawAirport, drawRoute, drawCauses, drawNetworkMap,
